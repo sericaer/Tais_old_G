@@ -1,8 +1,10 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Scenes/Main/MainScene.cs" type="Script" id=1]
 [ext_resource path="res://Scenes/Main/Map/MapRect.cs" type="Script" id=2]
 [ext_resource path="res://Scenes/Main/Top/Date.cs" type="Script" id=3]
+
+[sub_resource type="StyleBoxFlat" id=1]
 
 [node name="Panel" type="Panel"]
 anchor_right = 1.0
@@ -30,6 +32,7 @@ __meta__ = {
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/TopRect"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+margin_right = -30.0
 custom_constants/separation = 100
 alignment = 1
 __meta__ = {
@@ -37,8 +40,8 @@ __meta__ = {
 }
 
 [node name="Economy" type="HBoxContainer" parent="VBoxContainer/TopRect/HBoxContainer"]
-margin_left = 164.0
-margin_right = 298.0
+margin_left = 93.0
+margin_right = 227.0
 margin_bottom = 60.0
 size_flags_horizontal = 6
 __meta__ = {
@@ -59,8 +62,8 @@ margin_bottom = 40.0
 text = "--"
 
 [node name="Date" type="HBoxContainer" parent="VBoxContainer/TopRect/HBoxContainer"]
-margin_left = 726.0
-margin_right = 860.0
+margin_left = 514.0
+margin_right = 648.0
 margin_bottom = 60.0
 size_flags_horizontal = 6
 __meta__ = {
@@ -84,6 +87,38 @@ script = ExtResource( 3 )
 [node name="Timer" type="Timer" parent="VBoxContainer/TopRect/HBoxContainer/Date"]
 autostart = true
 
+[node name="Control" type="HBoxContainer" parent="VBoxContainer/TopRect/HBoxContainer"]
+margin_left = 842.0
+margin_right = 994.0
+margin_bottom = 60.0
+
+[node name="Button_Inc" type="Button" parent="VBoxContainer/TopRect/HBoxContainer/Control"]
+margin_right = 30.0
+margin_bottom = 60.0
+rect_min_size = Vector2( 30, 0 )
+text = "+"
+
+[node name="Button_Pause" type="Button" parent="VBoxContainer/TopRect/HBoxContainer/Control"]
+margin_left = 34.0
+margin_right = 64.0
+margin_bottom = 60.0
+rect_min_size = Vector2( 30, 0 )
+text = "P"
+
+[node name="Button_Dec" type="Button" parent="VBoxContainer/TopRect/HBoxContainer/Control"]
+margin_left = 68.0
+margin_right = 98.0
+margin_bottom = 60.0
+rect_min_size = Vector2( 30, 0 )
+text = "-"
+
+[node name="Button_Sys" type="Button" parent="VBoxContainer/TopRect/HBoxContainer/Control"]
+margin_left = 102.0
+margin_right = 152.0
+margin_bottom = 60.0
+rect_min_size = Vector2( 50, 0 )
+text = "SYS"
+
 [node name="MapContainer" type="CenterContainer" parent="VBoxContainer"]
 margin_top = 64.0
 margin_right = 1024.0
@@ -100,6 +135,47 @@ script = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="Panel" type="Panel" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PanelContainer" type="PanelContainer" parent="Panel"]
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_top = -7.0
+margin_bottom = 7.0
+custom_styles/panel = SubResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/PanelContainer"]
+margin_right = 1024.0
+margin_bottom = 190.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="Panel/PanelContainer/VBoxContainer"]
+margin_right = 1024.0
+margin_bottom = 21.0
+text = "12453456456"
+
+[node name="Label2" type="Label" parent="Panel/PanelContainer/VBoxContainer"]
+margin_top = 25.0
+margin_right = 1024.0
+margin_bottom = 190.0
+text = "12453456456
+
+
+
+
+
+"
 [connection signal="timeout" from="VBoxContainer/TopRect/HBoxContainer/Date/Timer" to="VBoxContainer/TopRect/HBoxContainer/Date/Value" method="_on_Timer_timeout"]
 [connection signal="MapClickSignal" from="VBoxContainer/MapContainer/MapRect" to="." method="_on_MapRect_MapClickSignal"]
 [connection signal="gui_input" from="VBoxContainer/MapContainer/MapRect" to="VBoxContainer/MapContainer/MapRect" method="_on_TextureRect_gui_input"]

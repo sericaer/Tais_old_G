@@ -13,9 +13,9 @@ namespace TaisGodot.Scripts
 	{
 		internal void SetPops(IEnumerable<Pop> pops)
 		{
-            GD.Print("PopContainer"+ pops.Count());
+			GD.Print("PopContainer"+ pops.Count());
 
-            foreach (var pop in pops)
+			foreach (var pop in pops)
 			{
 				var popNode = (PopPanel)ResourceLoader.Load<PackedScene>("res://Scenes/Main/Dynamic/DepartPanel/PopPanel/PopPanel.tscn").Instance();
 				popNode.gmObj = pop;
