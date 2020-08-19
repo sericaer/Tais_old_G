@@ -1,0 +1,4 @@
+﻿NEW:新建
+DATE_VALUE:{0}年{1}月{2}日
+POP_NUM:人口
+CONFIRM:确认

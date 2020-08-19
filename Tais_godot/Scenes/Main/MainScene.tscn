@@ -1,0 +1,105 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Scenes/Main/MainScene.cs" type="Script" id=1]
+[ext_resource path="res://Scenes/Main/Map/MapRect.cs" type="Script" id=2]
+[ext_resource path="res://Scenes/Main/Top/Date.cs" type="Script" id=3]
+
+[node name="Panel" type="Panel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TopRect" type="TextureRect" parent="VBoxContainer"]
+margin_right = 1024.0
+margin_bottom = 60.0
+rect_min_size = Vector2( 0, 60 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/TopRect"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_constants/separation = 100
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Economy" type="HBoxContainer" parent="VBoxContainer/TopRect/HBoxContainer"]
+margin_left = 164.0
+margin_right = 298.0
+margin_bottom = 60.0
+size_flags_horizontal = 6
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="VBoxContainer/TopRect/HBoxContainer/Economy"]
+margin_top = 19.0
+margin_right = 110.0
+margin_bottom = 40.0
+text = "STATIC_DATE"
+
+[node name="Value" type="Label" parent="VBoxContainer/TopRect/HBoxContainer/Economy"]
+margin_left = 114.0
+margin_top = 19.0
+margin_right = 134.0
+margin_bottom = 40.0
+text = "--"
+
+[node name="Date" type="HBoxContainer" parent="VBoxContainer/TopRect/HBoxContainer"]
+margin_left = 726.0
+margin_right = 860.0
+margin_bottom = 60.0
+size_flags_horizontal = 6
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="VBoxContainer/TopRect/HBoxContainer/Date"]
+margin_top = 19.0
+margin_right = 110.0
+margin_bottom = 40.0
+text = "STATIC_DATE"
+
+[node name="Value" type="Label" parent="VBoxContainer/TopRect/HBoxContainer/Date"]
+margin_left = 114.0
+margin_top = 19.0
+margin_right = 134.0
+margin_bottom = 40.0
+text = "--"
+script = ExtResource( 3 )
+
+[node name="Timer" type="Timer" parent="VBoxContainer/TopRect/HBoxContainer/Date"]
+autostart = true
+
+[node name="MapContainer" type="CenterContainer" parent="VBoxContainer"]
+margin_top = 64.0
+margin_right = 1024.0
+margin_bottom = 604.0
+rect_min_size = Vector2( 0, 540 )
+
+[node name="MapRect" type="TextureRect" parent="VBoxContainer/MapContainer"]
+margin_left = 512.0
+margin_top = 270.0
+margin_right = 512.0
+margin_bottom = 270.0
+stretch_mode = 4
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="timeout" from="VBoxContainer/TopRect/HBoxContainer/Date/Timer" to="VBoxContainer/TopRect/HBoxContainer/Date/Value" method="_on_Timer_timeout"]
+[connection signal="MapClickSignal" from="VBoxContainer/MapContainer/MapRect" to="." method="_on_MapRect_MapClickSignal"]
+[connection signal="gui_input" from="VBoxContainer/MapContainer/MapRect" to="VBoxContainer/MapContainer/MapRect" method="_on_TextureRect_gui_input"]
