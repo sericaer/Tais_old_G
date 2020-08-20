@@ -17,7 +17,7 @@ namespace TaisGodot.Scripts
 		{
 			Mod.Load(GlobalPath.mod);
 
-			foreach(var mod in Mod.Enumerate())
+			foreach (var mod in Mod.Enumerate())
 			{
 				TranslateServerEx.AddTranslate(mod.languages);
 			}

@@ -31,11 +31,11 @@ namespace TaisGodot.Scripts
             {
                 if (OS.HasFeature("ReleaseApp"))
                 {
-                    return System.IO.Path.GetDirectoryName(OS.GetExecutablePath()) + "/";
+                    return System.IO.Path.GetDirectoryName(OS.GetExecutablePath()) + "/../";
 
                 }
 
-                return ProjectSettings.GlobalizePath("res://Release/");
+                return ProjectSettings.GlobalizePath("res://Release/Tais/");
             }
         }
     }

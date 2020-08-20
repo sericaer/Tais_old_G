@@ -26,9 +26,9 @@ namespace TaisGodot.Scripts
 		{
 			GD.Print("DepartPanel Ready");
 
-			GetNode<Label>("Object/VBoxContainer/Name").Text = gmObj.name;
+			GetNode<Label>("CenterContainer/PanelContainer/VBoxContainer/Name").Text = gmObj.name;
 
-			GetNode<PopContainer>("Object/VBoxContainer/PopContainer/Grid").SetPops(gmObj.pops);
+			GetNode<PopContainer>("CenterContainer/PanelContainer/VBoxContainer/PopContainer").SetPops(gmObj.pops);
 		}
 
 		public override void _EnterTree()
