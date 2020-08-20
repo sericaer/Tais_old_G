@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 using Modder;
+using RunData;
 
 namespace TaisGodot.Scripts
 {
@@ -15,6 +16,8 @@ namespace TaisGodot.Scripts
 
 		public StartScene()
 		{
+            Root.logger = (value)=>GD.Print(value);
+
 			Mod.Load(GlobalPath.mod);
 
 			foreach(var mod in Mod.Enumerate())
@@ -33,8 +36,7 @@ namespace TaisGodot.Scripts
 
 		private void _on_Button_Start_button_up()
 		{
-			GD.Print("btn on");
-			RunData.Root.Init((value)=>GD.Print(value));
+			Root.Init();
 			GetTree().ChangeScene("res://Scenes/Main/MainScene.tscn");
 			// Replace with function body.
 		}

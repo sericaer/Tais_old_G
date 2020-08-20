@@ -23,6 +23,7 @@ namespace TaisGodot.Scripts
         private void _on_Timer_timeout()
         {
             RunData.Date.Inc();
+            Modder.Mod.DaysInc();
         }
     }
 
