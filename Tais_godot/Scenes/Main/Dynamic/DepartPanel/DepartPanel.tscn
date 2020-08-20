@@ -37,10 +37,10 @@ __meta__ = {
 }
 
 [node name="PanelContainer" type="PanelContainer" parent="CenterContainer"]
-margin_left = 275.0
-margin_top = 172.0
-margin_right = 749.0
-margin_bottom = 427.0
+margin_left = 483.0
+margin_top = 322.0
+margin_right = 957.0
+margin_bottom = 577.0
 __meta__ = {
 "_edit_use_anchors_": false
 }

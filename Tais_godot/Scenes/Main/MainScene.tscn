@@ -20,7 +20,7 @@ __meta__ = {
 }
 
 [node name="TopRect" type="TextureRect" parent="VBoxContainer"]
-margin_right = 1024.0
+margin_right = 1440.0
 margin_bottom = 60.0
 rect_min_size = Vector2( 0, 60 )
 __meta__ = {
@@ -38,8 +38,8 @@ __meta__ = {
 }
 
 [node name="Economy" type="HBoxContainer" parent="VBoxContainer/TopRect/HBoxContainer"]
-margin_left = 93.0
-margin_right = 227.0
+margin_left = 197.0
+margin_right = 331.0
 margin_bottom = 60.0
 size_flags_horizontal = 6
 __meta__ = {
@@ -60,8 +60,8 @@ margin_bottom = 40.0
 text = "--"
 
 [node name="Date" type="HBoxContainer" parent="VBoxContainer/TopRect/HBoxContainer"]
-margin_left = 514.0
-margin_right = 648.0
+margin_left = 826.0
+margin_right = 960.0
 margin_bottom = 60.0
 size_flags_horizontal = 6
 __meta__ = {
@@ -86,8 +86,8 @@ script = ExtResource( 3 )
 autostart = true
 
 [node name="Control" type="HBoxContainer" parent="VBoxContainer/TopRect/HBoxContainer"]
-margin_left = 842.0
-margin_right = 994.0
+margin_left = 1258.0
+margin_right = 1410.0
 margin_bottom = 60.0
 
 [node name="Button_Inc" type="Button" parent="VBoxContainer/TopRect/HBoxContainer/Control"]
@@ -119,15 +119,17 @@ text = "SYS"
 
 [node name="MapContainer" type="CenterContainer" parent="VBoxContainer"]
 margin_top = 64.0
-margin_right = 1024.0
-margin_bottom = 604.0
+margin_right = 1440.0
+margin_bottom = 900.0
 rect_min_size = Vector2( 0, 540 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
 
 [node name="MapRect" type="TextureRect" parent="VBoxContainer/MapContainer"]
-margin_left = 512.0
-margin_top = 270.0
-margin_right = 512.0
-margin_bottom = 270.0
+margin_left = 720.0
+margin_top = 418.0
+margin_right = 720.0
+margin_bottom = 418.0
 stretch_mode = 4
 script = ExtResource( 2 )
 __meta__ = {

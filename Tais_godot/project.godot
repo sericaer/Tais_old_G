@@ -23,6 +23,8 @@ config/icon="res://icon.png"
 
 [display]
 
+window/size/width=1440
+window/size/height=900
 window/size/resizable=false
 
 [gui]
