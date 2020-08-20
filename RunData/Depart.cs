@@ -26,6 +26,8 @@ namespace RunData
         }
 
         public string name;
+        public Reactive<int> popNum;
+
         public IEnumerable<Pop> pops
         {
             get
@@ -45,6 +47,18 @@ namespace RunData
                                new (string name, int num)[]{ ("HAOQIANG", 3000), ("MINHU", 60000) }));
         }
 
+        internal static void Exit()
+        {
+            all = null;
+        }
+
+        internal static void DaysInc()
+        {
+            all.ForEach(depart =>
+            {
+                depart.popNum.value = depart.pops.Sum(x => x.num.value);
+            });
+        }
 
         private (int r, int g, int b) color;
 
@@ -58,11 +72,6 @@ namespace RunData
         private bool SameColor((int r, int g, int b) p)
         {
             return (color.r == p.r && color.g == p.g && color.b == p.b);
-        }
-
-        internal static void Exit()
-        {
-            all = null;
         }
     }
 }

@@ -11,11 +11,10 @@ namespace RunData
 {
     public class Root
     {
+        public static Action<string> logger;
 
-        public static void Init(Action<string> logger)
+        public static void Init()
         {
-            Root.logger = logger;
-
             Date.Init();
             //Background.Init();
             //Chaoting.Init(Background.Enumerate());
@@ -46,10 +45,11 @@ namespace RunData
 
         public static void DaysInc()
         {
+            Date.Inc();
 
+            Pop.DaysInc();
+            Depart.DaysInc();
         }
-
-        internal static Action<string> logger;
 
         public static void Exit()
         {

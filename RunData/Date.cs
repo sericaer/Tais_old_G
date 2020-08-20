@@ -89,37 +89,5 @@ namespace RunData
         }
     }
 
-    public class Reactive<T>
-    {
-        public Reactive(T value)
-        {
-            this.value = value;
-        }
 
-        public void Bind(Action<string> act)
-        {
-            _act = act;
-            _act.Invoke(_value.ToString());
-        }
-
-        public T value
-        {
-            get
-            {
-                return _value;
-            }
-            set
-            {
-                if (_value == null || !_value.Equals(value))
-                {
-                    _value = value;
-                    _act?.Invoke(_value.ToString());
-                }
-                
-            }
-        }
-
-        internal T _value;
-        internal Action<string> _act;
-    }
 }
