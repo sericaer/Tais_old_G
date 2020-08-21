@@ -38,6 +38,9 @@ namespace TaisGodot.Scripts
 		private void _on_Button_Start_button_up()
 		{
 			Root.Init();
+			
+			//Mod.InitVisit(Root.inst, Root.GetReflectionDict());
+
 			GetTree().ChangeScene("res://Scenes/Main/MainScene.tscn");
 			// Replace with function body.
 		}

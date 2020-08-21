@@ -17,6 +17,7 @@ namespace Modder
 
         public List<Language> languages;
 
+        
         public static IEnumerable<Mod> Enumerate()
         {
             foreach(var elem in modDict)
@@ -32,6 +33,12 @@ namespace Modder
 
         public static void Load(string path)
         {
+            Visitor.GetValue = (raw) =>
+            {
+                var datavisit = new DataVisit(raw);
+                return datavisit.Get();
+            };
+
             foreach (var sub in System.IO.Directory.EnumerateDirectories(path))
             {
                 var modname = System.IO.Path.GetFileName(sub);

@@ -9,26 +9,26 @@ namespace Parser.Semantic
 {
     public class GroupValue : IEnumerable<object>
     {
-        List<DataVisit> dataVisitors = new List<DataVisit>();
+        List<string> datas = new List<String>();
 
         public GroupValue(params string[] Params)
         {
-            dataVisitors.AddRange(Params.Select(x => new DataVisit(x)));
+            datas.AddRange(Params);
         }
 
         public IEnumerator<object> GetEnumerator()
         {
-            for(int i=0; i< dataVisitors.Count(); i++)
+            for(int i=0; i< datas.Count(); i++)
             {
-                yield return dataVisitors[i].Get();
+                yield return Visitor.GetValue(datas[i]);
             }
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            for (int i = 0; i < dataVisitors.Count(); i++)
+            for (int i = 0; i < datas.Count(); i++)
             {
-                yield return dataVisitors[i].Get();
+                yield return Visitor.GetValue(datas[i]);
             }
         }
     }

@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Parser;
 using Parser.Semantic;
 
 namespace Modder
@@ -13,6 +14,8 @@ namespace Modder
         internal static void Load(string mod, string path)
         {
             LoadSub(mod, path + "common/", ref common);
+            LoadSub(mod, path + "depart/", ref depart);
+            LoadSub(mod, path + "pop/", ref pop);
         }
 
         private static void LoadSub(string mod, string path, ref List<(string mod, List<GEvent> events)> eventGroup)
@@ -102,13 +105,37 @@ namespace Modder
         internal static List<(string mod, List<GEvent> events)> depart;
         internal static List<(string mod, List<GEvent> events)> pop;
 
-        internal static IEnumerable<GEvent> Process()
+        internal static IEnumerable<GEvent> Process(object rootObj, IEnumerable<object> departObjs, IEnumerable<object> popObjs)
         {
             foreach(var gEvent in common.SelectMany(x=>x.events))
             {
-                if(gEvent.trigger.Rslt() && gEvent.occur.Rslt())
+                if (gEvent.trigger.Rslt() && gEvent.occur.Rslt())
                 {
                     yield return gEvent;
+                }
+            }
+
+            foreach(var departObj in departObjs)
+            {
+                //DataVisit.SetObj("depart", departObj);
+                foreach (var gEvent in depart.SelectMany(x => x.events))
+                {
+                    if (gEvent.trigger.Rslt() && gEvent.occur.Rslt())
+                    {
+                        yield return gEvent;
+                    }
+                }
+            }
+
+            foreach (var popObj in popObjs)
+            {
+                //DataVisit.SetObj("pop", popObj);
+                foreach (var gEvent in pop.SelectMany(x => x.events))
+                {
+                    if (gEvent.trigger.Rslt() && gEvent.occur.Rslt())
+                    {
+                        yield return gEvent;
+                    }
                 }
             }
         }

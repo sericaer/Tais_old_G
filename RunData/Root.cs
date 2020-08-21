@@ -25,6 +25,8 @@ namespace RunData
             //Person.Init(Family.Enumerate());
         }
 
+        //public static (object obj, List<ReflectionInfo> reflections)[] dataMapping;
+
         public static void Load(string path)
         {
             var str = File.ReadAllText(path);

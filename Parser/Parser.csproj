@@ -51,12 +51,11 @@
     <Compile Include="Semantic\Condition.cs" />
     <Compile Include="Semantic\ConditionEqual.cs" />
     <Compile Include="Semantic\GroupValue.cs" />
-    <Compile Include="DataVisit\DataVisit.cs" />
     <Compile Include="Semantic\ConditionDefault.cs" />
+    <Compile Include="Semantic\Visitor.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Semantic\" />
-    <Folder Include="DataVisit\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

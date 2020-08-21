@@ -23,16 +23,16 @@ namespace Parser.Semantic
                 throw new Exception("conditon equal value must be string or digit");
             }
 
-            return new ConditionEqual() { right = new DataVisit(value0.ToString()), left = new DataVisit(value1.ToString()) };
+            return new ConditionEqual() { right = value0.ToString(), left = value1.ToString() };
         }
 
 
         public override bool Rslt()
         {
-            return right.Get() == left.Get();
+            return Visitor.GetValue(right) == Visitor.GetValue(left);
         }
 
-        internal DataVisit right;
-        internal DataVisit left;
+        internal string right;
+        internal string left;
     }
 }
