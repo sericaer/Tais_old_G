@@ -6,18 +6,18 @@ namespace TaisGodot.Scripts
 {
 	public class MainScene : Panel
 	{
-        public MainScene()
-        {
-            Mod.showDialogAction = ShowDialog;
-        }
-        
-        private void ShowDialog(Modder.GEvent dialog)
-        {
-            var dialogNode = (DialogPanel)ResourceLoader.Load<PackedScene>("res://Scenes/Main/Dynamic/DialogPanel/DialogPanel.tscn").Instance();
-            dialogNode.gEventObj = dialog;
+		public MainScene()
+		{
+			Mod.showDialogAction = ShowDialog;
+		}
+		
+		private void ShowDialog(Modder.GEvent dialog)
+		{
+			var dialogNode = (DialogPanel)ResourceLoader.Load<PackedScene>("res://Scenes/Main/Dynamic/DialogPanel/DialogPanel.tscn").Instance();
+			dialogNode.gEventObj = dialog;
 
-            AddChild(dialogNode);
-        }
+			AddChild(dialogNode);
+		}
 
 		private void _on_MapRect_MapClickSignal(int r, int g, int b)
 		{

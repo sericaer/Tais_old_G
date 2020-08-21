@@ -41,10 +41,10 @@ namespace Modder
 
         public static void DaysInc()
         {
-            foreach(var eventObj in GEvent.Process())
-            {
-                showDialogAction(eventObj);
-            }
+            //foreach(var eventObj in GEvent.Process())
+            //{
+            //    showDialogAction(eventObj);
+            //}
 
             var testDialog = new GEvent();
             testDialog._title = new GroupValue("EVENT_TEST_TITLE");

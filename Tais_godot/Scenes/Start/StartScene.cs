@@ -16,7 +16,8 @@ namespace TaisGodot.Scripts
 
 		public StartScene()
 		{
-            Root.logger = (value)=>GD.Print(value);
+			Root.logger = (value) => GD.Print(value);
+			Mod.logger  = (value) => GD.Print(value);
 
 			Mod.Load(GlobalPath.mod);
 

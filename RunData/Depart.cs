@@ -67,6 +67,8 @@ namespace RunData
             this.name = name;
             this.color = color;
             this.pops_init = pops_init;
+
+            this.popNum = new Reactive<int>(pops_init.Sum(x=>x.num));
         }
 
         private bool SameColor((int r, int g, int b) p)

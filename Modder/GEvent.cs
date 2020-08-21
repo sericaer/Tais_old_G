@@ -17,6 +17,11 @@ namespace Modder
 
         private static void LoadSub(string mod, string path, ref List<(string mod, List<GEvent> events)> eventGroup)
         {
+            if (!Directory.Exists(path))
+            {
+                return;
+            }
+
             List<GEvent> events = new List<GEvent>();
             foreach(var file in Directory.EnumerateFiles(path, "*.txt"))
             {

@@ -18,26 +18,13 @@ namespace TaisGodot.Scripts
             GetNode<Label>("Title").Text = TranslateServerEx.Translate(gEventObj.title.Format, gEventObj.title.Params);
             GetNode<Label>("Desc").Text = TranslateServerEx.Translate(gEventObj.desc.Format, gEventObj.desc.Params);
 
-            var optionButton = GetNode<OptionButton>("options");
-            for (int i = 0; i < gEventObj.options.Count(); i++)
-            {
-                var optionObj = gEventObj.options[i];
-
-                optionButton.SetItemText(i, TranslateServerEx.Translate(optionObj.desc.Format, optionObj.desc.Params));
-            }
-
-            for (int i = optionButton.GetItemCount() - 1; i >= gEventObj.options.Count(); i++)
-            {
-                optionButton.RemoveItem(i);
-            }
+            var optionGroup = GetNode<OptionGroup>("options");
+            optionGroup.gmObj = gEventObj.options;
         }
 
-        private void _on_OptionButton_Selected(int idx)
+        private void _on_Selected_Signal()
         {
-            gEventObj.options[idx].Selected();
             QueueFree();
-
-            Date.UnPause();
         }
 
         internal GEvent gEventObj;

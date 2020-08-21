@@ -10,8 +10,8 @@ namespace RunData
     {
         public Reactive(T value)
         {
-            this.value = value;
             this.weakEvent = new WeakEvent<string>();
+            this.value = value;
         }
 
         public void Bind(Action<string> act)
