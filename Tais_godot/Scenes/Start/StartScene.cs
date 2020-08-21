@@ -14,12 +14,17 @@ namespace TaisGodot.Scripts
 		// private int a = 2;
 		// private string b = "text";
 
-		public StartScene()
+		static StartScene()
 		{
 			Root.logger = (value) => GD.Print(value);
-			Mod.logger  = (value) => GD.Print(value);
+			Mod.logger = (value) => GD.Print(value);
 
 			Mod.Load(GlobalPath.mod);
+		}
+
+		public StartScene()
+		{
+
 
 			foreach (var mod in Mod.Enumerate())
 			{
@@ -48,6 +53,11 @@ namespace TaisGodot.Scripts
 		private void _on_Button_Load_button_up()
 		{
 			GetNode<SavePanel>("LoadPanel").Visible = true;
+		}
+
+		private void _on_Button_Quit_pressed()
+		{
+			GetTree().Quit();
 		}
 
 		//  // Called every frame. 'delta' is the elapsed time since the previous frame.

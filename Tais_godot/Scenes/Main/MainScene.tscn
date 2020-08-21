@@ -136,5 +136,6 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 [connection signal="timeout" from="VBoxContainer/TopRect/HBoxContainer/Date/Timer" to="VBoxContainer/TopRect/HBoxContainer/Date/Value" method="_on_Timer_timeout"]
+[connection signal="pressed" from="VBoxContainer/TopRect/HBoxContainer/Control/Button_Sys" to="." method="_on_Button_Sys_pressed"]
 [connection signal="MapClickSignal" from="VBoxContainer/MapContainer/MapRect" to="." method="_on_MapRect_MapClickSignal"]
 [connection signal="gui_input" from="VBoxContainer/MapContainer/MapRect" to="VBoxContainer/MapContainer/MapRect" method="_on_TextureRect_gui_input"]

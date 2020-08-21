@@ -48,6 +48,12 @@ namespace TaisGodot.Scripts
 			GetTree().ChangeScene("res://Scenes/StartScene.tscn");
 		}
 
+		private void _on_Button_Sys_pressed()
+		{
+			var SysPanel = ResourceLoader.Load<PackedScene>("res://Scenes/Main/SysPanel/SysPanel.tscn").Instance();
+			AddChild(SysPanel);
+		}
+
 		//  // Called every frame. 'delta' is the elapsed time since the previous frame.
 		//  public override void _Process(float delta)
 		//  {
@@ -55,3 +61,6 @@ namespace TaisGodot.Scripts
 		//  }
 	}
 }
+
+
+
