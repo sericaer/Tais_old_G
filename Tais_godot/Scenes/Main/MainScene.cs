@@ -1,20 +1,23 @@
 using Godot;
 using RunData;
-using System;
+using Modder;
 
 namespace TaisGodot.Scripts
 {
 	public class MainScene : Panel
 	{
-		// Declare member variables here. Examples:
-		// private int a = 2;
-		// private string b = "text";
+        public MainScene()
+        {
+            Mod.showDialogAction = ShowDialog;
+        }
+        
+        private void ShowDialog(Modder.GEvent dialog)
+        {
+            var dialogNode = (DialogPanel)ResourceLoader.Load<PackedScene>("res://Scenes/Main/Dynamic/DialogPanel/DialogPanel.tscn").Instance();
+            dialogNode.gEventObj = dialog;
 
-		// Called when the node enters the scene tree for the first time.
-		public override void _Ready()
-		{
-
-		}
+            AddChild(dialogNode);
+        }
 
 		private void _on_MapRect_MapClickSignal(int r, int g, int b)
 		{
@@ -34,7 +37,7 @@ namespace TaisGodot.Scripts
 			AddChild(departNode);
 		}
 
-		public void _on_Button_Cmd_button_up()
+		private void _on_Button_Cmd_button_up()
 		{
 			GetNode<Panel>("SysPanel").Visible = true;
 		}

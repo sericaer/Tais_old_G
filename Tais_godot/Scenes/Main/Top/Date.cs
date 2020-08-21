@@ -5,25 +5,33 @@ namespace TaisGodot.Scripts
 {
     public class Date : Label
     {
+        public static void Pause()
+        {
+            isPause = true;
+        }
+
+        public static void UnPause()
+        {
+            isPause = false;
+        }
+
         public Date()
         {
             RunData.Date.inst.desc.Bind((value) => Text = TranslateServerEx.Translate("STATIC_DATE_VALUE", value.Split('-')));
         }
 
-        public override void _EnterTree()
-        {
-            GD.Print("_EnterTree");
-        }
-
-        public override void _ExitTree()
-        {
-            GD.Print("_ExitTree");
-        }
-
         private void _on_Timer_timeout()
         {
+            if(isPause)
+            {
+                return;
+            }
+
             RunData.Date.Inc();
+            Modder.Mod.DaysInc();
         }
+
+        private static bool isPause;
     }
 
 }

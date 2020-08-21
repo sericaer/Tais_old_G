@@ -8,11 +8,19 @@ using System.Threading.Tasks;
 
 namespace TaisGodot.Scripts
 {
-    class ReactiveLabel : Label
+    public class ReactiveLabel : Label
     {
-        internal void Assoc<T>(Reactive<T> data)
+        internal void Assoc<T>(Reactive<T> data, Func<string, string> adpt = null)
         {
-            data.Bind((value) => Text = value);
+            this.adpt = adpt;
+            data.Bind(SetValue);
+        }
+
+        private Func<string, string> adpt;
+
+        private void SetValue(string value)
+        { 
+            Text = adpt!=null ? adpt(value) : value;
         }
     }
 }

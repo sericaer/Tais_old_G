@@ -12,20 +12,19 @@ namespace RunData
 
         public Reactive<int> num;
 
-        public Pop(string name, int num, string depart_name)
+        public Pop(string name, int num)
         {
             this.name = name;
             this.num = new Reactive<int>(num);
-            this.depart_name = depart_name;
         }
 
         internal static void Init(IEnumerable<Depart> departs)
         {
-            foreach (var depart in departs)
+            foreach(var depart in departs)
             {
                 foreach (var pop_init in depart.pops_init)
                 {
-                    all.Add(new Pop(pop_init.name, pop_init.num, depart.name));
+                    all.Add(new Pop(pop_init.name, pop_init.num));
                 }
             }
         }
@@ -33,6 +32,14 @@ namespace RunData
         internal static void Exit()
         {
             all = null;
+        }
+
+        internal static void DaysInc()
+        {
+            all.ForEach(pop =>
+            {
+                pop.num.value++;
+            });
         }
     }
 }

@@ -69,6 +69,7 @@
     <Compile Include="Scenes\Main\Map\MapRect.cs" />
     <Compile Include="Scenes\Main\Dynamic\DepartPanel\PopContainer.cs" />
     <Compile Include="Scenes\Main\Dynamic\DepartPanel\PopPanel\PopPanel.cs" />
+    <Compile Include="Scenes\Main\Dynamic\DialogPanel\DialogPanel.cs" />
     <Compile Include="Global\ReactiveLabel.cs" />
     <Compile Include="Global\TranslateServerEx.cs" />
     <Compile Include="Scenes\Start\StartScene.cs" />
