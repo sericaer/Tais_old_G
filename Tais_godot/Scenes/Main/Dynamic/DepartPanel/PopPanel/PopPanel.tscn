@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://Scenes/Main/Dynamic/DepartPanel/PopPanel/PopPanel.cs" type="Script" id=1]
+[ext_resource path="res://Global/ReactiveLabel.cs" type="Script" id=2]
 
 [node name="PopPanel" type="Panel"]
 margin_right = 90.0
@@ -37,6 +38,7 @@ margin_right = 45.0
 margin_bottom = 51.0
 text = "100000"
 align = 1
+script = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
 }

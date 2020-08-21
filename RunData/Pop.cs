@@ -12,10 +12,11 @@ namespace RunData
 
         public Reactive<int> num;
 
-        public Pop(string name, int num)
+        public Pop(string depart_name, string name, int num)
         {
             this.name = name;
             this.num = new Reactive<int>(num);
+            this.depart_name = depart_name;
         }
 
         internal static void Init(IEnumerable<Depart> departs)
@@ -24,7 +25,7 @@ namespace RunData
             {
                 foreach (var pop_init in depart.pops_init)
                 {
-                    all.Add(new Pop(pop_init.name, pop_init.num));
+                    all.Add(new Pop(depart.name, pop_init.name, pop_init.num));
                 }
             }
         }

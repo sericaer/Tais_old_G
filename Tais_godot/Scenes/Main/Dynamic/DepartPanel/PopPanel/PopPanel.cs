@@ -14,13 +14,9 @@ namespace TaisGodot.Scripts
 
 		public override void _Ready()
 		{
-			if(gmObj == null)
-			{
-				GD.Print("null");
-				GetNode<Label>("VBoxContainer/Name").Text = gmObj.name;
-			}
+			GetNode<Label>("Type").Text = gmObj.name;
 
-			//GetNode<ReactiveLabel>("VBoxContainer/Num").Assoc(gmObj.num);
+			GetNode<ReactiveLabel>("Num").Assoc(gmObj.num);
 		}
 	}
 }

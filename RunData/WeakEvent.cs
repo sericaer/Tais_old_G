@@ -75,15 +75,24 @@ namespace RunData
 
             for (int i = this.list.Count - 1; i > -1; i--)
             {
-                if (this.list[i].IsDead)
+                try
+                {
+                    if (this.list[i].IsDead)
+                    {
+                        Root.logger($"Remove {this.list[i].Name}");
+                        this.list.RemoveAt(i);
+                    }
+                    else
+                    {
+                        this.list[i].Invoke(ARGS);
+                    }
+                }
+                catch(TargetInvocationException e)
                 {
                     Root.logger($"Remove {this.list[i].Name}");
                     this.list.RemoveAt(i);
                 }
-                else
-                {
-                    this.list[i].Invoke(ARGS);
-                }
+
             }
         }
 

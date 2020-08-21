@@ -27,7 +27,7 @@ namespace TaisGodot.Scripts
                 return;
             }
 
-            RunData.Date.Inc();
+            RunData.Root.DaysInc();
             //Modder.Mod.DaysInc();
         }
 
