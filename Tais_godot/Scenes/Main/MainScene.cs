@@ -61,6 +61,3 @@ namespace TaisGodot.Scripts
 		//  }
 	}
 }
-
-
-
