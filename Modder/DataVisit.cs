@@ -29,10 +29,15 @@ namespace Modder
                 return doubleRslt;
             }
 
+            if(!raw.Contains("."))
+            {
+                return raw;
+            }
+
             var splits = raw.Split('.');
             if(splits.Length < 2)
             {
-                throw new Exception("error value" + raw);
+                throw new Exception("error value " + raw);
             }
 
             return VisitGet(splits);

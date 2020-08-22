@@ -73,7 +73,6 @@
     <Compile Include="Global\ReactiveLabel.cs" />
     <Compile Include="Global\TranslateServerEx.cs" />
     <Compile Include="Scenes\Start\StartScene.cs" />
-    <Compile Include="Scenes\Main\Dynamic\DialogPanel\OptionGroup.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Modder\Modder.csproj">

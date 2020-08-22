@@ -13,6 +13,13 @@ namespace TaisGodot.Scripts
 		
 		private void ShowDialog(Modder.GEvent dialog)
 		{
+			GD.Print(dialog.title.Format);
+			GD.Print(dialog.desc.Format);
+			foreach (var op in dialog.options)
+			{
+				GD.Print(op.desc.Format);
+			}
+
 			var dialogNode = (DialogPanel)ResourceLoader.Load<PackedScene>("res://Scenes/Main/Dynamic/DialogPanel/DialogPanel.tscn").Instance();
 			dialogNode.gEventObj = dialog;
 

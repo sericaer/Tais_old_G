@@ -28,7 +28,7 @@ namespace TaisGodot.Scripts
             }
 
             RunData.Root.DaysInc();
-            //Modder.Mod.DaysInc();
+            Modder.Mod.DaysInc();
         }
 
         private static bool isPause;

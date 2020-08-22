@@ -46,7 +46,7 @@ namespace Modder
 
             internal Desc(GroupValue groupValue)
             {
-                Format = groupValue.Take(1).ToString();
+                Format = groupValue.First().ToString();
                 Params = groupValue.Skip(1).Select(x => x.ToString()).ToArray();
             }
         }
