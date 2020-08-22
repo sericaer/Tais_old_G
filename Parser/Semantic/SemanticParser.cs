@@ -14,8 +14,9 @@ namespace Parser.Semantic
         {
             try
             {
-                var raw = File.ReadAllText(path);
-                return DoParserString<T>(raw);
+                var syntaxRoot = SyntaxItem.RootParse(File.ReadAllText(path));
+
+                return DoParser<T>(syntaxRoot);
             }
             catch (Exception e)
             {
@@ -23,10 +24,8 @@ namespace Parser.Semantic
             }
         }
 
-        public static T DoParserString<T>(string raw)
+        public static T DoParser<T>(SyntaxItem syntaxRoot)
         {
-            var syntaxRoot = new SyntaxRoot(raw);
-
             object rslt = Activator.CreateInstance<T>();
 
             var fields = typeof(T).GetFields();
@@ -49,7 +48,7 @@ namespace Parser.Semantic
             return (T)rslt;
         }
 
-        private static void ParseSemanticProperty(SyntaxRoot syntaxRoot, SemanticProperty property, FieldInfo field, ref object obj)
+        private static void ParseSemanticProperty(SyntaxItem syntaxRoot, SemanticProperty property, FieldInfo field, ref object obj)
         {
             var item = syntaxRoot.Find(property.key);
             if (item == null)
@@ -60,10 +59,10 @@ namespace Parser.Semantic
             field.SetValue(obj, ConvertItem(item, field.FieldType));
         }
 
-        private static void ParseSemanticPropertyList(SyntaxRoot syntaxRoot, SemanticPropertyArray property, FieldInfo field, ref object obj)
+        private static void ParseSemanticPropertyList(SyntaxItem syntaxRoot, SemanticPropertyArray property, FieldInfo field, ref object obj)
         {
             var items = syntaxRoot.Finds(property.key);
-            if (items.Any())
+            if (!items.Any())
             {
                 throw new Exception($"can not find key:{property.key}");
             }
@@ -86,7 +85,7 @@ namespace Parser.Semantic
 
         private static object ConvertItem(SyntaxItem item, Type type)
         {
-            var ParseMethod = type.GetMethod("Parse", BindingFlags.Static);
+            var ParseMethod = type.GetMethod("Parse", BindingFlags.Static|BindingFlags.Public);
             if (ParseMethod != null)
             {
                 return ParseMethod.Invoke(null, new object[] { item });
@@ -94,7 +93,7 @@ namespace Parser.Semantic
 
             if (item.values.Count() != 1 || !(item.values[0] is StringValue))
             {
-                throw new Exception($"not support key-value:{item}");
+                throw new Exception($"type {type.FullName} not support key-value:{item}");
             }
 
             var strValue = item.values[0] as StringValue;

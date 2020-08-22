@@ -1,3 +1,4 @@
+using Parser.Syntax;
 using System;
 using Xunit;
 
@@ -8,7 +9,7 @@ namespace XUnitText_Parser
         [Fact]
         public void Test1()
         {
-
+            
         }
     }
 }

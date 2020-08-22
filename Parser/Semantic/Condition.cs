@@ -9,7 +9,7 @@ namespace Parser.Semantic
 {
     public abstract class Condition
     {
-        internal Condition Parse(SyntaxItem item)
+        public static Condition Parse(SyntaxItem item)
         {
             try
             {

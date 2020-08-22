@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Semantic\Option.cs" />
     <Compile Include="Syntax\Syntax.cs" />
     <Compile Include="Syntax\SyntaxRoot.cs" />
     <Compile Include="Syntax\Value.cs" />
@@ -54,8 +55,6 @@
     <Compile Include="Semantic\ConditionDefault.cs" />
     <Compile Include="Semantic\Visitor.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Semantic\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

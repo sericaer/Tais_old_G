@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Parser.Syntax;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,20 @@ namespace Parser.Semantic
     {
         List<string> datas = new List<String>();
 
+        public static GroupValue Parse(SyntaxItem item)
+        {
+            var Params = new List<String>();
+            foreach(var value in item.values)
+            {
+                var stringValue = value as StringValue;
+                if(stringValue == null)
+                {
+                    throw new Exception($"Semantic error, {item} value must be string value");
+                }
+            }
+
+            return new GroupValue(Params.ToArray());
+        }
         public GroupValue(params string[] Params)
         {
             datas.AddRange(Params);

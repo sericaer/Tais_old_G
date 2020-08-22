@@ -1,0 +1,7 @@
+title = EVENT_TEST_TITLE
+desc = EVENT_TEST_DESC
+
+option =
+{
+	desc = EVENT_TEST_OPTION_1_DESC
+}

@@ -7,9 +7,35 @@ namespace Parser.Syntax
 {
     public class SyntaxItem : Value
     {
+        public static int line;
+
+        public static SyntaxItem RootParse(String raw)
+        {
+
+            line = 0;
+
+            List<Value> synatxNodes = new List<Value>();
+
+            var trim = Regex.Replace(raw, @"[\f\r\t\v ]+", "");
+
+            int charIndex = 0;
+            while (charIndex < trim.Length)
+            {
+                var node = new SyntaxItem(trim, ref charIndex);
+                synatxNodes.Add(node);
+            }
+
+            return new SyntaxItem("root", synatxNodes);
+        }
+
         public string key;
         public List<Value> values;
 
+        internal SyntaxItem(string key, List<Value> values)
+        {
+            this.key = key;
+            this.values = values;
+        }
 
         internal SyntaxItem(string raw, ref int charIndex)
         {
@@ -35,7 +61,7 @@ namespace Parser.Syntax
                         break;
                     case ELEM_TYPE.CR:
                         {
-                            SyntaxRoot.line++;
+                            line++;
                             start = end;
                             continue;
                         }
@@ -80,6 +106,44 @@ namespace Parser.Syntax
             {
                 return $"{key} =\n{{ \n {String.Join("\n", values.Select(x => x.ToString()))} \n}}";
             }
+        }
+
+        public SyntaxItem Find(string key)
+        {
+            foreach (var value in values)
+            {
+                SyntaxItem item = value as SyntaxItem;
+                if(item == null)
+                {
+                    continue;
+                }
+                if(item.key == key)
+                {
+                    return item;
+                }
+            }
+
+            return null;
+        }
+
+        public IEnumerable<SyntaxItem> Finds(string key)
+        {
+            var rslt = new List<SyntaxItem>();
+
+            foreach (var value in values)
+            {
+                SyntaxItem item = value as SyntaxItem;
+                if (item == null)
+                {
+                    continue;
+                }
+                if (item.key == key)
+                {
+                    rslt.Add(item);
+                }
+            }
+
+            return rslt;
         }
 
     }

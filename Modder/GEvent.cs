@@ -13,9 +13,9 @@ namespace Modder
     {
         internal static void Load(string mod, string path)
         {
-            LoadSub(mod, path + "common/", ref common);
-            LoadSub(mod, path + "depart/", ref depart);
-            LoadSub(mod, path + "pop/", ref pop);
+            LoadSub(mod, path + "/common", ref common);
+            LoadSub(mod, path + "/depart", ref depart);
+            LoadSub(mod, path + "/pop", ref pop);
         }
 
         private static void LoadSub(string mod, string path, ref List<(string mod, List<GEvent> events)> eventGroup)
@@ -57,18 +57,17 @@ namespace Modder
             {
                 get
                 {
-                    return new Desc(_desc);
+                    return new Desc(semantic.desc);
                 }
             }
 
-            [SemanticProperty("select")]
-            public Action Selected;
+            public void Selected()
+            {
+                Mod.logger($"{desc} selected!");
+            }
 
-            [SemanticProperty("desc")]
-            internal GroupValue _desc;
+            internal Parser.Semantic.Option semantic;
         }
-
-
 
         public Desc title
         {
@@ -86,8 +85,17 @@ namespace Modder
             }
         }
 
+
+        public Option[] options
+        {
+            get
+            {
+                return _options.Select(x => new Option() { semantic = x }).ToArray();
+            }
+        }
+
         [SemanticPropertyArray("option")]
-        public Option[] options;
+        public List<Parser.Semantic.Option> _options;
 
         [SemanticProperty("trigger")]
         internal Condition trigger;
@@ -101,46 +109,57 @@ namespace Modder
         [SemanticProperty("desc")]
         internal GroupValue _desc;
 
-        internal static List<(string mod, List<GEvent> events)> common;
-        internal static List<(string mod, List<GEvent> events)> depart;
-        internal static List<(string mod, List<GEvent> events)> pop;
+        internal static List<(string mod, List<GEvent> events)> common = new List<(string mod, List<GEvent> events)>();
+        internal static List<(string mod, List<GEvent> events)> depart = new List<(string mod, List<GEvent> events)>();
+        internal static List<(string mod, List<GEvent> events)> pop = new List<(string mod, List<GEvent> events)>();
 
-        internal static IEnumerable<GEvent> Process(object rootObj, IEnumerable<object> departObjs, IEnumerable<object> popObjs)
+        internal static IEnumerable<GEvent> Process()
         {
-            foreach(var gEvent in common.SelectMany(x=>x.events))
+            foreach (var gEvent in common.SelectMany(x => x.events))
             {
-                if (gEvent.trigger.Rslt() && gEvent.occur.Rslt())
+                //if (gEvent.trigger.Rslt() && gEvent.occur.Rslt())
                 {
                     yield return gEvent;
                 }
             }
-
-            foreach(var departObj in departObjs)
-            {
-                //DataVisit.SetObj("depart", departObj);
-                foreach (var gEvent in depart.SelectMany(x => x.events))
-                {
-                    if (gEvent.trigger.Rslt() && gEvent.occur.Rslt())
-                    {
-                        yield return gEvent;
-                    }
-                }
-            }
-
-            foreach (var popObj in popObjs)
-            {
-                //DataVisit.SetObj("pop", popObj);
-                foreach (var gEvent in pop.SelectMany(x => x.events))
-                {
-                    if (gEvent.trigger.Rslt() && gEvent.occur.Rslt())
-                    {
-                        yield return gEvent;
-                    }
-                }
-            }
         }
 
-        internal GEvent()
+        //internal static IEnumerable<GEvent> Process(object rootObj, IEnumerable<object> departObjs, IEnumerable<object> popObjs)
+        //{
+        //    foreach(var gEvent in common.SelectMany(x=>x.events))
+        //    {
+        //        if (gEvent.trigger.Rslt() && gEvent.occur.Rslt())
+        //        {
+        //            yield return gEvent;
+        //        }
+        //    }
+
+        //    foreach(var departObj in departObjs)
+        //    {
+        //        //DataVisit.SetObj("depart", departObj);
+        //        foreach (var gEvent in depart.SelectMany(x => x.events))
+        //        {
+        //            if (gEvent.trigger.Rslt() && gEvent.occur.Rslt())
+        //            {
+        //                yield return gEvent;
+        //            }
+        //        }
+        //    }
+
+        //    foreach (var popObj in popObjs)
+        //    {
+        //        //DataVisit.SetObj("pop", popObj);
+        //        foreach (var gEvent in pop.SelectMany(x => x.events))
+        //        {
+        //            if (gEvent.trigger.Rslt() && gEvent.occur.Rslt())
+        //            {
+        //                yield return gEvent;
+        //            }
+        //        }
+        //    }
+        //}
+
+        public GEvent()
         {
             trigger = new ConditionDefault(false);
             occur = new Occur(false);

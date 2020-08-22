@@ -48,26 +48,26 @@ namespace Modder
 
         public static void DaysInc()
         {
-            //foreach(var eventObj in GEvent.Process())
-            //{
-            //    showDialogAction(eventObj);
-            //}
-
-            var testDialog = new GEvent();
-            testDialog._title = new GroupValue("EVENT_TEST_TITLE");
-            testDialog._desc = new GroupValue("EVENT_TEST_DESC");
-
-            testDialog.options = new GEvent.Option[]
+            foreach (var eventObj in GEvent.Process())
             {
-                new GEvent.Option(){_desc = new GroupValue("OPTION_1_DESC"),
-                                    Selected = ()=>logger("Select OPTION_1_DESC") },
-                new GEvent.Option(){_desc = new GroupValue("OPTION_2_DESC"),
-                                    Selected = ()=>logger("Select OPTION_2_DESC") },
-                new GEvent.Option(){_desc = new GroupValue("OPTION_3_DESC"),
-                                    Selected = ()=>logger("Select OPTION_3_DESC") },
-            };
-            
-            showDialogAction(testDialog);
+                showDialogAction(eventObj);
+            }
+
+            //var testDialog = new GEvent();
+            //testDialog._title = new GroupValue("EVENT_TEST_TITLE");
+            //testDialog._desc = new GroupValue("EVENT_TEST_DESC");
+
+            //testDialog.options = new GEvent.Option[]
+            //{
+            //    new GEvent.Option(){_desc = new GroupValue("OPTION_1_DESC"),
+            //                        Selected = ()=>logger("Select OPTION_1_DESC") },
+            //    new GEvent.Option(){_desc = new GroupValue("OPTION_2_DESC"),
+            //                        Selected = ()=>logger("Select OPTION_2_DESC") },
+            //    new GEvent.Option(){_desc = new GroupValue("OPTION_3_DESC"),
+            //                        Selected = ()=>logger("Select OPTION_3_DESC") },
+            //};
+
+            //showDialogAction(testDialog);
         }
 
         internal Mod(string modname, string path)
