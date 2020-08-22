@@ -1,6 +1,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.438
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30406.217
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tais_Godot", "Tais_Godot.csproj", "{46E4D32E-ABAD-4652-BD32-A808B3B14878}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -16,7 +16,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RunData", "..\RunData\RunDa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Parser", "..\Parser\Parser.csproj", "{6889D115-E394-4412-A83C-26900889634E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XUnitText_Parser", "..\Parser\XUnitText_Parser\XUnitText_Parser.csproj", "{5667391F-4DE5-47D1-8CC1-297AE2930A72}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModderUnitTest", "..\Modder\ModderUnitTest\ModderUnitTest.csproj", "{CB407E53-003E-4037-B5BE-47A26EFAB175}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -58,14 +58,14 @@ Global
 		{6889D115-E394-4412-A83C-26900889634E}.ExportRelease|Any CPU.Build.0 = Release|Any CPU
 		{6889D115-E394-4412-A83C-26900889634E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6889D115-E394-4412-A83C-26900889634E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5667391F-4DE5-47D1-8CC1-297AE2930A72}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5667391F-4DE5-47D1-8CC1-297AE2930A72}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5667391F-4DE5-47D1-8CC1-297AE2930A72}.ExportDebug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5667391F-4DE5-47D1-8CC1-297AE2930A72}.ExportDebug|Any CPU.Build.0 = Debug|Any CPU
-		{5667391F-4DE5-47D1-8CC1-297AE2930A72}.ExportRelease|Any CPU.ActiveCfg = Debug|Any CPU
-		{5667391F-4DE5-47D1-8CC1-297AE2930A72}.ExportRelease|Any CPU.Build.0 = Debug|Any CPU
-		{5667391F-4DE5-47D1-8CC1-297AE2930A72}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5667391F-4DE5-47D1-8CC1-297AE2930A72}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CB407E53-003E-4037-B5BE-47A26EFAB175}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CB407E53-003E-4037-B5BE-47A26EFAB175}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CB407E53-003E-4037-B5BE-47A26EFAB175}.ExportDebug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CB407E53-003E-4037-B5BE-47A26EFAB175}.ExportDebug|Any CPU.Build.0 = Debug|Any CPU
+		{CB407E53-003E-4037-B5BE-47A26EFAB175}.ExportRelease|Any CPU.ActiveCfg = Release|Any CPU
+		{CB407E53-003E-4037-B5BE-47A26EFAB175}.ExportRelease|Any CPU.Build.0 = Release|Any CPU
+		{CB407E53-003E-4037-B5BE-47A26EFAB175}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CB407E53-003E-4037-B5BE-47A26EFAB175}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

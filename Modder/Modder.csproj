@@ -57,6 +57,7 @@
     <Compile Include="GEvent.cs" />
     <Compile Include="Language.cs" />
     <Compile Include="Mod.cs" />
+    <Compile Include="ModElementLoader.cs" />
     <Compile Include="Occur.cs" />
     <Compile Include="DataVisit.cs" />
   </ItemGroup>

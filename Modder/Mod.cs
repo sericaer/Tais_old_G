@@ -33,11 +33,7 @@ namespace Modder
 
         public static void Load(string path)
         {
-            Visitor.GetValue = (raw) =>
-            {
-                var datavisit = new DataVisit(raw);
-                return datavisit.Get();
-            };
+            Visitor.GetValue = DataVisit.Get;
 
             foreach (var sub in System.IO.Directory.EnumerateDirectories(path))
             {

@@ -15,7 +15,7 @@ namespace Modder
             this.raw = raw;
         }
 
-        public dynamic Get()
+        public static object Get(string raw)
         {
             int intRslt;
             if(int.TryParse(raw, out intRslt))
@@ -43,7 +43,7 @@ namespace Modder
             return VisitGet(splits);
         }
 
-        private dynamic VisitGet(string[] splits)
+        private static object VisitGet(string[] splits)
         {
             object gmObj;
             if (!dictObj.TryGetValue(splits[0], out gmObj))

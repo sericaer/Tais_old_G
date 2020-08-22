@@ -22,6 +22,8 @@ namespace Parser.Semantic
                 {
                     throw new Exception($"Semantic error, {item} value must be string value");
                 }
+
+                Params.Add(stringValue.ToString());
             }
 
             return new GroupValue(Params.ToArray());

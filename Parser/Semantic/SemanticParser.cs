@@ -28,7 +28,7 @@ namespace Parser.Semantic
         {
             object rslt = Activator.CreateInstance<T>();
 
-            var fields = typeof(T).GetFields();
+            var fields = typeof(T).GetFields(BindingFlags.Public|BindingFlags.NonPublic | BindingFlags.Instance);
             foreach (var field in fields)
             {
                 var Properties = field.GetCustomAttributes(typeof(SemanticProperty), false);
@@ -53,7 +53,8 @@ namespace Parser.Semantic
             var item = syntaxRoot.Find(property.key);
             if (item == null)
             {
-                throw new Exception($"can not find key:{property.key}");
+                return;
+                //throw new Exception($"can not find key:{property.key}");
             }
 
             field.SetValue(obj, ConvertItem(item, field.FieldType));
@@ -64,11 +65,12 @@ namespace Parser.Semantic
             var items = syntaxRoot.Finds(property.key);
             if (!items.Any())
             {
-                throw new Exception($"can not find key:{property.key}");
+                return;
+                //throw new Exception($"can not find key:{property.key}");
             }
 
 
-            if(!field.FieldType.IsGenericType || field.FieldType.GetGenericTypeDefinition() != typeof(List<>))
+            if (!field.FieldType.IsGenericType || field.FieldType.GetGenericTypeDefinition() != typeof(List<>))
             {
                 throw new Exception($"field type not list! {field.FieldType.FullName}");
             }
@@ -81,6 +83,8 @@ namespace Parser.Semantic
             {
                 list.Add((dynamic)ConvertItem(item, listParameters[0]));
             }
+
+            field.SetValue(obj, list);
         }
 
         private static object ConvertItem(SyntaxItem item, Type type)

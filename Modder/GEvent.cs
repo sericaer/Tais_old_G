@@ -28,7 +28,7 @@ namespace Modder
             List<GEvent> events = new List<GEvent>();
             foreach(var file in Directory.EnumerateFiles(path, "*.txt"))
             {
-                events.Add(SemanticParser.ParserFile<GEvent>(file));
+                events.Add(ModElementLoader.Load<GEvent>(file, File.ReadAllText(file)));
             }
 
             eventGroup.Add((mod, events));
@@ -63,7 +63,7 @@ namespace Modder
 
             public void Selected()
             {
-                Mod.logger($"{desc} selected!");
+                Mod.logger($"{desc.Format} selected!");
             }
 
             internal Parser.Semantic.Option semantic;
@@ -103,7 +103,7 @@ namespace Modder
         [SemanticProperty("occur")]
         internal Occur occur;
 
-        [SemanticProperty("titile")]
+        [SemanticProperty("title")]
         internal GroupValue _title;
 
         [SemanticProperty("desc")]
