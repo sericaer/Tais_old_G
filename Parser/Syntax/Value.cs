@@ -104,14 +104,14 @@ namespace Parser.Syntax
                 return ELEM_TYPE.BRACE_CLOSE;
             }
 
-            rslt = Regex.Match(curr, @"^([ ]*[A-Za-z0-9_\.\+\-\*/%]+)+=");
+            rslt = Regex.Match(curr, @"^[A-Za-z0-9_\.\+\-\*/%]+=");
             if (rslt.Success)
             {
                 end = start + rslt.Length;
                 return ELEM_TYPE.KEY;
             }
 
-            rslt = Regex.Match(curr, @"^([ ]*[A-Za-z0-9_\.\+\-\*/%]+)+");
+            rslt = Regex.Match(curr, @"^[A-Za-z0-9_\.\+\-\*/%]+");
             if (rslt.Success)
             {
                 end = start + rslt.Length;
