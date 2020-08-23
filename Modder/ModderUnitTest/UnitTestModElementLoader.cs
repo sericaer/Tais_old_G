@@ -23,6 +23,13 @@ namespace ModderUnitTest
             string raw = @"title = EVENT_TEST_TITLE
 desc = EVENT_TEST_DESC
 
+trigger =
+{
+	EQUAL = {11, 11}
+}
+
+occur = 1
+
 option =
 {
     desc = EVENT_TEST_OPTION_1_DESC

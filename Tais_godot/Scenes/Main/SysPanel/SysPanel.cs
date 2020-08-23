@@ -11,6 +11,11 @@ namespace TaisGodot.Scripts
 {
 	class SysPanel : Panel
 	{
+		public SysPanel()
+		{
+			Date.Pause();
+		}
+
 		private void _on_ButtonSave_button_up(string fileName)
 		{
 			Root.Load(GlobalPath.save + fileName);

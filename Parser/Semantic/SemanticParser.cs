@@ -89,34 +89,42 @@ namespace Parser.Semantic
 
         private static object ConvertItem(SyntaxItem item, Type type)
         {
-            var ParseMethod = type.GetMethod("Parse", BindingFlags.Static|BindingFlags.Public);
-            if (ParseMethod != null)
+            if(type.IsValueType)
             {
-                return ParseMethod.Invoke(null, new object[] { item });
-            }
+                if (item.values.Count() != 1 || !(item.values[0] is StringValue))
+                {
+                    throw new Exception($"type {type.FullName} not support key-value:{item}");
+                }
 
-            if (item.values.Count() != 1 || !(item.values[0] is StringValue))
-            {
-                throw new Exception($"type {type.FullName} not support key-value:{item}");
-            }
-
-            var strValue = item.values[0] as StringValue;
-            if (type == typeof(string))
-            {
-                return strValue.ToString();
-            }
-            else if (type == typeof(double))
-            {
-                return double.Parse(strValue.ToString());
-            }
-            else if (type == typeof(int))
-            {
-                return int.Parse(strValue.ToString());
+                var strValue = item.values[0] as StringValue;
+                if (type == typeof(string))
+                {
+                    return strValue.ToString();
+                }
+                else if (type == typeof(double))
+                {
+                    return double.Parse(strValue.ToString());
+                }
+                else if (type == typeof(int))
+                {
+                    return int.Parse(strValue.ToString());
+                }
+                else
+                {
+                    throw new Exception($"can not support type {type} with key:{item.key}");
+                }
             }
             else
             {
-                throw new Exception($"can not support type {type} with key:{item.key}");
+                var ParseMethod = type.GetMethod("Parse", BindingFlags.Static | BindingFlags.Public);
+                if (ParseMethod == null)
+                {
+                    throw new Exception($"can not support type {type}");
+                }
+
+                return ParseMethod.Invoke(null, new object[] { item });
             }
+
         }
     }
 }

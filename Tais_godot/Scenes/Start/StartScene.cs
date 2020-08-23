@@ -20,6 +20,7 @@ namespace TaisGodot.Scripts
 			Mod.logger = (value) => GD.Print(value);
 
 			Mod.Load(GlobalPath.mod);
+			//DataVisit.Init(Root.GetMap());
 		}
 
 		public StartScene()
@@ -43,7 +44,8 @@ namespace TaisGodot.Scripts
 		private void _on_Button_Start_button_up()
 		{
 			Root.Init();
-			
+			//DataVisit.Init(Root.GetData());
+
 			//Mod.InitVisit(Root.inst, Root.GetReflectionDict());
 
 			GetTree().ChangeScene("res://Scenes/Main/MainScene.tscn");

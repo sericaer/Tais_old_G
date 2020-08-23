@@ -55,6 +55,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GEvent.cs" />
+    <Compile Include="GRandom.cs" />
     <Compile Include="Language.cs" />
     <Compile Include="Mod.cs" />
     <Compile Include="ModElementLoader.cs" />

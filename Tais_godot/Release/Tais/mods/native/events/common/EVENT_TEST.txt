@@ -1,6 +1,13 @@
 title = EVENT_TEST_TITLE
 desc = EVENT_TEST_DESC
 
+trigger =
+{
+	EQUAL = {11, 12}
+}
+
+occur = 2
+
 option =
 {
 	desc = EVENT_TEST_OPTION_1_DESC

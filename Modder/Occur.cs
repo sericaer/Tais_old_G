@@ -24,6 +24,7 @@ namespace Modder
             {
                 return defaultValue.Value;
             }
+
             throw new NotImplementedException();
         }
 
