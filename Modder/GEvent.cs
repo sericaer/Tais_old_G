@@ -94,6 +94,14 @@ namespace Modder
             }
         }
 
+        public bool isOccur
+        {
+            get
+            {
+                return Tools.GRandom.isOccur(100/_occur);
+            }
+        }
+
         [SemanticPropertyArray("option")]
         public List<Parser.Semantic.Option> _options;
 
@@ -101,7 +109,7 @@ namespace Modder
         internal Condition trigger;
 
         [SemanticProperty("occur")]
-        internal Occur occur;
+        internal int _occur;
 
         [SemanticProperty("title")]
         internal GroupValue _title;
@@ -117,11 +125,33 @@ namespace Modder
         {
             foreach (var gEvent in common.SelectMany(x => x.events))
             {
-                //if (gEvent.trigger.Rslt() && gEvent.occur.Rslt())
+                if (gEvent.trigger.Rslt() && gEvent.isOccur)
                 {
                     yield return gEvent;
                 }
             }
+
+            //DataVisit.ForechDepart(() =>
+            //{
+            //    foreach (var gEvent in depart.SelectMany(x => x.events))
+            //    {
+            //        if (gEvent.trigger.Rslt() && gEvent.occur.Rslt())
+            //        {
+            //            yield return gEvent;
+            //        }
+            //    }
+            //});
+
+            //DataVisit.ForechPop(() =>
+            //{
+            //    foreach (var gEvent in depart.SelectMany(x => x.events))
+            //    {
+            //        if (gEvent.trigger.Rslt() && gEvent.occur.Rslt())
+            //        {
+            //            yield return gEvent;
+            //        }
+            //    }
+            //});
         }
 
         //internal static IEnumerable<GEvent> Process(object rootObj, IEnumerable<object> departObjs, IEnumerable<object> popObjs)
@@ -162,7 +192,6 @@ namespace Modder
         public GEvent()
         {
             trigger = new ConditionDefault(false);
-            occur = new Occur(false);
         }
     }
 }
