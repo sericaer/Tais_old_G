@@ -1,36 +1,39 @@
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Modder;
-using System.Collections.Generic;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using DataVisit;
 //using Parser.Semantic;
 using System.Text.RegularExpressions;
+using System.Collections.Generic;
 
-namespace ModderUnitTest
+namespace DataVisit.Tests
 {
     [TestClass]
-    public class UnitTestDataVisit
+    public class VisitorTests
     {
         [TestMethod]
         public void TestVisitGetData()
         {
-            TestData data = new TestData() { a = 12,
-                                             sub = new TestDataSub { a = 14 },
-                                             elems = new List<TestElem>()
+            TestData data = new TestData()
+            {
+                a = 12,
+                sub = new TestDataSub { a = 14 },
+                elems = new List<TestElem>()
                                              {
                                                  new TestElem(){ b= 20},
                                                  new TestElem(){ b= 21}
-                                             } };
-            DataVisit.InitVisitMap(typeof(TestData));
-            DataVisit.SetVisitData(data);
+                                             }
+            };
+            Visitor.InitVisitMap(typeof(TestData));
+            Visitor.SetVisitData(data);
 
-            Assert.AreEqual(DataVisit.Get("test.a"), 12);
-            Assert.AreEqual(DataVisit.Get("test.b"), 13);
-            Assert.AreEqual(DataVisit.Get("test.sub.a"), 14);
+            Assert.AreEqual(Visitor.Get("test.a"), 12);
+            Assert.AreEqual(Visitor.Get("test.b"), 13);
+            Assert.AreEqual(Visitor.Get("test.sub.a"), 14);
 
             int i = 0;
-            DataVisit.Pos pos = null;
-            while (DataVisit.EnumerateVisit("test.elem", ref pos))
+            Visitor.Pos pos = null;
+            while (Visitor.EnumerateVisit("test.elem", ref pos))
             {
-                Assert.AreEqual(DataVisit.Get("elem.b", pos), data.elems[i].b);
+                Assert.AreEqual(Visitor.Get("elem.b", pos), data.elems[i].b);
                 i++;
             }
         }

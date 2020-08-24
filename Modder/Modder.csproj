@@ -61,7 +61,6 @@
     <Compile Include="ModElementLoader.cs" />
     <Compile Include="Occur.cs" />
     <Compile Include="ModDataVisit.cs" />
-    <Compile Include="DataVisit.cs" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.7">
@@ -77,6 +76,10 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <ProjectReference Include="..\DataVisit\DataVisit.csproj">
+      <Project>{60624f37-78f3-44eb-ad31-76e1893f5ea9}</Project>
+      <Name>DataVisit</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Parser\Parser.csproj">
       <Project>{6889D115-E394-4412-A83C-26900889634E}</Project>
       <Name>Parser</Name>

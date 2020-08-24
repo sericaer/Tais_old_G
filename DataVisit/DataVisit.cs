@@ -3,19 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
 
-namespace Modder
+namespace DataVisit
 {
-    public class DataVisit
+    public class Visitor
     {
         public class Pos
         {
             internal int index;
             internal object obj;
-        }
-
-        public static void Init(string key, object value)
-        {
-            throw new NotImplementedException();
         }
 
         public static object Get(string raw)

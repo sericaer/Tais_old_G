@@ -8,12 +8,12 @@ namespace Modder
     {
         public static void InitVisitMap(Type type)
         {
-            DataVisit.InitVisitMap(type);
+            DataVisit.Visitor.InitVisitMap(type);
         }
 
         public static void InitVisitData(object data)
         {
-            DataVisit.SetVisitData(data);
+            DataVisit.Visitor.SetVisitData(data);
         }
 
         internal static bool EnumerateVisit(string v)
@@ -23,7 +23,7 @@ namespace Modder
 
         internal static dynamic Get(string arg)
         {
-            return DataVisit.Get(arg);
+            return DataVisit.Visitor.Get(arg);
         }
     }
 }
