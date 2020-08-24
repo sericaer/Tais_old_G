@@ -7,12 +7,12 @@ namespace TaisGodot.Scripts
 	{
 		public static void UnPause()
 		{
-			isPause = false;
+			sysPause = false;
 		}
 
 		public static void Pause()
 		{
-			isPause = true;
+			sysPause = true;
 		}
 
 		public override void _Ready()
@@ -20,6 +20,11 @@ namespace TaisGodot.Scripts
 			speed = 2;
 		}
 
+		private void _on_CheckBox_toggled(bool button_pressed)
+		{
+			usrPause = button_pressed;
+		}
+		
 		private void _on_Button_Inc_pressed()
 		{
 			if (speed < MAX_SPEED)
@@ -61,7 +66,17 @@ namespace TaisGodot.Scripts
 		private static int MAX_SPEED = 5;
 		private static int MIN_SPEED = 1;
 
-		private static bool isPause;
+		private static bool isPause
+		{
+			get
+			{
+				return usrPause||sysPause;
+			}
+		}
+
+		private static bool usrPause;
+		private static bool sysPause;
+
 		private int speed
 		{
 			get
