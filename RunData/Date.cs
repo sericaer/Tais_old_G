@@ -1,3 +1,4 @@
+using DataVisit;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
@@ -43,7 +44,7 @@ namespace RunData
         [JsonProperty]
         public int month;
 
-        [JsonProperty]
+        [JsonProperty, DataVisitorProperty("date.day")]
         public int day;
 
         public int total_days

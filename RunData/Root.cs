@@ -6,6 +6,7 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
+using DataVisit;
 
 namespace RunData
 {
@@ -89,7 +90,7 @@ namespace RunData
 
         public static Root inst;
 
-
+        [DataVisitorProperty]
         public Date date;
 
         public Root()

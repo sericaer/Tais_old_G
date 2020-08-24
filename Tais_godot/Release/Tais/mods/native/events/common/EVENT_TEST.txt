@@ -3,7 +3,7 @@ desc = EVENT_TEST_DESC
 
 trigger =
 {
-	EQUAL = {11, 11}
+	EQUAL = {date.day, 11}
 }
 
 occur = 1
