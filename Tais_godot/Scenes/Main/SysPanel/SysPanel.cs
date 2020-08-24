@@ -11,9 +11,14 @@ namespace TaisGodot.Scripts
 {
 	class SysPanel : Panel
 	{
-		public SysPanel()
+		public override void _EnterTree()
 		{
-			Date.Pause();
+			SpeedContrl.Pause();
+		}
+
+		public override void _ExitTree()
+		{
+			SpeedContrl.UnPause();
 		}
 
 		private void _on_ButtonSave_button_up(string fileName)
@@ -24,7 +29,6 @@ namespace TaisGodot.Scripts
 
 		private void _on_Button_Quit_pressed()
 		{
-			GD.Print("Press");
 			GetTree().ChangeScene("res://Scenes/Start/StartScene.tscn");
 		}
 

@@ -1,8 +1,10 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Scenes/Main/MainScene.cs" type="Script" id=1]
 [ext_resource path="res://Scenes/Main/Map/MapRect.cs" type="Script" id=2]
 [ext_resource path="res://Scenes/Main/Top/Date.cs" type="Script" id=3]
+[ext_resource path="res://Global/ReactiveLabel.cs" type="Script" id=4]
+[ext_resource path="res://Scenes/Main/Top/SpeedContrl.cs" type="Script" id=5]
 
 [node name="Panel" type="Panel"]
 anchor_right = 1.0
@@ -64,6 +66,7 @@ margin_left = 826.0
 margin_right = 960.0
 margin_bottom = 60.0
 size_flags_horizontal = 6
+script = ExtResource( 3 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -80,15 +83,13 @@ margin_top = 19.0
 margin_right = 134.0
 margin_bottom = 40.0
 text = "--"
-script = ExtResource( 3 )
-
-[node name="Timer" type="Timer" parent="VBoxContainer/TopRect/HBoxContainer/Date"]
-autostart = true
+script = ExtResource( 4 )
 
 [node name="Control" type="HBoxContainer" parent="VBoxContainer/TopRect/HBoxContainer"]
 margin_left = 1258.0
 margin_right = 1410.0
 margin_bottom = 60.0
+script = ExtResource( 5 )
 
 [node name="Button_Inc" type="Button" parent="VBoxContainer/TopRect/HBoxContainer/Control"]
 margin_right = 30.0
@@ -117,6 +118,9 @@ margin_bottom = 60.0
 rect_min_size = Vector2( 50, 0 )
 text = "SYS"
 
+[node name="Timer" type="Timer" parent="VBoxContainer/TopRect/HBoxContainer/Control"]
+autostart = true
+
 [node name="MapContainer" type="CenterContainer" parent="VBoxContainer"]
 margin_top = 64.0
 margin_right = 1440.0
@@ -135,7 +139,9 @@ script = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
-[connection signal="timeout" from="VBoxContainer/TopRect/HBoxContainer/Date/Timer" to="VBoxContainer/TopRect/HBoxContainer/Date/Value" method="_on_Timer_timeout"]
+[connection signal="pressed" from="VBoxContainer/TopRect/HBoxContainer/Control/Button_Inc" to="VBoxContainer/TopRect/HBoxContainer/Control" method="_on_Button_Inc_pressed"]
+[connection signal="pressed" from="VBoxContainer/TopRect/HBoxContainer/Control/Button_Dec" to="VBoxContainer/TopRect/HBoxContainer/Control" method="_on_Button_Dec_pressed"]
 [connection signal="pressed" from="VBoxContainer/TopRect/HBoxContainer/Control/Button_Sys" to="." method="_on_Button_Sys_pressed"]
+[connection signal="timeout" from="VBoxContainer/TopRect/HBoxContainer/Control/Timer" to="VBoxContainer/TopRect/HBoxContainer/Control" method="_on_Timer_timeout"]
 [connection signal="MapClickSignal" from="VBoxContainer/MapContainer/MapRect" to="." method="_on_MapRect_MapClickSignal"]
 [connection signal="gui_input" from="VBoxContainer/MapContainer/MapRect" to="VBoxContainer/MapContainer/MapRect" method="_on_TextureRect_gui_input"]

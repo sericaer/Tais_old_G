@@ -13,7 +13,7 @@ namespace TaisGodot.Scripts
 	{
 		public DialogPanel()
 		{
-			Date.Pause();
+			SpeedContrl.Pause();
 		}
 
 		public override void _Ready()
@@ -40,7 +40,7 @@ namespace TaisGodot.Scripts
 
 			QueueFree();
 
-			Date.UnPause();
+			SpeedContrl.UnPause();
 		}
 
 

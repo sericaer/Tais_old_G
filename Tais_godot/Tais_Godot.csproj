@@ -58,6 +58,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Global\ClickFreeMask.cs" />
+    <Compile Include="Scenes\Main\Top\SpeedContrl.cs" />
     <Compile Include="Scenes\Start\LoadPanel\LoadPanel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Scenes\Main\SysPanel\SavePanel\SavePanel.cs" />
