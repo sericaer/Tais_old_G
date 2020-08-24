@@ -17,7 +17,6 @@ namespace Modder
 
         public List<Language> languages;
 
-        
         public static IEnumerable<Mod> Enumerate()
         {
             foreach(var elem in modDict)

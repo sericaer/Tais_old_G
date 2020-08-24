@@ -60,6 +60,7 @@
     <Compile Include="Mod.cs" />
     <Compile Include="ModElementLoader.cs" />
     <Compile Include="Occur.cs" />
+    <Compile Include="ModDataVisit.cs" />
     <Compile Include="DataVisit.cs" />
   </ItemGroup>
   <ItemGroup>

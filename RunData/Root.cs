@@ -13,6 +13,28 @@ namespace RunData
     {
         public static Action<string> logger;
 
+        public static List<Type> GetAllType()
+        {
+            List<Type> rslt = new List<Type>();
+
+            rslt.Add(typeof(Date));
+            rslt.Add(typeof(Depart));
+            rslt.Add(typeof(Pop));
+
+            return rslt;
+        }
+
+        public static List<object> GetAllData()
+        {
+            List<object> rslt = new List<object>();
+
+            rslt.Add(Date.inst);
+            rslt.Add(Depart.all);
+            rslt.Add(Pop.all);
+
+            return rslt;
+        }
+
         public static void Init()
         {
             Date.Init();
@@ -44,6 +66,8 @@ namespace RunData
 
             File.WriteAllText(path, json);
         }
+
+
 
         public static void DaysInc()
         {

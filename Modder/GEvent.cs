@@ -131,16 +131,16 @@ namespace Modder
                 }
             }
 
-            //DataVisit.ForechDepart(() =>
-            //{
-            //    foreach (var gEvent in depart.SelectMany(x => x.events))
-            //    {
-            //        if (gEvent.trigger.Rslt() && gEvent.occur.Rslt())
-            //        {
-            //            yield return gEvent;
-            //        }
-            //    }
-            //});
+            //while (ModDataVisit.EnumerateVisit("depart"))
+            {
+                foreach (var gEvent in depart.SelectMany(x => x.events))
+                {
+                    if (gEvent.trigger.Rslt() && gEvent.isOccur)
+                    {
+                        yield return gEvent;
+                    }
+                }
+            }
 
             //DataVisit.ForechPop(() =>
             //{
