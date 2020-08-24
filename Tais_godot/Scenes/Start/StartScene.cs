@@ -19,7 +19,7 @@ namespace TaisGodot.Scripts
 			Root.logger = (value) => GD.Print(value);
 			Mod.logger = (value) => GD.Print(value);
 
-			//Mod.InitVisitMap(Root.GetAllType());
+			ModDataVisit.InitVisitMap(typeof(Root));
 
 			Mod.Load(GlobalPath.mod);
 
@@ -39,8 +39,7 @@ namespace TaisGodot.Scripts
 
 		private void _on_Button_Start_button_up()
 		{
-			Root.Init();
-			//Mod.InitVisitData(Root.GetAllData());
+			ModDataVisit.InitVisitData(Root.Init());
 			//DataVisit.Init(Root.GetData());
 
 			//Mod.InitVisit(Root.inst, Root.GetReflectionDict());

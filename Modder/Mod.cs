@@ -25,6 +25,8 @@ namespace Modder
             }
         }
 
+
+
         public static Mod GetByName(string name)
         {
             return modDict[name];
@@ -32,7 +34,7 @@ namespace Modder
 
         public static void Load(string path)
         {
-            Visitor.GetValue = DataVisit.Get;
+            Visitor.GetValue = ModDataVisit.Get;
 
             foreach (var sub in System.IO.Directory.EnumerateDirectories(path))
             {

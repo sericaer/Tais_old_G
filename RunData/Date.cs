@@ -59,9 +59,10 @@ namespace RunData
             return $"{year}-{month}-{day}";
         }
 
-        internal static void Init()
+        public static Date Init()
         {
             inst = new Date();
+            return inst;
         }
 
         internal static void Exit()

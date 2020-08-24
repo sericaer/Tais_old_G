@@ -3,10 +3,10 @@ desc = EVENT_TEST_DESC
 
 trigger =
 {
-	EQUAL = {11, 12}
+	EQUAL = {11, 11}
 }
 
-occur = 2
+occur = 1
 
 option =
 {

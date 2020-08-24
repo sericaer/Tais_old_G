@@ -35,9 +35,10 @@ namespace RunData
             return rslt;
         }
 
-        public static void Init()
+        public static Root Init()
         {
-            Date.Init();
+            inst = new Root();
+
             //Background.Init();
             //Chaoting.Init(Background.Enumerate());
 
@@ -45,6 +46,8 @@ namespace RunData
             Pop.Init(Depart.Enumerate());
             //Family.Init(Pop.Enumerate(), Background.Enumerate());
             //Person.Init(Family.Enumerate());
+
+            return inst;
         }
 
         //public static (object obj, List<ReflectionInfo> reflections)[] dataMapping;
@@ -82,6 +85,16 @@ namespace RunData
             Pop.Exit();
             Depart.Exit();
             Date.Exit();
+        }
+
+        public static Root inst;
+
+
+        public Date date;
+
+        public Root()
+        {
+            date = Date.Init();
         }
     }
 }
