@@ -37,23 +37,23 @@ namespace RunData
             inst = null;
         }
 
-        public static void Load(string path)
-        {
-            var str = File.ReadAllText(path);
-            var josnObject = JObject.Parse(str);
+        //public static void Load(string path)
+        //{
+        //    var str = File.ReadAllText(path);
+        //    var josnObject = JObject.Parse(str);
 
-            Date.LoadJson(josnObject);
-        }
+        //    Date.LoadJson(josnObject);
+        //}
 
-        public static void Save(string path)
-        {
-            JObject josnObject = new JObject();
-            Date.ToJson(ref josnObject);
+        //public static void Save(string path)
+        //{
+        //    JObject josnObject = new JObject();
+        //    Date.ToJson(ref josnObject);
 
-            var json = josnObject.ToString();
+        //    var json = josnObject.ToString();
 
-            File.WriteAllText(path, json);
-        }
+        //    File.WriteAllText(path, json);
+        //}
 
 
 
@@ -87,7 +87,7 @@ namespace RunData
 
             pops = Pop.Init(departs);
 
-            economy = Economy.Init();
+            //economy = Economy.Init();
         }
     }
 }
