@@ -83,10 +83,13 @@ namespace DataVisit
 
             if (pos.index + 1 > list.Count)
             {
+                enumerateObj = null;
                 return false;
             }
 
             pos.obj = list[pos.index];
+            enumerateObj = pos.obj;
+
             return true;
         }
 
@@ -214,6 +217,13 @@ namespace DataVisit
         private static object VisitGet(string raw)
         {
             object rslt = obj;
+
+            var fields = dictMap[raw];
+            if(enumerateObj != null && fields[0].GetDeclaringType() == enumerateObj.GetType())
+            {
+                rslt = enumerateObj;
+            }
+
             foreach (var field in dictMap[raw])
             {
                 rslt = field.GetValue(rslt);
@@ -224,6 +234,7 @@ namespace DataVisit
 
         private static Dictionary<string, ReflectionInfo[]> dictMap;
         private static object obj;
+        private static object enumerateObj;
     }
 
     internal abstract class ReflectionInfo
@@ -233,6 +244,8 @@ namespace DataVisit
         internal abstract void SetValue(object rslt, object value);
 
         internal abstract Type GetDataType();
+
+        internal abstract Type GetDeclaringType();
     }
 
     internal class FieldReflectionInfo : ReflectionInfo
@@ -255,6 +268,11 @@ namespace DataVisit
         internal override Type GetDataType()
         {
             return field.FieldType;
+        }
+
+        internal override Type GetDeclaringType()
+        {
+            return field.DeclaringType;
         }
 
         private FieldInfo field;
@@ -280,6 +298,11 @@ namespace DataVisit
         internal override Type GetDataType()
         {
             return property.PropertyType;
+        }
+
+        internal override Type GetDeclaringType()
+        {
+            return property.DeclaringType;
         }
 
         private PropertyInfo property;

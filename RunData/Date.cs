@@ -13,7 +13,13 @@ namespace RunData
     [JsonObject(MemberSerialization.OptIn)]
     public class Date
     {
-        public static Date inst;
+        public static Date inst
+        {
+            get
+            {
+                return Root.inst.date;
+            }
+        }
 
         public static void Inc()
         {
@@ -62,24 +68,18 @@ namespace RunData
 
         public static Date Init()
         {
-            inst = new Date();
-            return inst;
+            return new Date();
         }
 
-        internal static void Exit()
-        {
-            inst = null;
-        }
-        
-        internal static void ToJson(ref JObject jObject)
-        {
-            jObject.Add("date", JToken.FromObject(inst));
-        }
+        //internal static void ToJson(ref JObject jObject)
+        //{
+        //    jObject.Add("date", JToken.FromObject(inst));
+        //}
 
-        internal static void LoadJson(JObject jObject)
-        {
-            inst = jObject.GetValue("date").ToObject<Date>();
-        }
+        //internal static void LoadJson(JObject jObject)
+        //{
+        //    inst = jObject.GetValue("date").ToObject<Date>();
+        //}
 
         private Date()
         {

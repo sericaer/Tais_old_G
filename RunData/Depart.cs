@@ -10,16 +10,6 @@ namespace RunData
     public class Depart
     {
 
-        public static List<Depart> all;
-
-        public static IEnumerable<Depart> Enumerate()
-        {
-            foreach (var elem in all)
-            {
-                yield return elem;
-            }
-        }
-
         public static Depart GetByColor(int r, int g, int b)
         {
             return all.SingleOrDefault(x => x.SameColor((r, g, b)));
@@ -38,18 +28,15 @@ namespace RunData
 
         internal (string name, int num)[] pops_init;
 
-        internal static void Init()
-        {
-            all = new List<Depart>();
 
-            all.Add(new Depart("JIXIAN", 
-                               (63, 72, 204), 
-                               new (string name, int num)[]{ ("HAOQIANG", 3000), ("MINHU", 60000) }));
-        }
-
-        internal static void Exit()
+        internal static List<Depart> Init()
         {
-            all = null;
+            var all = new List<Depart>();
+
+            all.Add(new Depart("JIXIAN",
+                               (63, 72, 204),
+                               new (string name, int num)[] { ("HAOQIANG", 3000), ("MINHU", 60000) }));
+            return all;
         }
 
         internal static void DaysInc()
@@ -61,6 +48,14 @@ namespace RunData
         }
 
         private (int r, int g, int b) color;
+
+        private static List<Depart> all
+        {
+            get
+            {
+                return Root.inst.departs;
+            }
+        }
 
         private Depart(string name, (int r, int g, int b) color, (string name, int num)[] pops_init)
         {

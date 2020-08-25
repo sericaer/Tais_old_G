@@ -33,7 +33,7 @@ namespace DataVisit.Tests
             Visitor.Pos pos = null;
             while (Visitor.EnumerateVisit("test.elem", ref pos))
             {
-                Assert.AreEqual(Visitor.Get("elem.b", pos), data.elems[i].b);
+                Assert.AreEqual(Visitor.Get("elem.b"), data.elems[i].b);
                 i++;
             }
         }

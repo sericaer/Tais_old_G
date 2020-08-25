@@ -14,44 +14,28 @@ namespace RunData
     {
         public static Action<string> logger;
 
-        public static List<Type> GetAllType()
-        {
-            List<Type> rslt = new List<Type>();
-
-            rslt.Add(typeof(Date));
-            rslt.Add(typeof(Depart));
-            rslt.Add(typeof(Pop));
-
-            return rslt;
-        }
-
-        public static List<object> GetAllData()
-        {
-            List<object> rslt = new List<object>();
-
-            rslt.Add(Date.inst);
-            rslt.Add(Depart.all);
-            rslt.Add(Pop.all);
-
-            return rslt;
-        }
 
         public static Root Init()
         {
             inst = new Root();
 
+
+
             //Background.Init();
             //Chaoting.Init(Background.Enumerate());
 
-            Depart.Init();
-            Pop.Init(Depart.Enumerate());
+            //Depart.Init();
+            //Pop.Init(Depart.Enumerate());
             //Family.Init(Pop.Enumerate(), Background.Enumerate());
             //Person.Init(Family.Enumerate());
 
             return inst;
         }
 
-        //public static (object obj, List<ReflectionInfo> reflections)[] dataMapping;
+        public static void Exit()
+        {
+            inst = null;
+        }
 
         public static void Load(string path)
         {
@@ -81,21 +65,29 @@ namespace RunData
             Depart.DaysInc();
         }
 
-        public static void Exit()
-        {
-            Pop.Exit();
-            Depart.Exit();
-            Date.Exit();
-        }
-
         public static Root inst;
 
         [DataVisitorProperty]
         public Date date;
 
+        [DataVisitorProperty]
+        public Economy economy;
+
+        [DataVisitorPropertyArray]
+        public List<Depart> departs;
+
+        [DataVisitorPropertyArray]
+        public List<Pop> pops;
+
         public Root()
         {
             date = Date.Init();
+
+            departs = Depart.Init();
+
+            pops = Pop.Init(departs);
+
+            economy = Economy.Init();
         }
     }
 }
