@@ -17,6 +17,12 @@ namespace Modder
 
         public List<Language> languages;
 
+        static Mod()
+        {
+            Visitor.GetValue = ModDataVisit.Get;
+            Visitor.SetValue = ModDataVisit.Set;
+        }
+
         public static IEnumerable<Mod> Enumerate()
         {
             foreach(var elem in modDict)
@@ -25,8 +31,6 @@ namespace Modder
             }
         }
 
-
-
         public static Mod GetByName(string name)
         {
             return modDict[name];
@@ -34,7 +38,7 @@ namespace Modder
 
         public static void Load(string path)
         {
-            Visitor.GetValue = ModDataVisit.Get;
+            
 
             foreach (var sub in System.IO.Directory.EnumerateDirectories(path))
             {

@@ -39,6 +39,6 @@ namespace Parser.Semantic
             list.ForEach(x => x.Do());
         }
 
-        List<OpSet> list = new List<OpSet>();
+        internal List<OpSet> list = new List<OpSet>();
     }
 }

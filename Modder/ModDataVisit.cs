@@ -25,5 +25,10 @@ namespace Modder
         {
             return DataVisit.Visitor.Get(arg);
         }
+
+        internal static void Set(string arg, object value)
+        {
+            DataVisit.Visitor.Set(arg, value);
+        }
     }
 }
