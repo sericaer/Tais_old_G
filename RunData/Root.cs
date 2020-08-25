@@ -87,7 +87,7 @@ namespace RunData
 
             pops = Pop.Init(departs);
 
-            //economy = Economy.Init();
+            economy = Economy.Init();
         }
     }
 }

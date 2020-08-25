@@ -63,7 +63,7 @@ namespace Modder
 
             public void Selected()
             {
-                Mod.logger($"{desc.Format} selected!");
+                semantic.select?.Do();
             }
 
             internal Parser.Semantic.Option semantic;

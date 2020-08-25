@@ -26,7 +26,9 @@ namespace DataVisit.Tests
             Visitor.SetVisitData(data);
 
             Assert.AreEqual(Visitor.Get("test.a"), 12);
-            Assert.AreEqual(Visitor.Get("test.b"), 13);
+            Visitor.Set("test.a", 22);
+            Assert.AreEqual(Visitor.Get("test.a"), 22);
+            Assert.AreEqual(Visitor.Get("test.b"), 23);
             Assert.AreEqual(Visitor.Get("test.sub.a"), 14);
 
             int i = 0;

@@ -23,7 +23,7 @@ namespace TaisGodot.Scripts
 
 		private void _on_ButtonSave_button_up(string fileName)
 		{
-			Root.Load(GlobalPath.save + fileName);
+			//Root.Load(GlobalPath.save + fileName);
 			GetTree().ChangeScene("res://Scenes/MainScene.tscn");
 		}
 

@@ -54,6 +54,8 @@
     <Compile Include="Semantic\GroupValue.cs" />
     <Compile Include="Semantic\ConditionDefault.cs" />
     <Compile Include="Semantic\Visitor.cs" />
+    <Compile Include="Semantic\Select.cs" />
+    <Compile Include="Semantic\OpSet.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

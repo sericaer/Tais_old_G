@@ -7,5 +7,7 @@ namespace Parser.Semantic
          {
              return raw;
          };
+
+        public static Action<string, string> SetValue = (p1, p2) => { };
     }
 }

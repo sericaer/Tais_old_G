@@ -52,6 +52,24 @@ namespace DataVisit
             return rslt;
         }
 
+        public static void Set(string raw, object value)
+        {
+            object rslt = obj;
+
+            var fields = dictMap[raw];
+            if (enumerateObj != null && fields[0].GetDeclaringType() == enumerateObj.GetType())
+            {
+                rslt = enumerateObj;
+            }
+
+            for (int i=0; i< fields.Length-1; i++)
+            {
+                rslt = fields[i].GetValue(rslt);
+            }
+
+            fields[fields.Length - 1].SetValue(rslt, value);
+        }
+
         public static void SetVisitData(object data)
         {
             obj = data;

@@ -9,10 +9,11 @@ namespace Parser.Semantic
 {
     public class Option
     {
-        public Action Selected;
-
         [SemanticProperty("desc")]
         public GroupValue desc;
+
+        [SemanticProperty("select")]
+        public Select select;
 
         public static Option Parse(SyntaxItem item)
         {

@@ -13,7 +13,7 @@ namespace TaisGodot.Scripts
     {
         private void _on_ButtonSave_button_up(string name)
         {
-            Root.Save(GlobalPath.save + name);
+            //Root.Save(GlobalPath.save + name);
             QueueFree();
         }
     }
