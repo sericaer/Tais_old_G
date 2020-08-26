@@ -5,6 +5,9 @@ namespace TaisGodot.Scripts
 {
 	public class SpeedContrl : HBoxContainer
 	{
+		[Signal]
+		public delegate void DaysInc();
+
 		public static void UnPause()
 		{
 			sysPause = false;
@@ -59,8 +62,7 @@ namespace TaisGodot.Scripts
 				return;
 			}
 
-			RunData.Root.DaysInc();
-			Modder.Mod.DaysInc();
+			EmitSignal(nameof(DaysInc));
 		}
 
 		private static int MAX_SPEED = 5;

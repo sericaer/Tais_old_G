@@ -10,7 +10,6 @@ namespace Modder
     public class Mod
     {
         public static Action<string> logger;
-        public static Action<GEvent> showDialogAction;
 
         public string name;
         public string path;
@@ -45,11 +44,11 @@ namespace Modder
             }
         }
 
-        public static void DaysInc()
+        public static IEnumerable<GEvent> Process()
         {
             foreach (var eventObj in GEvent.Process())
             {
-                showDialogAction(eventObj);
+                yield return eventObj;
             }
 
             //var testDialog = new GEvent();

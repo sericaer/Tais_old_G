@@ -1,22 +1,22 @@
 ﻿using Modder;
 using NUnit.Framework;
 using System;
+using System.Linq;
 namespace Modder.UnitTest
 {
     [TestFixture()]
-    public class TestEventCommon
+    public class TestEvent
     {
         [SetUpFixture]
         public class TestSetup
         {
             public TestSetup()
             {
-                Mod.showDialogAction = Checker.RecvEvent;
                 ModDataVisit.InitVisitMap(typeof(Demon));
 
                 ModFileSystem.Clear();
 
-                var modFileSystem = ModFileSystem.Generate(nameof(TestEventCommon));
+                var modFileSystem = ModFileSystem.Generate(nameof(TestEvent));
                 modFileSystem.AddCommonEvent("EVENT_TEST.txt",
 @"title = EVENT_DIFF_TITLE
 desc = EVENT_DIFF_DESC
@@ -105,22 +105,23 @@ option =
         {
             Demon.inst.item1.data1 = 10;
 
-            Mod.DaysInc();
-
-            var eventobj = Checker.currEvent;
-
-            Assert.IsNull(eventobj);
+            foreach(var eventobj in Mod.Process())
+            {
+                Assert.Fail();
+            }
         }
 
         [Test()]
-        public void TestEventTrigger()
+        public void TestEventCommon()
         {
 
             Demon.inst.item1.data1 = 11;
 
-            Mod.DaysInc();
+            var eventobjs = Mod.Process().ToArray();
 
-            var eventobj = Checker.currEvent;
+            Assert.AreEqual(eventobjs.Count(), 1);
+
+            var eventobj = eventobjs[0];
 
             Assert.AreEqual(eventobj.title.Format, "EVENT_DIFF_TITLE");
             Assert.AreEqual(eventobj.desc.Format, "EVENT_DIFF_DESC");
@@ -142,14 +143,16 @@ option =
         }
 
         [Test()]
-        public void TestEventDefaultTrigger()
+        public void TestEventCommonDefault()
         {
 
             Demon.inst.item1.data1 = 12;
 
-            Mod.DaysInc();
+            var eventobjs = Mod.Process().ToArray();
 
-            var eventobj = Checker.currEvent;
+            Assert.AreEqual(eventobjs.Count(), 1);
+
+            var eventobj = eventobjs[0];
 
             Assert.AreEqual(eventobj.title.Format, "EVENT_TEST_DEFAULT_TITLE");
             Assert.AreEqual(eventobj.desc.Format, "EVENT_TEST_DEFAULT_DESC");

@@ -6,24 +6,33 @@ namespace TaisGodot.Scripts
 {
 	public class MainScene : Panel
 	{
-		public MainScene()
-		{
-			Mod.showDialogAction = ShowDialog;
+		private async void _on_Days_IncAsync()
+        {
+			RunData.Root.DaysInc();
+
+			foreach(var eventobj in Modder.Mod.Process())
+            {
+				var dialog = ShowDialog(eventobj);
+
+				await ToSignal(dialog, "tree_exited");
+			}
 		}
 		
-		private void ShowDialog(Modder.GEvent dialog)
+		private Node ShowDialog(Modder.GEvent eventobj)
 		{
-			GD.Print(dialog.title.Format);
-			GD.Print(dialog.desc.Format);
-			foreach (var op in dialog.options)
+			GD.Print(eventobj.title.Format);
+			GD.Print(eventobj.desc.Format);
+			foreach (var op in eventobj.options)
 			{
 				GD.Print(op.desc.Format);
 			}
 
 			var dialogNode = (DialogPanel)ResourceLoader.Load<PackedScene>("res://Scenes/Main/Dynamic/DialogPanel/DialogPanel.tscn").Instance();
-			dialogNode.gEventObj = dialog;
+			dialogNode.gEventObj = eventobj;
 
 			AddChild(dialogNode);
+
+			return dialogNode;
 		}
 
 		private void _on_MapRect_MapClickSignal(int r, int g, int b)
