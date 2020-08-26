@@ -1,6 +1,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30406.217
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.106
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tais_Godot", "Tais_Godot.csproj", "{46E4D32E-ABAD-4652-BD32-A808B3B14878}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -18,9 +18,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Parser", "..\Parser\Parser.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataVisit", "..\DataVisit\DataVisit.csproj", "{60624F37-78F3-44EB-AD31-76E1893F5EA9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataVisitorUnitTest", "..\DataVisit\DataVisitorUnitTest\DataVisitorUnitTest.csproj", "{0536B9AC-3D33-42AE-9484-16BFA6137477}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataVisitorUnitTest", "..\DataVisit\DataVisitorUnitTest\DataVisitorUnitTest.csproj", "{0536B9AC-3D33-42AE-9484-16BFA6137477}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModderUnitTest", "..\Modder\ModderUnitTest\ModderUnitTest.csproj", "{68A67A80-8D32-479C-A011-43D7E8D79E3C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModderUnitTest", "..\Modder\ModderUnitTest\ModderUnitTest.csproj", "{B38CFB7E-6124-4578-B520-E162E08B00D5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -78,14 +78,14 @@ Global
 		{0536B9AC-3D33-42AE-9484-16BFA6137477}.ExportRelease|Any CPU.Build.0 = Release|Any CPU
 		{0536B9AC-3D33-42AE-9484-16BFA6137477}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0536B9AC-3D33-42AE-9484-16BFA6137477}.Release|Any CPU.Build.0 = Release|Any CPU
-		{68A67A80-8D32-479C-A011-43D7E8D79E3C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{68A67A80-8D32-479C-A011-43D7E8D79E3C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{68A67A80-8D32-479C-A011-43D7E8D79E3C}.ExportDebug|Any CPU.ActiveCfg = Debug|Any CPU
-		{68A67A80-8D32-479C-A011-43D7E8D79E3C}.ExportDebug|Any CPU.Build.0 = Debug|Any CPU
-		{68A67A80-8D32-479C-A011-43D7E8D79E3C}.ExportRelease|Any CPU.ActiveCfg = Release|Any CPU
-		{68A67A80-8D32-479C-A011-43D7E8D79E3C}.ExportRelease|Any CPU.Build.0 = Release|Any CPU
-		{68A67A80-8D32-479C-A011-43D7E8D79E3C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{68A67A80-8D32-479C-A011-43D7E8D79E3C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B38CFB7E-6124-4578-B520-E162E08B00D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B38CFB7E-6124-4578-B520-E162E08B00D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B38CFB7E-6124-4578-B520-E162E08B00D5}.ExportDebug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B38CFB7E-6124-4578-B520-E162E08B00D5}.ExportDebug|Any CPU.Build.0 = Debug|Any CPU
+		{B38CFB7E-6124-4578-B520-E162E08B00D5}.ExportRelease|Any CPU.ActiveCfg = Release|Any CPU
+		{B38CFB7E-6124-4578-B520-E162E08B00D5}.ExportRelease|Any CPU.Build.0 = Release|Any CPU
+		{B38CFB7E-6124-4578-B520-E162E08B00D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B38CFB7E-6124-4578-B520-E162E08B00D5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -11,8 +11,5 @@ occur = 1
 option =
 {
 	desc = EVENT_TEST_OPTION_1_DESC
-	select = 
-	{
-	    SET = {economy.value, 10}
-	}
+	set = {economy.value=10}
 }

@@ -36,6 +36,7 @@ namespace TaisGodot.Scripts
 		}
 		private void _on_Button_pressed(int index)
 		{
+			GD.Print(index.ToString());
 			gEventObj.options[index].Selected();
 
 			QueueFree();

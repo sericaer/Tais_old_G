@@ -6,18 +6,18 @@ namespace TaisGodot.Scripts
 {
 	public class MainScene : Panel
 	{
-		private async void _on_Days_IncAsync()
-        {
+		private async void _on_DaysInc()
+		{
 			RunData.Root.DaysInc();
 
 			foreach(var eventobj in Modder.Mod.Process())
-            {
+			{
 				var dialog = ShowDialog(eventobj);
 
 				await ToSignal(dialog, "tree_exited");
 			}
 		}
-		
+
 		private Node ShowDialog(Modder.GEvent eventobj)
 		{
 			GD.Print(eventobj.title.Format);
@@ -77,3 +77,6 @@ namespace TaisGodot.Scripts
 		//  }
 	}
 }
+
+
+
