@@ -28,7 +28,9 @@ namespace Modder
             List<GEvent> events = new List<GEvent>();
             foreach(var file in Directory.EnumerateFiles(path, "*.txt"))
             {
-                events.Add(ModElementLoader.Load<GEvent>(file, File.ReadAllText(file)));
+                var eventobj = ModElementLoader.Load<GEvent>(file, File.ReadAllText(file));
+                eventobj.file = file;
+                events.Add(eventobj);
             }
 
             eventGroup.Add((mod, events));
@@ -57,15 +59,30 @@ namespace Modder
             {
                 get
                 {
+                    if(semantic.desc == null)
+                    {
+                        return new Desc() { Format = $"{Path.GetFileNameWithoutExtension(owner.file)}_OPTION_{index}_DESC" };
+                    }
+
                     return new Desc(semantic.desc);
                 }
             }
 
             public void Selected()
             {
-                semantic.select?.Do();
+                semantic.set.Do();
             }
 
+            public (string right, string left)[] sets
+            {
+                get
+                {
+                    return semantic.set.list.ToArray();
+                }
+            }
+
+            internal GEvent owner;
+            internal int index;
             internal Parser.Semantic.Option semantic;
         }
 
@@ -73,6 +90,11 @@ namespace Modder
         {
             get
             {
+                if(_title == null)
+                {
+                    return new Desc() { Format = $"{Path.GetFileNameWithoutExtension(file)}_TITLE" };
+                }
+
                 return new Desc(_title);
             }
         }
@@ -81,6 +103,11 @@ namespace Modder
         {
             get
             {
+                if (_desc == null)
+                {
+                    return new Desc() { Format = $"{Path.GetFileNameWithoutExtension(file)}_DESC" };
+                }
+
                 return new Desc(_desc);
             }
         }
@@ -90,7 +117,14 @@ namespace Modder
         {
             get
             {
-                return _options.Select(x => new Option() { semantic = x }).ToArray();
+                var rslt = new List<Option>();
+                for(int i=0; i< _options.Count; i++)
+                {
+
+                    rslt.Add(new Option() { semantic = _options[i], index = i + 1, owner = this });
+                }
+
+                return rslt.ToArray();
             }
         }
 
@@ -102,11 +136,13 @@ namespace Modder
             }
         }
 
+        internal string file;
+
         [SemanticPropertyArray("option")]
         public List<Parser.Semantic.Option> _options;
 
         [SemanticProperty("trigger")]
-        internal Condition trigger;
+        public Condition trigger;
 
         [SemanticProperty("occur")]
         internal int _occur;

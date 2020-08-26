@@ -73,10 +73,10 @@ namespace RunData
         [DataVisitorProperty]
         public Economy economy;
 
-        [DataVisitorPropertyArray]
+        [DataVisitorPropertyArray("depart")]
         public List<Depart> departs;
 
-        [DataVisitorPropertyArray]
+        [DataVisitorPropertyArray("pop")]
         public List<Pop> pops;
 
         public Root()

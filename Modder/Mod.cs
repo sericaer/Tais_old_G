@@ -38,8 +38,6 @@ namespace Modder
 
         public static void Load(string path)
         {
-            
-
             foreach (var sub in System.IO.Directory.EnumerateDirectories(path))
             {
                 var modname = System.IO.Path.GetFileName(sub);

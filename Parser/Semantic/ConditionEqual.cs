@@ -7,7 +7,7 @@ using Parser.Syntax;
 
 namespace Parser.Semantic
 {
-    class ConditionEqual : Condition
+    public class ConditionEqual : Condition
     {
         internal static new ConditionEqual Parse(SyntaxItem item)
         {
@@ -32,7 +32,7 @@ namespace Parser.Semantic
             return Visitor.GetValue(right) == Visitor.GetValue(left);
         }
 
-        internal string right;
-        internal string left;
+        public string right;
+        public string left;
     }
 }

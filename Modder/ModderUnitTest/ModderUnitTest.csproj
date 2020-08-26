@@ -1,20 +1,58 @@
-<Project Sdk="Microsoft.NET.Sdk">
-
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\..\Tais_godot\packages\NUnit.3.12.0\build\NUnit.props" Condition="Exists('..\..\Tais_godot\packages\NUnit.3.12.0\build\NUnit.props')" />
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.1</TargetFramework>
-
-    <IsPackable>false</IsPackable>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{68A67A80-8D32-479C-A011-43D7E8D79E3C}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>ModderUnitTest</RootNamespace>
+    <AssemblyName>ModderUnitTest</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
   </PropertyGroup>
-
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.5.0" />
-    <PackageReference Include="MSTest.TestAdapter" Version="2.1.0" />
-    <PackageReference Include="MSTest.TestFramework" Version="2.1.0" />
-    <PackageReference Include="coverlet.collector" Version="1.2.0" />
+    <Reference Include="System" />
+    <Reference Include="nunit.framework">
+      <HintPath>..\..\Tais_godot\packages\NUnit.3.12.0\lib\net45\nunit.framework.dll</HintPath>
+    </Reference>
   </ItemGroup>
-
   <ItemGroup>
-    <ProjectReference Include="..\Modder.csproj" />
+    <Compile Include="TestEventCommon.cs" />
+    <Compile Include="Demon.cs" />
+    <Compile Include="Checker.cs" />
+    <Compile Include="ModFileSystem.cs" />
   </ItemGroup>
-
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Modder.csproj">
+      <Project>{1F3178EC-529A-482A-BC30-5A8047739338}</Project>
+      <Name>Modder</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Parser\Parser.csproj">
+      <Project>{6889D115-E394-4412-A83C-26900889634E}</Project>
+      <Name>Parser</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\DataVisit\DataVisit.csproj">
+      <Project>{60624F37-78F3-44EB-AD31-76E1893F5EA9}</Project>
+      <Name>DataVisit</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

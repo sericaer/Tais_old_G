@@ -12,8 +12,8 @@ namespace Parser.Semantic
         [SemanticProperty("desc")]
         public GroupValue desc;
 
-        [SemanticProperty("select")]
-        public Select select;
+        [SemanticProperty("set")]
+        public OpSet set;
 
         public static Option Parse(SyntaxItem item)
         {
