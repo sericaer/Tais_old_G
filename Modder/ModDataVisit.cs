@@ -16,9 +16,15 @@ namespace Modder
             DataVisit.Visitor.SetVisitData(data);
         }
 
-        internal static bool EnumerateVisit(string v)
+        internal static bool EnumerateVisit(string key)
         {
-            throw new NotImplementedException();
+            var rslt = DataVisit.Visitor.EnumerateVisit(key, ref pos);
+            if(!rslt)
+            {
+                pos = null;
+            }
+
+            return rslt;
         }
 
         internal static dynamic Get(string arg)
@@ -30,5 +36,8 @@ namespace Modder
         {
             DataVisit.Visitor.Set(arg, value);
         }
+
+        internal static DataVisit.Visitor.Pos pos = null;
+
     }
 }

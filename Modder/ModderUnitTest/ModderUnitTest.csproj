@@ -36,6 +36,7 @@
     <Compile Include="Demon.cs" />
     <Compile Include="Checker.cs" />
     <Compile Include="ModFileSystem.cs" />
+    <Compile Include="TestEventDepart.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

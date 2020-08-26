@@ -5,19 +5,16 @@ using System.Linq;
 namespace Modder.UnitTest
 {
     [TestFixture()]
-    public class TestEvent
+    public class TestEventCommon
     {
-        [SetUpFixture]
-        public class TestSetup
+        public TestEventCommon()
         {
-            public TestSetup()
-            {
-                ModDataVisit.InitVisitMap(typeof(Demon));
+            ModDataVisit.InitVisitMap(typeof(Demon));
 
-                ModFileSystem.Clear();
+            ModFileSystem.Clear();
 
-                var modFileSystem = ModFileSystem.Generate(nameof(TestEvent));
-                modFileSystem.AddCommonEvent("EVENT_TEST.txt",
+            var modFileSystem = ModFileSystem.Generate(nameof(TestEventCommon));
+            modFileSystem.AddCommonEvent("EVENT_TEST.txt",
 @"title = EVENT_DIFF_TITLE
 desc = EVENT_DIFF_DESC
 
@@ -55,7 +52,7 @@ option =
     }
 }");
 
-                modFileSystem.AddCommonEvent("EVENT_TEST_DEFAULT.txt",
+            modFileSystem.AddCommonEvent("EVENT_TEST_DEFAULT.txt",
 @"
 
 trigger =
@@ -89,7 +86,15 @@ option =
     }
 }");
 
-                Mod.Load(ModFileSystem.path);
+            Mod.Load(ModFileSystem.path);
+        }
+
+        [SetUpFixture]
+        public class TestSetup
+        {
+            public TestSetup()
+            {
+
             }
         }
 
@@ -112,7 +117,7 @@ option =
         }
 
         [Test()]
-        public void TestEventCommon()
+        public void TestEventBase()
         {
 
             Demon.inst.item1.data1 = 11;

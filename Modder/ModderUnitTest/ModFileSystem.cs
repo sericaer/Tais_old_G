@@ -23,6 +23,14 @@ namespace Modder.UnitTest
             File.WriteAllText(commonPath + fileName, fileContent);
         }
 
+        internal void AddDepartEvent(string fileName, string fileContent)
+        {
+            var commonPath = modPath + "events/depart/";
+            Directory.CreateDirectory(commonPath);
+
+            File.WriteAllText(commonPath + fileName, fileContent);
+        }
+
         public static ModFileSystem Generate(string modName)
         {
             return new ModFileSystem() { name = modName };
