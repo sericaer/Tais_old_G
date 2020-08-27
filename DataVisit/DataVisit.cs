@@ -2,11 +2,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Linq;
 
 namespace DataVisit
 {
     public class Visitor
     {
+        static Dictionary<Type, List<ReflectionInfo>> dictRef;
+
+        static FieldReflectionInfo rootReflection;
+
         public class Pos
         {
             internal int index;
@@ -54,7 +59,7 @@ namespace DataVisit
 
         public static void Set(string raw, object value)
         {
-            object rslt = obj;
+            object rslt = rootObj;
 
             var fields = dictMap[raw];
             if (enumerateObj != null && fields[0].GetDeclaringType() == enumerateObj.GetType())
@@ -72,13 +77,12 @@ namespace DataVisit
 
         public static void SetVisitData(object data)
         {
-            obj = data;
+            rootObj = data;
         }
 
         public static void InitVisitMap(Type type)
         {
-            var root = new ReflectionInfo[]{ };
-            dictMap = AnaylizeDataVisitorProperty(type, root);
+            rootReflection = new FieldReflectionInfo(type);
         }
 
         public static bool EnumerateVisit(string key, ref Pos pos)
@@ -110,6 +114,7 @@ namespace DataVisit
 
             return true;
         }
+
 
         private static Dictionary<string, ReflectionInfo[]> AnaylizeDataVisitorProperty(Type type, ReflectionInfo[] parents)
         {
@@ -234,29 +239,35 @@ namespace DataVisit
 
         private static object VisitGet(string raw)
         {
-            object rslt = obj;
+            var splits = raw.Split('.');
 
-            var fields = dictMap[raw];
-            if(enumerateObj != null && fields[0].GetDeclaringType() == enumerateObj.GetType())
-            {
-                rslt = enumerateObj;
-            }
+            dictRef.Values.Single(x=>x.)
 
-            foreach (var field in dictMap[raw])
-            {
-                rslt = field.GetValue(rslt);
-            }
+            // object rslt = obj;
 
-            return rslt;
+            // var fields = dictMap[raw];
+            // if(enumerateObj != null && fields[0].GetDeclaringType() == enumerateObj.GetType())
+            // {
+            //     rslt = enumerateObj;
+            // }
+
+            // foreach (var field in dictMap[raw])
+            // {
+            //     rslt = field.GetValue(rslt);
+            // }
+
+            // return rslt;
         }
 
         private static Dictionary<string, ReflectionInfo[]> dictMap;
-        private static object obj;
+        private static object rootObj;
         private static object enumerateObj;
     }
 
     internal abstract class ReflectionInfo
     {
+        internal string name;
+
         internal abstract object GetValue(object rslt);
 
         internal abstract void SetValue(object rslt, object value);
@@ -264,10 +275,24 @@ namespace DataVisit
         internal abstract Type GetDataType();
 
         internal abstract Type GetDeclaringType();
+
+        internal abstract (ReflectionInfo reflectionInfo, object obj) GetChild(string name, object currObj);
     }
 
     internal class FieldReflectionInfo : ReflectionInfo
     {
+        internal FieldReflectionInfo(string name, FieldInfo field)
+        {
+            var fields = AnaylizeFields(field.FieldType);
+            var propertys = AnaylizeProperties(field.FieldType);
+
+            this.name = name;
+            this.field = field;
+
+            subReflectionInfos.Add(fields.Select(x => new FieldReflectionInfo(x.name, x.field)));
+            subReflectionInfos.Add(propertys.Select(x => new PropertyReflectionInfo(x.name, x.field)));
+        }
+
         internal FieldReflectionInfo(FieldInfo field)
         {
             this.field = field;
@@ -293,11 +318,28 @@ namespace DataVisit
             return field.DeclaringType;
         }
 
+        internal override (ReflectionInfo reflectionInfo, object obj) GetChild(string name, object currObj)
+        {
+            var obj = GetValue(currObj);
+            var reflectionInfo = subReflectionInfos.Single(x => x.name == name);
+            return (reflectionInfo, obj);
+
+        }
+
+        internal List<ReflectionInfo> subReflectionInfos = new List<ReflectionInfo>();
         private FieldInfo field;
+
     }
 
     internal class PropertyReflectionInfo : ReflectionInfo
     {
+        internal PropertyReflectionInfo(string name, PropertyInfo field)
+        {
+            this.name = name;
+            this.property = field;
+        }
+
+
         internal PropertyReflectionInfo(PropertyInfo property)
         {
             this.property = property;
@@ -321,6 +363,12 @@ namespace DataVisit
         internal override Type GetDeclaringType()
         {
             return property.DeclaringType;
+        }
+
+        internal override (ReflectionInfo reflectionInfo, object obj) GetChild(string name, object currObj)
+        {
+            var obj = GetValue(currObj);
+            return (null, obj);
         }
 
         private PropertyInfo property;
