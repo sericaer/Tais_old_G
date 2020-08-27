@@ -8,9 +8,7 @@ namespace DataVisit
 {
     public class Visitor
     {
-        static Dictionary<Type, List<ReflectionInfo>> dictRef;
-
-        static FieldReflectionInfo rootReflection;
+        static Dictionary<Type, List<ReflectionInfo>> dictRef = new Dictionary<Type, List<ReflectionInfo>>();
 
         public class Pos
         {
@@ -59,20 +57,19 @@ namespace DataVisit
 
         public static void Set(string raw, object value)
         {
-            object rslt = rootObj;
+            var splits = raw.Split('.');
 
-            var fields = dictMap[raw];
-            if (enumerateObj != null && fields[0].GetDeclaringType() == enumerateObj.GetType())
+            ReflectionInfo currReflection = dictRef[rootObj.GetType()].Single(x => x.name == splits[0]);
+            var currObj = currReflection.GetValue(rootObj);
+
+            for (int i = 1; i < splits.Length-1; i++)
             {
-                rslt = enumerateObj;
+                currReflection = dictRef[currObj.GetType()].Single(x => x.name == splits[i]);
+                currObj = currReflection.GetValue(currObj);
             }
 
-            for (int i=0; i< fields.Length-1; i++)
-            {
-                rslt = fields[i].GetValue(rslt);
-            }
-
-            fields[fields.Length - 1].SetValue(rslt, value);
+            var leaf = dictRef[currReflection.GetDataType()].Single(x => x.name == splits[splits.Length - 1]);
+            leaf.SetValue(currObj, value);
         }
 
         public static void SetVisitData(object data)
@@ -80,9 +77,16 @@ namespace DataVisit
             rootObj = data;
         }
 
-        public static void InitVisitMap(Type type)
+        public static void InitVisitMap(List<Type> types)
         {
-            rootReflection = new FieldReflectionInfo(type);
+            foreach(var type in  types)
+            {
+                var reflectionList = new List<ReflectionInfo>();
+                reflectionList.AddRange(AnaylizeFields(type));
+                reflectionList.AddRange(AnaylizeProperties(type));
+
+                dictRef.Add(type, reflectionList);
+            }
         }
 
         public static bool EnumerateVisit(string key, ref Pos pos)
@@ -115,32 +119,32 @@ namespace DataVisit
             return true;
         }
 
-
-        private static Dictionary<string, ReflectionInfo[]> AnaylizeDataVisitorProperty(Type type, ReflectionInfo[] parents)
+        internal static List<FieldReflectionInfo> AnaylizeFields(Type type)
         {
-            var rslt = new Dictionary<string, ReflectionInfo[]>();
+            var rslt = new List<FieldReflectionInfo>();
 
-            var fieldVisitDict = AnaylizeFields(type, parents);
-            var propertyVisitDict = AnaylizeProperties(type, parents);
+            var fields = type.GetFields(BindingFlags.DeclaredOnly | BindingFlags.Public | BindingFlags.Instance);
 
-            foreach (var elem in fieldVisitDict)
+            foreach (var field in fields)
             {
-                rslt.Add(elem.Key, elem.Value);
-            }
+                var visitPropery = (DataVisitorProperty)Attribute.GetCustomAttribute(field, typeof(DataVisitorProperty));
+                if (visitPropery == null)
+                {
+                    continue;
+                }
 
-            foreach (var elem in propertyVisitDict)
-            {
-                rslt.Add(elem.Key, elem.Value);
+                rslt.Add(new FieldReflectionInfo(visitPropery.key, field));
             }
 
             return rslt;
         }
 
-        private static Dictionary<string, ReflectionInfo[]> AnaylizeProperties(Type type, ReflectionInfo[] parents)
+        internal static List<PropertyReflectionInfo> AnaylizeProperties(Type type)
         {
-            var rslt = new Dictionary<string, ReflectionInfo[]>();
+            var rslt = new List<PropertyReflectionInfo>();
 
             var properties = type.GetProperties(BindingFlags.DeclaredOnly | BindingFlags.Public | BindingFlags.Instance);
+
             foreach (var property in properties)
             {
                 var visitPropery = (DataVisitorProperty)Attribute.GetCustomAttribute(property, typeof(DataVisitorProperty));
@@ -149,89 +153,7 @@ namespace DataVisit
                     continue;
                 }
 
-                if (visitPropery.key == "")
-                {
-                    throw new Exception("DataVisitorProperty of property must have vaild key!");
-                }
-
-                var reflectionInfos = new List<ReflectionInfo>(parents);
-                reflectionInfos.Add(new PropertyReflectionInfo(property));
-
-                rslt.Add(visitPropery.key, reflectionInfos.ToArray());
-            }
-
-            return rslt;
-        }
-
-        private static Dictionary<string, ReflectionInfo[]> AnaylizeFields(Type type, ReflectionInfo[] parents)
-        {
-            var rslt = new Dictionary<string, ReflectionInfo[]>();
-
-            var fields = type.GetFields(BindingFlags.DeclaredOnly | BindingFlags.Public | BindingFlags.Instance);
-
-            foreach (var field in fields)
-            {
-                var visitArrayPropery = (DataVisitorPropertyArray)Attribute.GetCustomAttribute(field, typeof(DataVisitorPropertyArray));
-                if (visitArrayPropery != null)
-                {
-                    var subDict = AnaylizeDataVisitorPropertyArray(field, visitArrayPropery, parents);
-                    foreach (var set in subDict)
-                    {
-                        rslt.Add(set.Key, set.Value);
-                    }
-                    continue;
-                }
-
-                var visitPropery = (DataVisitorProperty)Attribute.GetCustomAttribute(field, typeof(DataVisitorProperty));
-                if (visitPropery == null)
-                {
-                    continue;
-                }
-
-                if (visitPropery.key != "")
-                {
-                    var reflectionInfos = new List<ReflectionInfo>(parents);
-                    reflectionInfos.Add(new FieldReflectionInfo(field));
-
-                    rslt.Add(visitPropery.key, reflectionInfos.ToArray());
-                }
-                else
-                {
-                    var reflectionInfos = new List<ReflectionInfo>(parents);
-                    reflectionInfos.Add(new FieldReflectionInfo(field));
-
-                    var subDict = AnaylizeDataVisitorProperty(field.FieldType, reflectionInfos.ToArray());
-                    foreach (var set in subDict)
-                    {
-                        rslt.Add(set.Key, set.Value);
-                    }
-                }
-            }
-
-            return rslt;
-        }
-
-        private static Dictionary<string, ReflectionInfo[]> AnaylizeDataVisitorPropertyArray(FieldInfo field, DataVisitorPropertyArray visitArrayPropery, ReflectionInfo[] parents)
-        {
-            var rslt = new Dictionary<string, ReflectionInfo[]>();
-
-            if (visitArrayPropery.key == "")
-            {
-                throw new Exception("DataVisitorPropertyArray of property must have vaild key!");
-            }
-
-            var reflectionInfos = new List<ReflectionInfo>(parents);
-            reflectionInfos.Add(new FieldReflectionInfo(field));
-
-            rslt.Add(visitArrayPropery.key, reflectionInfos.ToArray());
-
-
-            Type[] listParameters = field.FieldType.GetGenericArguments();
-
-            var subDict = AnaylizeDataVisitorProperty(listParameters[0], new ReflectionInfo[] { });
-            foreach (var set in subDict)
-            {
-                rslt.Add(set.Key, set.Value);
+                rslt.Add(new PropertyReflectionInfo(visitPropery.key, property));
             }
 
             return rslt;
@@ -241,23 +163,18 @@ namespace DataVisit
         {
             var splits = raw.Split('.');
 
-            dictRef.Values.Single(x=>x.)
+            ReflectionInfo currReflection = dictRef[rootObj.GetType()].Single(x => x.name == splits[0]);
+            var currObj = currReflection.GetValue(rootObj);
 
-            // object rslt = obj;
+            for(int i=1; i<splits.Length; i++)
+            {
+                currReflection = dictRef[currObj.GetType()].Single(x => x.name == splits[i]);
+                currObj = currReflection.GetValue(currObj);
+            }
 
-            // var fields = dictMap[raw];
-            // if(enumerateObj != null && fields[0].GetDeclaringType() == enumerateObj.GetType())
-            // {
-            //     rslt = enumerateObj;
-            // }
-
-            // foreach (var field in dictMap[raw])
-            // {
-            //     rslt = field.GetValue(rslt);
-            // }
-
-            // return rslt;
+            return currObj;
         }
+
 
         private static Dictionary<string, ReflectionInfo[]> dictMap;
         private static object rootObj;
@@ -276,6 +193,8 @@ namespace DataVisit
 
         internal abstract Type GetDeclaringType();
 
+        internal abstract ReflectionInfo GetChild(string name);
+
         internal abstract (ReflectionInfo reflectionInfo, object obj) GetChild(string name, object currObj);
     }
 
@@ -283,14 +202,11 @@ namespace DataVisit
     {
         internal FieldReflectionInfo(string name, FieldInfo field)
         {
-            var fields = AnaylizeFields(field.FieldType);
-            var propertys = AnaylizeProperties(field.FieldType);
+            var fields = Visitor.AnaylizeFields(field.FieldType);
+            var propertys = Visitor.AnaylizeProperties(field.FieldType);
 
             this.name = name;
             this.field = field;
-
-            subReflectionInfos.Add(fields.Select(x => new FieldReflectionInfo(x.name, x.field)));
-            subReflectionInfos.Add(propertys.Select(x => new PropertyReflectionInfo(x.name, x.field)));
         }
 
         internal FieldReflectionInfo(FieldInfo field)
@@ -318,15 +234,16 @@ namespace DataVisit
             return field.DeclaringType;
         }
 
-        internal override (ReflectionInfo reflectionInfo, object obj) GetChild(string name, object currObj)
+        internal override ReflectionInfo GetChild(string name)
         {
-            var obj = GetValue(currObj);
-            var reflectionInfo = subReflectionInfos.Single(x => x.name == name);
-            return (reflectionInfo, obj);
-
+            throw new NotImplementedException();
         }
 
-        internal List<ReflectionInfo> subReflectionInfos = new List<ReflectionInfo>();
+        internal override (ReflectionInfo reflectionInfo, object obj) GetChild(string name, object currObj)
+        {
+            throw new NotImplementedException();
+        }
+
         private FieldInfo field;
 
     }
@@ -371,7 +288,12 @@ namespace DataVisit
             return (null, obj);
         }
 
-        private PropertyInfo property;
+        internal override ReflectionInfo GetChild(string name)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal PropertyInfo property;
     }
 
     [AttributeUsage(AttributeTargets.Field|AttributeTargets.Property)]
