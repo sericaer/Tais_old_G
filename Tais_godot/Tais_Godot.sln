@@ -20,7 +20,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataVisit", "..\DataVisit\D
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataVisitorUnitTest", "..\DataVisit\DataVisitorUnitTest\DataVisitorUnitTest.csproj", "{0536B9AC-3D33-42AE-9484-16BFA6137477}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModderUnitTest", "..\Modder\ModderUnitTest\ModderUnitTest.csproj", "{B38CFB7E-6124-4578-B520-E162E08B00D5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NUnitTest", "..\NUnitTest\NUnitTest.csproj", "{B27D30B1-B521-450C-8C2E-5AEE495CF5F0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -78,14 +78,14 @@ Global
 		{0536B9AC-3D33-42AE-9484-16BFA6137477}.ExportRelease|Any CPU.Build.0 = Release|Any CPU
 		{0536B9AC-3D33-42AE-9484-16BFA6137477}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0536B9AC-3D33-42AE-9484-16BFA6137477}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B38CFB7E-6124-4578-B520-E162E08B00D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B38CFB7E-6124-4578-B520-E162E08B00D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B38CFB7E-6124-4578-B520-E162E08B00D5}.ExportDebug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B38CFB7E-6124-4578-B520-E162E08B00D5}.ExportDebug|Any CPU.Build.0 = Debug|Any CPU
-		{B38CFB7E-6124-4578-B520-E162E08B00D5}.ExportRelease|Any CPU.ActiveCfg = Release|Any CPU
-		{B38CFB7E-6124-4578-B520-E162E08B00D5}.ExportRelease|Any CPU.Build.0 = Release|Any CPU
-		{B38CFB7E-6124-4578-B520-E162E08B00D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B38CFB7E-6124-4578-B520-E162E08B00D5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B27D30B1-B521-450C-8C2E-5AEE495CF5F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B27D30B1-B521-450C-8C2E-5AEE495CF5F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B27D30B1-B521-450C-8C2E-5AEE495CF5F0}.ExportDebug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B27D30B1-B521-450C-8C2E-5AEE495CF5F0}.ExportDebug|Any CPU.Build.0 = Debug|Any CPU
+		{B27D30B1-B521-450C-8C2E-5AEE495CF5F0}.ExportRelease|Any CPU.ActiveCfg = Release|Any CPU
+		{B27D30B1-B521-450C-8C2E-5AEE495CF5F0}.ExportRelease|Any CPU.Build.0 = Release|Any CPU
+		{B27D30B1-B521-450C-8C2E-5AEE495CF5F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B27D30B1-B521-450C-8C2E-5AEE495CF5F0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

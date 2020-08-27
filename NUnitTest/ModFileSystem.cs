@@ -38,6 +38,10 @@ namespace Modder.UnitTest
 
         internal static void Clear()
         {
+            if(!Directory.Exists(path))
+            {
+                return;
+            }
             foreach(var dir in Directory.EnumerateDirectories(path))
             {
                 Directory.Delete(dir, true);
