@@ -73,7 +73,17 @@ namespace Parser.Syntax
                             }
 
                             values = new List<Value>();
-                            values.Add(new StringValue(raw, start, end));
+                            var substr = raw.Substring(start, end - start);
+                            double dbValue;
+                            if(double.TryParse(substr, out dbValue))
+                            {
+                                values.Add(new DigitValue() { digit = dbValue});
+                            }
+                            else
+                            {
+                                values.Add(new StringValue() { data = substr});
+                            }
+                            
                             charIndex = end;
                         }
                         return;
@@ -148,15 +158,14 @@ namespace Parser.Syntax
 
     }
 
-   
-
-    public class StringValue : Value
+    public class SingleValue : Value
     {
-        String data;
-        public StringValue(string raw, int start, int end)
-        {
-            data = raw.Substring(start, end - start);
-        }
+
+    }
+
+    public class StringValue : SingleValue
+    {
+        public String data;
 
         public override string ToString()
         {
@@ -164,9 +173,9 @@ namespace Parser.Syntax
         }
     }
 
-    public class DigitValue : Value
+    public class DigitValue : SingleValue
     {
-
+        public double digit;
     }
 
     internal enum ELEM_TYPE

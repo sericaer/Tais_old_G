@@ -9,6 +9,7 @@ namespace Parser.Syntax
 {
     public class Value
     {
+
         protected static List<Value> LoadList(string raw, ref int charIndex)
         {
             List<Value> rslt = new List<Value>();
@@ -35,7 +36,7 @@ namespace Parser.Syntax
                         }
                     case ELEM_TYPE.STRING:
                         {
-                            var node = new StringValue(raw, start, end);
+                            var node = new StringValue() { data = raw.Substring(start, end - start) };
                             rslt.Add(node);
                             start = end;
 

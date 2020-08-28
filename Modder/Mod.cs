@@ -18,8 +18,8 @@ namespace Modder
 
         static Mod()
         {
-            Visitor.GetValue = ModDataVisit.Get;
-            Visitor.SetValue = ModDataVisit.Set;
+            Visitor.GetValueFunc = ModDataVisit.Get;
+            Visitor.SetValueFunc = ModDataVisit.Set;
         }
 
         public static IEnumerable<Mod> Enumerate()

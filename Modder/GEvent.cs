@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Parser;
 using Parser.Semantic;
+using Parser.Syntax;
 
 namespace Modder
 {
@@ -73,11 +74,11 @@ namespace Modder
                 semantic.set.Do();
             }
 
-            public (string right, string left)[] sets
+            public (string right, SingleValue left)[] sets
             {
                 get
                 {
-                    return semantic.set.list.ToArray();
+                    return semantic.set.list.Select(x=>(x.left, x.right)).ToArray();
                 }
             }
 

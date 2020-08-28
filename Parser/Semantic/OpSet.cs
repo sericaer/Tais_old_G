@@ -8,7 +8,7 @@ namespace Parser.Semantic
     {
         public static OpSet Parse(SyntaxItem item)
         {
-            var sub = new List<(string right, string left)>();
+            var sub = new List<(string right, SingleValue left)>();
 
             foreach(var value in item.values)
             {
@@ -17,12 +17,12 @@ namespace Parser.Semantic
                 {
                     throw new Exception("set sub iteam must be key-value pair!");
                 }
-                if(subItem.values.Count != 1 || !(subItem.values[0] is StringValue))
+                if(subItem.values.Count != 1 || !(subItem.values[0] is SingleValue))
                 {
                     throw new Exception("set sub iteam must be have one StringValue!");
                 }
 
-                sub.Add((subItem.key, subItem.values[0].ToString()));
+                sub.Add((subItem.key, subItem.values[0] as SingleValue));
             }
 
             return new OpSet() { list = sub };
@@ -30,9 +30,9 @@ namespace Parser.Semantic
 
         public void Do()
         {
-            list.ForEach(x => Visitor.SetValue(x.right, Visitor.GetValue(x.left)));
+            list.ForEach(x => Visitor.SetValue(x.left, Visitor.GetValue(x.right)));
         }
 
-        public List<(string right, string left)> list;
+        public List<(string left, SingleValue right)> list;
     }
 }

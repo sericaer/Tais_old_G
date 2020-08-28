@@ -10,25 +10,25 @@ namespace Parser.Semantic
 {
     public class GroupValue : IEnumerable<object>
     {
-        List<string> datas = new List<String>();
+        List<SingleValue> datas = new List<SingleValue>();
 
         public static GroupValue Parse(SyntaxItem item)
         {
-            var Params = new List<String>();
+            var Params = new List<SingleValue>();
             foreach(var value in item.values)
             {
-                var stringValue = value as StringValue;
+                var stringValue = value as SingleValue;
                 if(stringValue == null)
                 {
-                    throw new Exception($"Semantic error, {item} value must be string value");
+                    throw new Exception($"Semantic error, {item} value must be single value");
                 }
 
-                Params.Add(stringValue.ToString());
+                Params.Add(stringValue);
             }
 
             return new GroupValue(Params.ToArray());
         }
-        public GroupValue(params string[] Params)
+        public GroupValue(params SingleValue[] Params)
         {
             datas.AddRange(Params);
         }

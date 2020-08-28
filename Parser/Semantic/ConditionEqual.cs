@@ -16,14 +16,14 @@ namespace Parser.Semantic
                 throw new Exception("conditon equal must have 2 values!");
             }
 
-            var value0 = item.values[0] as StringValue;
-            var value1 = item.values[1] as StringValue;
+            var value0 = item.values[0] as SingleValue;
+            var value1 = item.values[1] as SingleValue;
             if (value0 == null || value1 == null)
             {
-                throw new Exception("conditon equal value must be string or digit");
+                throw new Exception("conditon equal value must be SingleValue");
             }
 
-            return new ConditionEqual() { right = value0.ToString(), left = value1.ToString() };
+            return new ConditionEqual() { right = value0, left = value1 };
         }
 
 
@@ -32,7 +32,7 @@ namespace Parser.Semantic
             return Visitor.GetValue(right) == Visitor.GetValue(left);
         }
 
-        public string right;
-        public string left;
+        public SingleValue right;
+        public SingleValue left;
     }
 }

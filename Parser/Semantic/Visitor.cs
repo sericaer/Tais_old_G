@@ -3,11 +3,26 @@ namespace Parser.Semantic
 {
     public static class Visitor
     {
-        public static Func<string, dynamic> GetValue = (raw) =>
-         {
-             return raw;
-         };
+        public static dynamic GetValue(Syntax.Value raw)
+        {
+            switch(raw)
+            {
+                case Syntax.DigitValue dValue:
+                    return dValue.digit;
+                case Syntax.StringValue sValue:
+                    return GetValueFunc(sValue.ToString());
+                default:
+                    throw new NotImplementedException();
+            }
+        }
 
-        public static Action<string, object> SetValue = (p1, p2) => { };
+        public static void SetValue(string target, Syntax.Value raw)
+        {
+            SetValueFunc(target, GetValue(raw));
+        }
+
+        public static Func<String, dynamic> GetValueFunc;
+
+        public static Action<String, object> SetValueFunc;
     }
 }
