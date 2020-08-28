@@ -2,7 +2,9 @@
 using NUnit.Framework;
 using System;
 using System.Linq;
-namespace Modder.UnitTest
+using UnitTest.Modder.Mock;
+
+namespace UnitTest.Modder.Event
 {
     [TestFixture()]
     public class TestEventDepart
@@ -59,7 +61,6 @@ option =
         public void Setup()
         {
             ModDataVisit.InitVisitData(Demon.Init());
-            Checker.currEvent = null;
         }
 
         [Test()]

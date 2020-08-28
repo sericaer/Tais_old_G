@@ -220,8 +220,6 @@ namespace DataVisit
             return obj;
         }
 
-
-        private static Dictionary<string, ReflectionInfo[]> dictMap;
         private static object rootObj;
         private static object enumerateObj;
         private static string enumerateKey;

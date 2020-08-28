@@ -1,6 +1,6 @@
 ﻿using System;
 using System.IO;
-namespace Modder.UnitTest
+namespace UnitTest.Modder.Mock
 {
     public class ModFileSystem
     {

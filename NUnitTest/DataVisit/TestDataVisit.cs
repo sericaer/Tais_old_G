@@ -1,16 +1,16 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using DataVisit;
-//using Parser.Semantic;
-using System.Text.RegularExpressions;
-using System.Collections.Generic;
+﻿using DataVisit;
+using Modder;
+using NUnit.Framework;
 using System;
-
-namespace DataVisit.Tests
+using System.Collections.Generic;
+using System.Linq;
+namespace UnitTest.DataVisit
 {
-    [TestClass]
-    public class VisitorTests
+    [TestFixture()]
+    public class TestDataVisit
     {
-        [TestMethod]
+
+        [Test()]
         public void TestVisitGetData()
         {
             TestData.inst = new TestData()

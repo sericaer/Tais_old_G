@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using DataVisit;
 
-namespace Modder.UnitTest
+namespace UnitTest.Modder.Mock
 {
     public class Demon
     {

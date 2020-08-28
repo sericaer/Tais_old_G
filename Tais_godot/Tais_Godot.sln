@@ -18,8 +18,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Parser", "..\Parser\Parser.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataVisit", "..\DataVisit\DataVisit.csproj", "{60624F37-78F3-44EB-AD31-76E1893F5EA9}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataVisitorUnitTest", "..\DataVisit\DataVisitorUnitTest\DataVisitorUnitTest.csproj", "{0536B9AC-3D33-42AE-9484-16BFA6137477}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NUnitTest", "..\NUnitTest\NUnitTest.csproj", "{B27D30B1-B521-450C-8C2E-5AEE495CF5F0}"
 EndProject
 Global
@@ -70,14 +68,6 @@ Global
 		{60624F37-78F3-44EB-AD31-76E1893F5EA9}.ExportRelease|Any CPU.Build.0 = Release|Any CPU
 		{60624F37-78F3-44EB-AD31-76E1893F5EA9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{60624F37-78F3-44EB-AD31-76E1893F5EA9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0536B9AC-3D33-42AE-9484-16BFA6137477}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0536B9AC-3D33-42AE-9484-16BFA6137477}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0536B9AC-3D33-42AE-9484-16BFA6137477}.ExportDebug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0536B9AC-3D33-42AE-9484-16BFA6137477}.ExportDebug|Any CPU.Build.0 = Debug|Any CPU
-		{0536B9AC-3D33-42AE-9484-16BFA6137477}.ExportRelease|Any CPU.ActiveCfg = Release|Any CPU
-		{0536B9AC-3D33-42AE-9484-16BFA6137477}.ExportRelease|Any CPU.Build.0 = Release|Any CPU
-		{0536B9AC-3D33-42AE-9484-16BFA6137477}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0536B9AC-3D33-42AE-9484-16BFA6137477}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B27D30B1-B521-450C-8C2E-5AEE495CF5F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B27D30B1-B521-450C-8C2E-5AEE495CF5F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B27D30B1-B521-450C-8C2E-5AEE495CF5F0}.ExportDebug|Any CPU.ActiveCfg = Debug|Any CPU

@@ -32,11 +32,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Checker.cs" />
-    <Compile Include="Demon.cs" />
-    <Compile Include="ModFileSystem.cs" />
-    <Compile Include="TestEventCommon.cs" />
-    <Compile Include="TestEventDepart.cs" />
+    <Compile Include="Modder\Event\TestEventCommon.cs" />
+    <Compile Include="Modder\Event\TestEventDepart.cs" />
+    <Compile Include="Modder\Mock\Demon.cs" />
+    <Compile Include="Modder\Mock\ModFileSystem.cs" />
+    <Compile Include="DataVisit\TestDataVisit.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -50,6 +50,12 @@
       <Project>{60624F37-78F3-44EB-AD31-76E1893F5EA9}</Project>
       <Name>DataVisit</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Modder\" />
+    <Folder Include="Modder\Event\" />
+    <Folder Include="Modder\Mock\" />
+    <Folder Include="DataVisit\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
