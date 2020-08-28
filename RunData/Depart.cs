@@ -35,7 +35,7 @@ namespace RunData
 
             all.Add(new Depart("JIXIAN",
                                (63, 72, 204),
-                               new (string name, int num)[] { ("HAOQIANG", 3000), ("MINHU", 60000) }));
+                               new (string name, int num)[] { ("haoqiang", 3000), ("minhu", 60000), ("yinhu", 20000) }));
             return all;
         }
 

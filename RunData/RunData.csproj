@@ -53,6 +53,7 @@
     <Compile Include="Root.cs" />
     <Compile Include="Date.cs" />
     <Compile Include="WeakEvent.cs" />
+    <Compile Include="Extensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

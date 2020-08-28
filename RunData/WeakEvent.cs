@@ -87,7 +87,7 @@ namespace RunData
                         this.list[i].Invoke(ARGS);
                     }
                 }
-                catch(TargetInvocationException e)
+                catch(TargetInvocationException)
                 {
                     Root.logger($"Remove {this.list[i].Name}");
                     this.list.RemoveAt(i);
