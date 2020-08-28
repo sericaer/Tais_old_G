@@ -23,7 +23,7 @@ namespace RunData
         }
 
 
-        [DataVisitorProperty("economy.value")]
+        [DataVisitorProperty("value")]
         public double currValue
         {
             get

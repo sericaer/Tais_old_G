@@ -23,7 +23,7 @@ namespace DataVisit.Tests
                                              }
             };
 
-            Visitor.InitVisitMap(new List<Type> { typeof(TestData),  typeof(TestDataSub), typeof(TestElem) });
+            Visitor.InitVisitMap(typeof(TestData));
             Visitor.SetVisitData(TestData.inst);
 
             Assert.AreEqual(Visitor.Get("sub.a"), 14);

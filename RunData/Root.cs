@@ -67,10 +67,10 @@ namespace RunData
 
         public static Root inst;
 
-        [DataVisitorProperty]
+        [DataVisitorProperty("date")]
         public Date date;
 
-        [DataVisitorProperty]
+        [DataVisitorProperty("economy")]
         public Economy economy;
 
         [DataVisitorPropertyArray("depart")]

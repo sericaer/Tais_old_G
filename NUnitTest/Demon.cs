@@ -13,7 +13,7 @@ namespace Modder.UnitTest
             return inst;
         }
 
-        [DataVisitorProperty]
+        [DataVisitorProperty("item1")]
         public Item1 item1;
 
         [DataVisitorPropertyArray("depart")]
@@ -30,19 +30,19 @@ namespace Modder.UnitTest
 
     public class Item1
     {
-        [DataVisitorProperty("item1.data1")]
+        [DataVisitorProperty("data1")]
         public int data1;
 
-        [DataVisitorProperty("item1.data2")]
+        [DataVisitorProperty("data2")]
         public int data2;
     }
 
     public class Depart
     {
-        [DataVisitorProperty("depart.data1")]
+        [DataVisitorProperty("data1")]
         public int data1;
 
-        [DataVisitorProperty("depart.data2")]
+        [DataVisitorProperty("data2")]
         public int data2;
     }
 }

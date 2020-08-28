@@ -8,12 +8,11 @@ namespace DataVisit
 {
     public class Visitor
     {
-        static Dictionary<Type, List<ReflectionInfo>> dictRef = new Dictionary<Type, List<ReflectionInfo>>();
-
+        static Dictionary<Type, Dictionary<string, ReflectionInfo>> dictRef = new Dictionary<Type, Dictionary<string, ReflectionInfo>>();
         public class Pos
         {
             internal int index;
-            internal object obj;
+            internal IList list;
         }
 
         public static object Get(string raw)
@@ -44,32 +43,40 @@ namespace DataVisit
             return VisitGet(raw);
         }
 
-        public static object Get(string raw, Pos pos)
-        {
-            object rslt = pos.obj;
-            foreach (var field in dictMap[raw])
-            {
-                rslt = field.GetValue(rslt);
-            }
+        //public static object Get(string raw, Pos pos)
+        //{
+        //    object rslt = pos.obj;
+        //    foreach (var field in dictMap[raw])
+        //    {
+        //        rslt = field.GetValue(rslt);
+        //    }
 
-            return rslt;
-        }
+        //    return rslt;
+        //}
 
         public static void Set(string raw, object value)
         {
             var splits = raw.Split('.');
 
-            ReflectionInfo currReflection = dictRef[rootObj.GetType()].Single(x => x.name == splits[0]);
-            var currObj = currReflection.GetValue(rootObj);
+            var type = rootObj.GetType();
+            var obj = rootObj;
 
-            for (int i = 1; i < splits.Length-1; i++)
+            int i = 0;
+            if (enumerateObj != null && enumerateKey == splits[0])
             {
-                currReflection = dictRef[currObj.GetType()].Single(x => x.name == splits[i]);
-                currObj = currReflection.GetValue(currObj);
+                type = enumerateObj.GetType();
+                obj = enumerateObj;
+                i++;
             }
 
-            var leaf = dictRef[currReflection.GetDataType()].Single(x => x.name == splits[splits.Length - 1]);
-            leaf.SetValue(currObj, value);
+            for (; i<splits.Length-1; i++)
+            {
+                var reflection = dictRef[type][splits[i]];
+                obj = reflection.GetValue(obj);
+                type = reflection.GetDataType();
+            }
+
+            dictRef[type][splits[i]].SetValue(obj, value);
         }
 
         public static void SetVisitData(object data)
@@ -77,71 +84,100 @@ namespace DataVisit
             rootObj = data;
         }
 
-        public static void InitVisitMap(List<Type> types)
+        public static void InitVisitMap(Type type)
         {
-            foreach(var type in  types)
+            if(dictRef.ContainsKey(type))
             {
-                var reflectionList = new List<ReflectionInfo>();
-                reflectionList.AddRange(AnaylizeFields(type));
-                reflectionList.AddRange(AnaylizeProperties(type));
+                return;
+            }
 
-                dictRef.Add(type, reflectionList);
+            var dictField = AnaylizeFields(type);
+            var dictProperty = AnaylizeProperties(type);
+
+            dictRef.Add(type, new Dictionary<string, ReflectionInfo>());
+
+            dictField.ToList().ForEach(x => dictRef[type].Add(x.Key, x.Value));
+            dictProperty.ToList().ForEach(x => dictRef[type].Add(x.Key, x.Value));
+
+            foreach(var reflection in dictRef[type].Values)
+            {
+                var subType = reflection.GetDataType();
+                if (subType.IsValueType)
+                {
+                    continue;
+                }
+
+                if (subType.IsGenericType && subType.GetGenericTypeDefinition() == typeof(List<>))
+                {
+                    subType = subType.GetGenericArguments()[0];
+                }
+
+                InitVisitMap(subType);
             }
         }
 
         public static bool EnumerateVisit(string key, ref Pos pos)
         {
-            var objs = VisitGet(key);
-            var list = objs as IList;
-            if(list == null)
-            {
-                throw new Exception($"EnumerateVisit error, {key} must be List<>");
-            }
-
             if (pos == null)
             {
-                pos = new Pos() { index = 0 };
+                var objs = VisitGet(key) as IList;
+                if (objs == null)
+                {
+                    throw new Exception($"EnumerateVisit error, {key} must be List<>");
+                }
+
+                pos = new Pos() { index = 0, list = objs };
+                enumerateKey = key;
             }
             else
             {
                 pos.index++;
             }
 
-            if (pos.index + 1 > list.Count)
+            if (pos.index + 1 > pos.list.Count)
             {
                 enumerateObj = null;
+                enumerateKey = null;
                 return false;
             }
 
-            pos.obj = list[pos.index];
-            enumerateObj = pos.obj;
+            enumerateObj = pos.list[pos.index];
 
             return true;
         }
 
-        internal static List<FieldReflectionInfo> AnaylizeFields(Type type)
+        internal static Dictionary<string, ReflectionInfo> AnaylizeFields(Type type)
         {
-            var rslt = new List<FieldReflectionInfo>();
+            var rslt = new Dictionary<string, ReflectionInfo>();
 
             var fields = type.GetFields(BindingFlags.DeclaredOnly | BindingFlags.Public | BindingFlags.Instance);
 
             foreach (var field in fields)
             {
                 var visitPropery = (DataVisitorProperty)Attribute.GetCustomAttribute(field, typeof(DataVisitorProperty));
-                if (visitPropery == null)
+                if (visitPropery != null)
                 {
-                    continue;
+                    rslt.Add(visitPropery.key, new FieldReflectionInfo(field));
                 }
 
-                rslt.Add(new FieldReflectionInfo(visitPropery.key, field));
+                var visitProperyArray = (DataVisitorPropertyArray)Attribute.GetCustomAttribute(field, typeof(DataVisitorPropertyArray));
+                if (visitProperyArray != null)
+                {
+                    if(field.FieldType.GetGenericTypeDefinition() != typeof(List<>))
+                    {
+                        throw new Exception();
+                    }
+
+                    rslt.Add(visitProperyArray.key, new FieldReflectionInfo(field));
+                }
             }
 
             return rslt;
         }
 
-        internal static List<PropertyReflectionInfo> AnaylizeProperties(Type type)
+        internal static Dictionary<string, ReflectionInfo> AnaylizeProperties(Type type)
         {
-            var rslt = new List<PropertyReflectionInfo>();
+            var rslt = new Dictionary<string, ReflectionInfo>();
 
             var properties = type.GetProperties(BindingFlags.DeclaredOnly | BindingFlags.Public | BindingFlags.Instance);
 
@@ -153,7 +189,7 @@ namespace DataVisit
                     continue;
                 }
 
-                rslt.Add(new PropertyReflectionInfo(visitPropery.key, property));
+                rslt.Add(visitPropery.key, new PropertyReflectionInfo(property));
             }
 
             return rslt;
@@ -163,22 +199,32 @@ namespace DataVisit
         {
             var splits = raw.Split('.');
 
-            ReflectionInfo currReflection = dictRef[rootObj.GetType()].Single(x => x.name == splits[0]);
-            var currObj = currReflection.GetValue(rootObj);
+            var type = rootObj.GetType();
+            var obj = rootObj;
 
-            for(int i=1; i<splits.Length; i++)
+            int i = 0;
+            if (enumerateObj != null && enumerateKey == splits[0])
             {
-                currReflection = dictRef[currObj.GetType()].Single(x => x.name == splits[i]);
-                currObj = currReflection.GetValue(currObj);
+                type = enumerateObj.GetType();
+                obj = enumerateObj;
+                i++;
             }
 
-            return currObj;
+            for (; i < splits.Length; i++)
+            {
+                var reflection = dictRef[type][splits[i]];
+                obj = reflection.GetValue(obj);
+                type = reflection.GetDataType();
+            }
+
+            return obj;
         }
 
 
         private static Dictionary<string, ReflectionInfo[]> dictMap;
         private static object rootObj;
         private static object enumerateObj;
+        private static string enumerateKey;
     }
 
     internal abstract class ReflectionInfo

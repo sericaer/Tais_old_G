@@ -50,7 +50,7 @@ namespace RunData
         [JsonProperty]
         public int month;
 
-        [JsonProperty, DataVisitorProperty("date.day")]
+        [JsonProperty, DataVisitorProperty("day")]
         public int day;
 
         public int total_days

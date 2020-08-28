@@ -108,7 +108,7 @@ option =
 
             Demon.inst.departs[0].data1 = 11;
             Demon.inst.departs[1].data1 = 11;
-            int eventCount = 0;
+            int count = 0;
             foreach (var eventobj in Mod.Process())
             {
                 Assert.AreEqual(eventobj.title.Format, "EVENT_DIFF_TITLE");
@@ -120,18 +120,18 @@ option =
                 Assert.AreEqual(eventobj.options[2].desc.Format, "EVENT_TEST_OPTION_3_DESC");
 
                 eventobj.options[0].Selected();
-                Assert.AreEqual(Demon.inst.departs[0].data2, 101);
+                Assert.AreEqual(Demon.inst.departs[count].data2, 101);
 
                 eventobj.options[1].Selected();
-                Assert.AreEqual(Demon.inst.departs[0].data2, 102);
+                Assert.AreEqual(Demon.inst.departs[count].data2, 102);
 
                 eventobj.options[2].Selected();
-                Assert.AreEqual(Demon.inst.departs[0].data2, 103);
+                Assert.AreEqual(Demon.inst.departs[count].data2, 103);
 
-                eventCount++;
+                count++;
             }
 
-            Assert.AreEqual(2, eventCount);
+            Assert.AreEqual(2, count);
         }
     }
 }
