@@ -39,6 +39,14 @@ namespace RunData
             this.depart_name = depart_name;
         }
 
+        internal PopDef def
+        {
+            get
+            {
+                return PopDef.dict[name];
+            }
+        }
+
         internal static List<Pop> Init(IEnumerable<Depart> departs)
         {
             var all = new List<Pop>();
@@ -59,5 +67,23 @@ namespace RunData
                 pop.num.value++;
             });
         }
+    }
+
+    public class PopDef
+    {
+        static PopDef()
+        {
+            dict = new Dictionary<string, PopDef>()
+            {
+                { "haoqiang", new PopDef(){ is_collect_tax = true} },
+                { "minhu", new PopDef(){ is_collect_tax = true} },
+                { "yinhu", new PopDef(){ is_collect_tax = false} },
+            };
+        }
+
+        public static Dictionary<string, PopDef> dict;
+
+
+        public bool is_collect_tax;
     }
 }

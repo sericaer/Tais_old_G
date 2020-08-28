@@ -11,5 +11,8 @@ occur = 1
 option =
 {
 	desc = EVENT_TEST_OPTION_1_DESC
-	set = {economy.value=10}
+	set = 
+	{
+	    economy.value = economy.expext_tax
+	}
 }

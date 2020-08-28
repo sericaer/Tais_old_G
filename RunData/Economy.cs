@@ -35,13 +35,17 @@ namespace RunData
                 curr.value = value;
             }
         }
-        
+
+        [DataVisitorProperty("expert_tax")]
+        public double expertTax;
+
         public Reactive<double> curr;
 
 
         private Economy()
         {
             curr = new Reactive<double>(100);
+            expertTax = 200;
         }
     }
 }
