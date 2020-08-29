@@ -6,7 +6,7 @@ namespace TaisGodot.Scripts
     {
         public override void _Ready()
         {
-            GetNode<ReactiveLabel>("").Assoc(RunData.Economy.inst.curr);
+            GetNode<ReactiveLabel>("Button/Economy/Value").Assoc(RunData.Economy.inst.curr);
         }
     }
 }

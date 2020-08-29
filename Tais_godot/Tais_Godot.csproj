@@ -57,6 +57,7 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Global\ButtonEx.cs" />
     <Compile Include="Global\ClickFreeMask.cs" />
     <Compile Include="Scenes\Main\Top\SpeedContrl.cs" />
     <Compile Include="Scenes\Start\LoadPanel\LoadPanel.cs" />

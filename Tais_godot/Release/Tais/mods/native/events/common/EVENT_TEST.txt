@@ -13,6 +13,6 @@ option =
 	desc = EVENT_TEST_OPTION_1_DESC
 	set = 
 	{
-	    economy.value = economy.expext_tax
+	    economy.value = 120
 	}
 }
