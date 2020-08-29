@@ -30,7 +30,7 @@ namespace Parser.Semantic
 
         public void Do()
         {
-            list.ForEach(x => Visitor.SetValue(x.left, Visitor.GetValue(x.right)));
+            list.ForEach(x => Visitor.SetValue(x.left, x.right));
         }
 
         public List<(string left, SingleValue right)> list;

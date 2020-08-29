@@ -91,23 +91,25 @@ namespace Parser.Semantic
         {
             if(type.IsValueType)
             {
-                if (item.values.Count() != 1 || !(item.values[0] is StringValue))
+                if (item.values.Count() != 1 || !(item.values[0] is SingleValue))
                 {
                     throw new Exception($"type {type.FullName} not support key-value:{item}");
                 }
 
-                var strValue = item.values[0] as StringValue;
+                var strValue = item.values[0] as SingleValue;
                 if (type == typeof(string))
                 {
                     return strValue.ToString();
                 }
-                else if (type == typeof(double))
+                else if (type == typeof(double) || type == typeof(int))
                 {
-                    return double.Parse(strValue.ToString());
-                }
-                else if (type == typeof(int))
-                {
-                    return int.Parse(strValue.ToString());
+                    var digitValue = strValue as DigitValue;
+                    if (digitValue == null)
+                    {
+                        throw new Exception($"can not support type {type} with key:{item.key}");
+                    }
+
+                    return Convert.ChangeType(digitValue.digit, type);
                 }
                 else
                 {

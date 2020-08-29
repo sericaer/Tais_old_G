@@ -31,18 +31,18 @@ namespace UnitTest.Modder.Mock
     public class Item1
     {
         [DataVisitorProperty("data1")]
-        public int data1;
+        public double data1;
 
         [DataVisitorProperty("data2")]
-        public int data2;
+        public double data2;
     }
 
     public class Depart
     {
         [DataVisitorProperty("data1")]
-        public int data1;
+        public double data1;
 
         [DataVisitorProperty("data2")]
-        public int data2;
+        public double data2;
     }
 }
