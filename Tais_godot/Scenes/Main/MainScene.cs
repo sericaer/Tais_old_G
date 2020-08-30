@@ -70,6 +70,11 @@ namespace TaisGodot.Scripts
 			AddChild(SysPanel);
 		}
 
+		private void _on_Button_Economy_pressed()
+		{
+			var SysPanel = ResourceLoader.Load<PackedScene>("res://Scenes/Main/Dynamic/EconomyDetail/EconomyDetailPanel.tscn").Instance();
+			AddChild(SysPanel);
+		}
 		//  // Called every frame. 'delta' is the elapsed time since the previous frame.
 		//  public override void _Process(float delta)
 		//  {
@@ -77,6 +82,3 @@ namespace TaisGodot.Scripts
 		//  }
 	}
 }
-
-
-

@@ -11,7 +11,7 @@ public class ButtonEx : Button
 	public override void _Ready()
 	{
 		var sub = GetChild<Control>(0);
-		this.RectMinSize = new Vector2(sub.RectSize.x, sub.RectSize.y);
+		this.RectMinSize = new Vector2(sub.RectSize.x+10, sub.RectSize.y);
 
 	}
 
