@@ -40,7 +40,15 @@ namespace RunData
             this.depart_name = depart_name;
 
             this.num = new Reactive<double>(num);
-            this.expectTax = Reactive<double>.From(this.num, (x)=>x * 0.01);
+
+            if(def.is_collect_tax)
+            {
+                this.expectTax = Reactive<double>.From(this.num, (x) => x * 0.01);
+            }
+            else
+            {
+                this.expectTax = new Reactive<double>(0);
+            }
 
         }
 
@@ -70,21 +78,7 @@ namespace RunData
             all.ForEach(pop =>
             {
                 pop.num.value++;
-
-                pop.UpdateExpectTax();
             });
-        }
-
-        private void UpdateExpectTax()
-        {
-            if (def.is_collect_tax)
-            {
-                expectTax.value = 0;
-            }
-            else
-            {
-                expectTax.value = num.value * 0.01;
-            }
         }
     }
 

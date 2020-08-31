@@ -1,12 +1,12 @@
-﻿using System;
+using System;
 using Godot;
 using RunData;
 
 namespace TaisGodot.Scripts
 {
-    public class IncomePanel : HBoxContainer
-    {
-        internal InCome gmObj;
+	public class IncomePanel : HBoxContainer
+	{
+		internal InCome gmObj;
 
 		// Called when the node enters the scene tree for the first time.
 		public override void _Ready()
@@ -15,10 +15,12 @@ namespace TaisGodot.Scripts
 			GetNode<HSlider>("HSlider").Value = gmObj.percent.value;
 			GetNode<ReactiveLabel>("Value").Assoc(gmObj.currValue);
 		}
-
-		private void _on_Slider_Value_Changed(double value)
-        {
+		
+		private void _on_HSlider_value_changed(float value)
+		{
 			gmObj.percent.value = value;
 		}
 	}
 }
+
+

@@ -95,11 +95,11 @@ namespace RunData
             curr = new Reactive<double>(100);
 
             inComes = new List<InCome>() {
-                new InCome( "", 30, ()=>Pop.all.Sum(x=>x.expectTax.value))
+                new InCome( "STATIC_POP_TAX", 30, ()=>Pop.all.Sum(x=>x.expectTax.value))
             };
 
             outputs = new List<Output>() {
-                new Output("", 100, ()=>Root.inst.chaoting.requireTax)
+                new Output("STATIC_COUNTRY_TAX", 100, ()=>Root.inst.chaoting.requireTax)
             };
         }
 

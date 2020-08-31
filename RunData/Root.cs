@@ -17,7 +17,7 @@ namespace RunData
 
         public static Root Init()
         {
-            inst = new Root();
+            new Root();
 
 
 
@@ -84,6 +84,8 @@ namespace RunData
 
         public Root()
         {
+            inst = this;
+
             date = Date.Init();
 
             departs = Depart.Init();

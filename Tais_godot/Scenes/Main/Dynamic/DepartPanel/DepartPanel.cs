@@ -12,21 +12,13 @@ namespace TaisGodot.Scripts
 	{
 		public Depart gmObj;
 
-		public DepartPanel()
-		{
-			GD.Print("DepartPanel construct");
-
-			
-			//GetNode<ReactiveLabel>("PopNum").Set();
-
-			//
-		}
 
 		public override void _Ready()
 		{
-			GD.Print("DepartPanel Ready");
 
 			GetNode<Label>("CenterContainer/PanelContainer/VBoxContainer/Name").Text = gmObj.name;
+
+			GetNode<ReactiveLabel>("CenterContainer/PanelContainer/VBoxContainer/StatisticContainer/GridContainer/PopNum/Value").Assoc(gmObj.popNum);
 
 			GetNode<PopContainer>("CenterContainer/PanelContainer/VBoxContainer/PopContainer").SetPops(gmObj.pops);
 		}

@@ -20,7 +20,7 @@ namespace TaisGodot.Scripts
 			memento = RunData.Economy.inst.CreateMemento();
 
 			foreach (var income in RunData.Economy.inst.EnumerateInCome())
-            {
+			{
 				var incomPanel = (IncomePanel)ResourceLoader.Load<PackedScene>("res://Scenes/Main/Dynamic/EconomyDetail/IncomePanel.tscn").Instance();
 				incomPanel.gmObj = income;
 
