@@ -13,6 +13,6 @@ option =
 	desc = EVENT_TEST_OPTION_1_DESC
 	select = 
 	{
-	    add = {economy.value, 120}
+	    add = {economy.value, economy.month_surplus}
 	}
 }

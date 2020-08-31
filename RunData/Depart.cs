@@ -43,7 +43,7 @@ namespace RunData
         {
             all.ForEach(depart =>
             {
-                depart.popNum.value = depart.pops.Sum(x => x.num.value);
+                depart.popNum.value = depart.pops.Where(x=>x.def.is_collect_tax).Sum(x => (int)x.num.value);
             });
         }
 

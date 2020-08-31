@@ -10,14 +10,14 @@ namespace RunData
     {
         public Reactive(T value)
         {
-            this.weakEvent = new WeakEvent<string>();
+            this.weakEvent = new WeakEvent<T>();
             this.value = value;
         }
 
-        public void Bind(Action<string> act)
+        public void Bind(Action<T> act)
         {
             weakEvent.Add(act);
-            act.Invoke(_value.ToString());
+            act.Invoke(_value);
         }
 
         public T value
@@ -31,13 +31,25 @@ namespace RunData
                 if (_value == null || !_value.Equals(value))
                 {
                     _value = value;
-                    weakEvent.Invoke(_value.ToString());
+                    weakEvent.Invoke(_value);
                 }
 
             }
         }
 
         internal T _value;
-        internal WeakEvent<string> weakEvent;
+        internal WeakEvent<T> weakEvent;
+
+        internal static Reactive<T> From(Reactive<T> src, Func<T, T> convert)
+        {
+            var dst = new Reactive<T>(convert(src.value));
+
+            src.Bind((src_value) =>
+            {
+                dst.value = convert(src_value);
+            });
+
+            return dst;
+        }
     }
 }

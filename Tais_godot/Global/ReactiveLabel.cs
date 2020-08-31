@@ -18,9 +18,9 @@ namespace TaisGodot.Scripts
 
 		private Func<string, string> adpt;
 
-		private void SetValue(string value)
+		private void SetValue<T>(T value)
 		{ 
-			Text = adpt!=null ? adpt(value) : value;
+			Text = adpt!=null ? adpt(value.ToString()) : value.ToString();
 		}
 	}
 }

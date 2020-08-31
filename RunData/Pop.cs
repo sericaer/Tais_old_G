@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using DataVisit;
 
@@ -17,14 +18,15 @@ namespace RunData
         public string name;
         public string depart_name;
 
-        public Reactive<int> num;
+        public Reactive<double> num;
+        public Reactive<double> expectTax;
 
         [DataVisitorProperty("pop.num")]
         public int numValue
         {
             get
             {
-                return num.value;
+                return (int)num.value;
             }
             set
             {
@@ -35,8 +37,11 @@ namespace RunData
         public Pop(string depart_name, string name, int num)
         {
             this.name = name;
-            this.num = new Reactive<int>(num);
             this.depart_name = depart_name;
+
+            this.num = new Reactive<double>(num);
+            this.expectTax = Reactive<double>.From(this.num, (x)=>x * 0.01);
+
         }
 
         internal PopDef def
@@ -65,7 +70,21 @@ namespace RunData
             all.ForEach(pop =>
             {
                 pop.num.value++;
+
+                pop.UpdateExpectTax();
             });
+        }
+
+        private void UpdateExpectTax()
+        {
+            if (def.is_collect_tax)
+            {
+                expectTax.value = 0;
+            }
+            else
+            {
+                expectTax.value = num.value * 0.01;
+            }
         }
     }
 

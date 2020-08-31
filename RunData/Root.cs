@@ -73,11 +73,14 @@ namespace RunData
         [DataVisitorProperty("economy")]
         public Economy economy;
 
+        public Chaoting chaoting;
+
         [DataVisitorPropertyArray("depart")]
         public List<Depart> departs;
 
         [DataVisitorPropertyArray("pop")]
         public List<Pop> pops;
+
 
         public Root()
         {
@@ -86,6 +89,8 @@ namespace RunData
             departs = Depart.Init();
 
             pops = Pop.Init(departs);
+
+            chaoting = Chaoting.Init();
 
             economy = Economy.Init();
         }

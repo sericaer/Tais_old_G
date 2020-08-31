@@ -77,6 +77,8 @@
     <Compile Include="Global\TranslateServerEx.cs" />
     <Compile Include="Scenes\Start\StartScene.cs" />
     <Compile Include="Scenes\Main\Top\Economy.cs" />
+    <Compile Include="Scenes\Main\Dynamic\EconomyDetail\IncomePanel.cs" />
+    <Compile Include="Scenes\Main\Dynamic\EconomyDetail\OutputPanel.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Modder\Modder.csproj">
