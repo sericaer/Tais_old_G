@@ -39,9 +39,9 @@ __meta__ = {
 
 [node name="PanelContainer" type="PanelContainer" parent="CenterContainer"]
 margin_left = 483.0
-margin_top = 322.0
+margin_top = 382.0
 margin_right = 957.0
-margin_bottom = 577.0
+margin_bottom = 517.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -50,7 +50,7 @@ __meta__ = {
 margin_left = 7.0
 margin_top = 7.0
 margin_right = 467.0
-margin_bottom = 248.0
+margin_bottom = 128.0
 size_flags_horizontal = 2
 size_flags_vertical = 2
 
@@ -225,156 +225,13 @@ clip_text = true
 [node name="PopContainer" type="PanelContainer" parent="CenterContainer/PanelContainer/VBoxContainer"]
 margin_top = 107.0
 margin_right = 460.0
-margin_bottom = 241.0
+margin_bottom = 121.0
 script = ExtResource( 2 )
 
 [node name="GridContainer" type="GridContainer" parent="CenterContainer/PanelContainer/VBoxContainer/PopContainer"]
 margin_left = 7.0
 margin_top = 7.0
 margin_right = 453.0
-margin_bottom = 127.0
+margin_bottom = 7.0
 columns = 5
-
-[node name="PopPanel2" type="Panel" parent="CenterContainer/PanelContainer/VBoxContainer/PopContainer/GridContainer"]
-margin_right = 90.0
-margin_bottom = 120.0
-rect_min_size = Vector2( 90, 120 )
-
-[node name="Type" type="Label" parent="CenterContainer/PanelContainer/VBoxContainer/PopContainer/GridContainer/PopPanel2"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -45.0
-margin_top = -40.0
-margin_right = 45.0
-margin_bottom = -19.0
-text = "fdgdsfg"
-align = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Num" type="Label" parent="CenterContainer/PanelContainer/VBoxContainer/PopContainer/GridContainer/PopPanel2"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -45.0
-margin_top = 30.0
-margin_right = 45.0
-margin_bottom = 51.0
-text = "100000"
-align = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="PopPanel3" type="Panel" parent="CenterContainer/PanelContainer/VBoxContainer/PopContainer/GridContainer"]
-margin_left = 94.0
-margin_right = 184.0
-margin_bottom = 120.0
-rect_min_size = Vector2( 90, 120 )
-
-[node name="Type" type="Label" parent="CenterContainer/PanelContainer/VBoxContainer/PopContainer/GridContainer/PopPanel3"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -45.0
-margin_top = -40.0
-margin_right = 45.0
-margin_bottom = -19.0
-text = "fdgdsfg"
-align = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Num" type="Label" parent="CenterContainer/PanelContainer/VBoxContainer/PopContainer/GridContainer/PopPanel3"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -45.0
-margin_top = 30.0
-margin_right = 45.0
-margin_bottom = 51.0
-text = "100000"
-align = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="PopPanel4" type="Panel" parent="CenterContainer/PanelContainer/VBoxContainer/PopContainer/GridContainer"]
-margin_left = 188.0
-margin_right = 278.0
-margin_bottom = 120.0
-rect_min_size = Vector2( 90, 120 )
-
-[node name="Type" type="Label" parent="CenterContainer/PanelContainer/VBoxContainer/PopContainer/GridContainer/PopPanel4"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -45.0
-margin_top = -40.0
-margin_right = 45.0
-margin_bottom = -19.0
-text = "fdgdsfg"
-align = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Num" type="Label" parent="CenterContainer/PanelContainer/VBoxContainer/PopContainer/GridContainer/PopPanel4"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -45.0
-margin_top = 30.0
-margin_right = 45.0
-margin_bottom = 51.0
-text = "100000"
-align = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="PopPanel5" type="Panel" parent="CenterContainer/PanelContainer/VBoxContainer/PopContainer/GridContainer"]
-margin_left = 282.0
-margin_right = 372.0
-margin_bottom = 120.0
-rect_min_size = Vector2( 90, 120 )
-
-[node name="Type" type="Label" parent="CenterContainer/PanelContainer/VBoxContainer/PopContainer/GridContainer/PopPanel5"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -45.0
-margin_top = -40.0
-margin_right = 45.0
-margin_bottom = -19.0
-text = "fdgdsfg"
-align = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Num" type="Label" parent="CenterContainer/PanelContainer/VBoxContainer/PopContainer/GridContainer/PopPanel5"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -45.0
-margin_top = 30.0
-margin_right = 45.0
-margin_bottom = 51.0
-text = "100000"
-align = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
 [connection signal="gui_input" from="Mask" to="Mask" method="_on_Mask_gui_input"]
