@@ -21,6 +21,11 @@ namespace Parser.Semantic
             SetValueFunc(target, GetValue(raw));
         }
 
+        public static void SetValue(string target, object raw)
+        {
+            SetValueFunc(target, raw);
+        }
+
         public static Func<String, dynamic> GetValueFunc;
 
         public static Action<String, object> SetValueFunc;

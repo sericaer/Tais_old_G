@@ -30,27 +30,27 @@ occur = 1
 option =
 {
     desc = EVENT_TEST_OPTION_1_DESC
-    set =
+    select =
     {
-        depart.data2 = 101
+        assign = {depart.data2, 101}
     }
 }
 
 option =
 {
     desc = EVENT_TEST_OPTION_2_DESC
-    set =
+    select =
     {
-        depart.data2 = 102
+        assign = {depart.data2, 102}
     }
 }
 
 option =
 {
     desc = EVENT_TEST_OPTION_3_DESC
-    set =
+    select =
     {
-        depart.data2 = 103
+        assign = {depart.data2, 103}
     }
 }");
 

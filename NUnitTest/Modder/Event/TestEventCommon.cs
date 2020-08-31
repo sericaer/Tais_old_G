@@ -30,27 +30,27 @@ occur = 1
 option =
 {
     desc = EVENT_TEST_OPTION_1_DESC
-    set =
+    select =
     {
-        item1.data2 = 101
+        assign = {item1.data2, 101}
     }
 }
 
 option =
 {
     desc = EVENT_TEST_OPTION_2_DESC
-    set =
+    select =
     {
-        item1.data2 = 102
+        assign = {item1.data2, 102}
     }
 }
 
 option =
 {
     desc = EVENT_TEST_OPTION_3_DESC
-    set =
+    select =
     {
-        item1.data2 = 103
+        assign = {item1.data2, 103}
     }
 }");
 
@@ -66,25 +66,25 @@ occur = 1
 
 option =
 {
-    set =
+    select =
     {
-        item1.data2 = 101
+        add = {item1.data2, 0}
     }
 }
 
 option =
 {
-    set =
+    select =
     {
-        item1.data2 = 102
+        add = {item1.data2, 1}
     }
 }
 
 option =
 {
-    set =
+    select =
     {
-        item1.data2 = 103
+        add = {item1.data2, 2}
     }
 }");
 
@@ -138,21 +138,22 @@ option =
             Assert.AreEqual(eventobj.options[2].desc.Format, "EVENT_TEST_OPTION_3_DESC");
 
             eventobj.options[0].Selected();
-            Assert.AreEqual(Demon.inst.item1.data2, 101);
+            Assert.AreEqual(101, Demon.inst.item1.data2);
 
             eventobj.options[1].Selected();
-            Assert.AreEqual(Demon.inst.item1.data2, 102);
+            Assert.AreEqual(102, Demon.inst.item1.data2);
 
             eventobj.options[2].Selected();
-            Assert.AreEqual(Demon.inst.item1.data2, 103);
+            Assert.AreEqual(103, Demon.inst.item1.data2);
 
         }
 
         [Test()]
-        public void TestEventCommonDefault()
+        public void TestEventCommonDefaultAndAdd()
         {
 
             Demon.inst.item1.data1 = 12;
+            Demon.inst.item1.data2 = 101;
 
             var eventobjs = Mod.Process().ToArray();
 
@@ -169,13 +170,13 @@ option =
             Assert.AreEqual(eventobj.options[2].desc.Format, "EVENT_TEST_DEFAULT_OPTION_3_DESC");
 
             eventobj.options[0].Selected();
-            Assert.AreEqual(Demon.inst.item1.data2, 101);
+            Assert.AreEqual(101, Demon.inst.item1.data2);
 
             eventobj.options[1].Selected();
-            Assert.AreEqual(Demon.inst.item1.data2, 102);
+            Assert.AreEqual(102, Demon.inst.item1.data2);
 
             eventobj.options[2].Selected();
-            Assert.AreEqual(Demon.inst.item1.data2, 103);
+            Assert.AreEqual(104, Demon.inst.item1.data2);
 
         }
     }

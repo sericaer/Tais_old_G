@@ -9,7 +9,7 @@ namespace Parser.Semantic
 {
     public class Select
     {
-        internal static Select Parse(SyntaxItem item)
+        public static Select Parse(SyntaxItem item)
         {
             var rslt = new Select();
 
@@ -22,8 +22,11 @@ namespace Parser.Semantic
                 }
                 switch(subItem.key)
                 {
-                    case "SET":
-                        rslt.list.Add(OpSet.Parse(subItem));
+                    case "add":
+                        rslt.opList.Add(OperationAdd.Parse(subItem));
+                        break;
+                    case "assign":
+                        rslt.opList.Add(OperationAssign.Parse(subItem));
                         break;
                     default:
                         throw new Exception($"can not support {subItem.key} in select");
@@ -36,9 +39,17 @@ namespace Parser.Semantic
 
         public void Do()
         {
-            list.ForEach(x => x.Do());
+            opList.ForEach(x => x.Do());
         }
 
-        internal List<OpSet> list = new List<OpSet>();
+        public (string op, string left, SingleValue right)[] info
+        {
+            get
+            {
+                return opList.Select(x => (x.GetType().Name, x.left.ToString(), x.right)).ToArray();
+            }
+        }
+
+        internal List<Operation> opList = new List<Operation>();
     }
 }

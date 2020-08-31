@@ -74,11 +74,11 @@ namespace Modder
                 semantic.set.Do();
             }
 
-            public (string right, SingleValue left)[] sets
+            public (string op, string left, SingleValue right)[] sets
             {
                 get
                 {
-                    return semantic.set.list.Select(x=>(x.left, x.right)).ToArray();
+                    return semantic.set.info;
                 }
             }
 
@@ -229,6 +229,9 @@ namespace Modder
         public GEvent()
         {
             trigger = new ConditionDefault(false);
+
+            _desc = null;
+            _title = null;
         }
     }
 }

@@ -11,8 +11,8 @@ occur = 1
 option =
 {
 	desc = EVENT_TEST_OPTION_1_DESC
-	set = 
+	select = 
 	{
-	    economy.value = 120
+	    add = {economy.value, 120}
 	}
 }
