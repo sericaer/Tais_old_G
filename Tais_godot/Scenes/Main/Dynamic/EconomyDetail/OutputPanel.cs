@@ -12,13 +12,13 @@ namespace TaisGodot.Scripts
 		public override void _Ready()
 		{
 			GetNode<Label>("Label").Text = gmObj.name;
-			GetNode<HSlider>("HSlider").Value = gmObj.percent.value;
+			GetNode<HSlider>("HSlider").Value = gmObj.percent.Value;
 			GetNode<ReactiveLabel>("Value").Assoc(gmObj.currValue);
 		}
 
 		private void _on_HSlider_value_changed(float value)
 		{
-			gmObj.percent.value = value;
+			gmObj.percent.Value = value;
 		}
 	}
 }

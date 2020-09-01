@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Sockets;
+using System.Reactive.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -23,48 +24,45 @@ namespace RunData
 
         public static void Inc()
         {
-            if (inst.day != 30)
+            if (inst.day.Value != 30)
             {
-                inst.day++;
+                inst.day.Value++;
             }
-            else if (inst.month != 12)
+            else if (inst.month.Value != 12)
             {
-                inst.day = 1;
-                inst.month++;
+                inst.day.Value = 1;
+                inst.month.Value++;
                 return;
             }
             else
             {
-                inst.month = 1;
-                inst.year++;
+                inst.month.Value = 1;
+                inst.year.Value++;
             }
-
-            inst.desc.value = inst.ToString();
         }
 
-        public Reactive<string> desc;
+
 
         [JsonProperty]
-        public int year;
+        public SubjectValue<int> year;
 
         [JsonProperty]
-        public int month;
+        public SubjectValue<int> month;
 
         [JsonProperty, DataVisitorProperty("day")]
-        public int day;
+        public SubjectValue<int> day;
 
-        public int total_days
-        {
-            get
-            {
-                return day + (month - 1) * 12 + (year - 1) * 360;
-            }
-        }
+        public ObservableValue<string> desc;
 
-        public override string ToString()
-        {
-            return $"{year}-{month}-{day}";
-        }
+        public ObservableValue<int> total_days;
+
+        //public int total_days
+        //{
+        //    get
+        //    {
+        //        return day.Value + (month.Value - 1) * 12 + (year.Value - 1) * 360;
+        //    }
+        //}
 
         public static Date Init()
         {
@@ -83,11 +81,12 @@ namespace RunData
 
         private Date()
         {
-            year = 1;
-            month = 1;
-            day = 1;
+            year.Value = 1;
+            month.Value = 1;
+            day.Value = 1;
 
-            desc = new Reactive<string>(ToString());
+            desc = Observable.CombineLatest(year.obs, month.obs, day.obs, (y, m, d) => $"{y}-{m}-{d}").ToOBSValue();
+            total_days = Observable.CombineLatest(year.obs, month.obs, day.obs, (y, m, d) => d + m * 12 + y * 360).ToOBSValue();
         }
     }
 

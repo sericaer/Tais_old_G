@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reactive.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DataVisit;
@@ -33,11 +34,11 @@ namespace RunData
         {
             get
             {
-                return curr.value;
+                return curr.Value;
             }
             set
             {
-                curr.value = value;
+                curr.Value = value;
             }
         }
 
@@ -50,7 +51,7 @@ namespace RunData
             }
         }
 
-        public Reactive<double> curr;
+        public SubjectValue<double> curr;
 
         public IEnumerable<InCome> EnumerateInCome()
         {
@@ -71,8 +72,8 @@ namespace RunData
         public Memento CreateMemento()
         {
             var rslt = new Memento();
-            rslt.incomes = this.inComes.ToDictionary(x => x.name, y => y.percent.value);
-            rslt.outputs = this.outputs.ToDictionary(x => x.name, y => y.percent.value);
+            rslt.incomes = this.inComes.ToDictionary(x => x.name, y => y.percent.Value);
+            rslt.outputs = this.outputs.ToDictionary(x => x.name, y => y.percent.Value);
 
             return rslt;
         }
@@ -81,25 +82,25 @@ namespace RunData
         {
             foreach(var pair in memento.incomes)
             {
-                inComes.Find(x => x.name == pair.Key).percent.value = pair.Value;
+                inComes.Find(x => x.name == pair.Key).percent.Value = pair.Value;
             }
 
             foreach (var pair in memento.outputs)
             {
-                outputs.Find(x => x.name == pair.Key).percent.value = pair.Value;
+                outputs.Find(x => x.name == pair.Key).percent.Value = pair.Value;
             }
         }
 
         private Economy()
         {
-            curr = new Reactive<double>(100);
+            curr = new SubjectValue<double>(100.0);
 
             inComes = new List<InCome>() {
-                new InCome( "STATIC_POP_TAX", 30, ()=>Pop.all.Sum(x=>x.expectTax.value))
+                new InCome( "STATIC_POP_TAX", 30, Observable.CombineLatest(Pop.all.Select(x=>x.expectTax.obs), (IList<double> taxs)=>taxs.Sum()))
             };
 
             outputs = new List<Output>() {
-                new Output("STATIC_COUNTRY_TAX", 100, ()=>Root.inst.chaoting.requireTax)
+                new Output("STATIC_COUNTRY_TAX", 100, Root.inst.chaoting.requireTax.obs.Select(x=>x))
             };
         }
 
@@ -110,52 +111,32 @@ namespace RunData
     public class InCome
     {
         public string name;
-        public Reactive<double> percent;
-        public Reactive<double> currValue;
+        public SubjectValue<double> percent;
+        public ObservableValue<double> currValue;
+        public ObservableValue<double> maxValue;
 
-        public double maxValue
-        {
-            get
-            {
-                return GetMaxValue();
-            }
-        }
-
-        internal Func<double> GetMaxValue;
-
-        internal InCome(string name, double percent, Func<double> func)
+        internal InCome(string name, double percent, IObservable<double> max)
         {
             this.name = name;
-            this.percent = new Reactive<double>(percent);
-            this.GetMaxValue = func;
-
-            this.currValue = Reactive<double>.From(this.percent, (x=> maxValue * x / 100));
+            this.percent = new SubjectValue<double>(percent);
+            this.maxValue = max.ToOBSValue();
+            this.currValue = Observable.CombineLatest(this.percent.obs, this.maxValue.obs, (p, m) => p * m / 100).ToOBSValue();
         }
     }
 
     public class Output
     {
         public string name;
-        public Reactive<double> percent;
-        public Reactive<double> currValue;
+        public SubjectValue<double> percent;
+        public ObservableValue<double> currValue;
+        public ObservableValue<double> maxValue;
 
-        public double maxValue
-        {
-            get
-            {
-                return GetMaxValue();
-            }
-        }
-
-        internal Func<double> GetMaxValue;
-
-        internal Output(string name, double percent, Func<double> func)
+        internal Output(string name, double percent, IObservable<double> max)
         {
             this.name = name;
-            this.percent = new Reactive<double>(percent);
-            this.GetMaxValue = func;
-
-            this.currValue = Reactive<double>.From(this.percent, (x => maxValue * x / 100));
+            this.percent = new SubjectValue<double>(percent);
+            this.maxValue = max.ToOBSValue();
+            this.currValue = Observable.CombineLatest(this.percent.obs, this.maxValue.obs, (p, m) => p * m / 100).ToOBSValue();
         }
     }
 }

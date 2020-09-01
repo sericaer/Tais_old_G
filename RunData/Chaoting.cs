@@ -3,11 +3,11 @@ namespace RunData
 {
     public class Chaoting
     {
-        public double requireTax;
+        public SubjectValue<double> requireTax;
 
         public Chaoting()
         {
-            requireTax = 60;
+            requireTax = new SubjectValue<double>(60);
         }
 
         internal static Chaoting Init()

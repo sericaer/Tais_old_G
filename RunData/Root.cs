@@ -62,7 +62,6 @@ namespace RunData
             Date.Inc();
 
             Pop.DaysInc();
-            Depart.DaysInc();
         }
 
         public static Root inst;

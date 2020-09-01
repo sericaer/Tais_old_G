@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq;
+using System.Reactive.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -16,7 +17,7 @@ namespace RunData
         }
 
         public string name;
-        public Reactive<int> popNum;
+        public ObservableValue<int> popNum;
 
         public IEnumerable<Pop> pops
         {
@@ -39,14 +40,6 @@ namespace RunData
             return all;
         }
 
-        internal static void DaysInc()
-        {
-            all.ForEach(depart =>
-            {
-                depart.popNum.value = depart.pops.Where(x=>x.def.is_collect_tax).Sum(x => (int)x.num.value);
-            });
-        }
-
         private (int r, int g, int b) color;
 
         private static List<Depart> all
@@ -62,8 +55,6 @@ namespace RunData
             this.name = name;
             this.color = color;
             this.pops_init = pops_init;
-
-            this.popNum = new Reactive<int>(0);
         }
 
         private bool SameColor((int r, int g, int b) p)
