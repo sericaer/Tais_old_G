@@ -10,12 +10,6 @@ namespace RunData
 {
     public class Depart
     {
-
-        public static Depart GetByColor(int r, int g, int b)
-        {
-            return all.SingleOrDefault(x => x.SameColor((r, g, b)));
-        }
-
         public string name;
         public ObservableValue<int> popNum;
 
@@ -27,20 +21,13 @@ namespace RunData
             }
         }
 
-        internal (string name, int num)[] pops_init;
-
-
-        internal static List<Depart> Init()
+        internal Define.DepartDef def
         {
-            var all = new List<Depart>();
-
-            all.Add(new Depart("JIXIAN",
-                               (63, 72, 204),
-                               new (string name, int num)[] { ("haoqiang", 3000), ("minhu", 60000), ("yinhu", 20000) }));
-            return all;
+            get
+            {
+                return Root.inst.def.departs[name];
+            }
         }
-
-        private (int r, int g, int b) color;
 
         private static List<Depart> all
         {
@@ -50,16 +37,24 @@ namespace RunData
             }
         }
 
-        private Depart(string name, (int r, int g, int b) color, (string name, int num)[] pops_init)
+        public static Depart GetByColor(int r, int g, int b)
+        {
+            return all.SingleOrDefault(x => x.SameColor((r, g, b)));
+        }
+
+        internal static List<Depart> Init(IEnumerable<string> departs)
+        {
+            return departs.Select(x => new Depart(x)).ToList();
+        }
+
+        public Depart(string name)
         {
             this.name = name;
-            this.color = color;
-            this.pops_init = pops_init;
         }
 
         private bool SameColor((int r, int g, int b) p)
         {
-            return (color.r == p.r && color.g == p.g && color.b == p.b);
+            return (def.color.r == p.r && def.color.g == p.g && def.color.b == p.b);
         }
     }
 }

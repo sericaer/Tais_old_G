@@ -32,11 +32,11 @@ namespace RunData
             this.expectTax = this.num.obs.Select(x => def.is_collect_tax ? x * 0.01 : 0).ToOBSValue();
         }
 
-        internal PopDef def
+        internal Define.PopDef def
         {
             get
             {
-                return PopDef.dict[name];
+                return Root.inst.def.pops[name];
             }
         }
 
@@ -54,7 +54,7 @@ namespace RunData
         {
             var pops = new List<Pop>();
 
-            foreach (var pop_init in depart.pops_init)
+            foreach (var pop_init in depart.def.pop_init)
             {
                 pops.Add(new Pop(depart.name, pop_init.name, pop_init.num));
             }
@@ -72,23 +72,5 @@ namespace RunData
                 pop.num.Value++;
             });
         }
-    }
-
-    public class PopDef
-    {
-        static PopDef()
-        {
-            dict = new Dictionary<string, PopDef>()
-            {
-                { "haoqiang", new PopDef(){ is_collect_tax = true} },
-                { "minhu", new PopDef(){ is_collect_tax = true} },
-                { "yinhu", new PopDef(){ is_collect_tax = false} },
-            };
-        }
-
-        public static Dictionary<string, PopDef> dict;
-
-
-        public bool is_collect_tax;
     }
 }

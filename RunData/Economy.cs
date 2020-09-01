@@ -24,9 +24,9 @@ namespace RunData
             }
         }
 
-        public static Economy Init()
+        public static Economy Init(Define.EconomyDef def)
         {
-            return new Economy();
+            return new Economy(def);
         }
 
         [DataVisitorProperty("value")]
@@ -70,9 +70,9 @@ namespace RunData
             }
         }
 
-        private Economy()
+        private Economy(Define.EconomyDef def)
         {
-            curr = new SubjectValue<double>(100.0);
+            curr = new SubjectValue<double>(def.curr);
 
             inComes = new List<InCome>() {
                 new InCome( "STATIC_POP_TAX", 30, Observable.CombineLatest(Pop.all.Select(x=>x.expectTax.obs), (IList<double> taxs)=>taxs.Sum()))
@@ -91,7 +91,7 @@ namespace RunData
         public ObservableValue<double> OuputTotal;
 
         [DataVisitorProperty("month_surplus")]
-        ObservableValue<double> monthSurplus;
+        public ObservableValue<double> monthSurplus;
 
         private List<InCome> inComes;
         private List<Output> outputs;

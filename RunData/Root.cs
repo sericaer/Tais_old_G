@@ -15,9 +15,9 @@ namespace RunData
         public static Action<string> logger;
 
 
-        public static Root Init()
+        public static Root Init(Define def)
         {
-            new Root();
+            new Root(def);
 
 
 
@@ -80,20 +80,23 @@ namespace RunData
         [DataVisitorPropertyArray("pop")]
         public List<Pop> pops;
 
+        internal Define def;
 
-        public Root()
+        public Root(Define def)
         {
+            this.def = def;
+
             inst = this;
 
             date = Date.Init();
 
-            departs = Depart.Init();
+            departs = Depart.Init(def.departs.Keys);
 
             pops = Pop.Init(departs);
 
             chaoting = Chaoting.Init();
 
-            economy = Economy.Init();
+            economy = Economy.Init(def.economy);
         }
     }
 }

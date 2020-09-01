@@ -70,6 +70,7 @@
     <Compile Include="Extensions.cs" />
     <Compile Include="Chaoting.cs" />
     <Compile Include="Observable.cs" />
+    <Compile Include="Define.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
