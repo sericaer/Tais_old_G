@@ -81,9 +81,9 @@ namespace RunData
 
         private Date()
         {
-            year.Value = 1;
-            month.Value = 1;
-            day.Value = 1;
+            year = new SubjectValue<int>(1);
+            month = new SubjectValue<int>(1);
+            day = new SubjectValue<int>(1);
 
             desc = Observable.CombineLatest(year.obs, month.obs, day.obs, (y, m, d) => $"{y}-{m}-{d}").ToOBSValue();
             total_days = Observable.CombineLatest(year.obs, month.obs, day.obs, (y, m, d) => d + m * 12 + y * 360).ToOBSValue();
