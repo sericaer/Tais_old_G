@@ -89,6 +89,10 @@
       <Project>{638a0033-8e91-475d-80c2-1888b2576151}</Project>
       <Name>RunData</Name>
     </ProjectReference>
+    <ProjectReference Include="..\DataVisit\DataVisit.csproj">
+      <Project>{60624F37-78F3-44EB-AD31-76E1893F5EA9}</Project>
+      <Name>DataVisit</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

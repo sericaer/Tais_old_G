@@ -76,7 +76,21 @@ namespace DataVisit
                 type = reflection.GetDataType();
             }
 
-            dictRef[type][splits[i]].SetValue(obj, value);
+            var leaf = dictRef[type][splits[i]];
+
+            if (leaf.GetDataType().IsSubclassOf(typeof(ReadValue)))
+            {
+                throw new Exception($"key:{raw} only read!");
+            }
+
+            if(leaf.GetDataType().IsSubclassOf(typeof(ReadWriteValue)))
+            {
+                var leafObj = leaf.GetValue(obj) as ReadWriteValue;
+                leafObj.setValue(value);
+                return;
+            }
+
+            leaf.SetValue(obj, value);
         }
 
         public static void SetVisitData(object data)
@@ -215,6 +229,18 @@ namespace DataVisit
                 var reflection = dictRef[type][splits[i]];
                 obj = reflection.GetValue(obj);
                 type = reflection.GetDataType();
+            }
+
+            if (typeof(ReadValue).IsInstanceOfType(obj))
+            {
+                var rValue = obj as ReadValue;
+                return rValue.getValue();
+            }
+
+            if (typeof(ReadWriteValue).IsInstanceOfType(obj))
+            {
+                var rValue = obj as ReadWriteValue;
+                return rValue.getValue();
             }
 
             return obj;
@@ -370,5 +396,41 @@ namespace DataVisit
         }
 
         internal string key;
+    }
+
+    public abstract class ReadValue
+    {
+        public abstract object getValue();
+    }
+
+    public abstract class ReadWriteValue
+    {
+        public abstract object getValue();
+        public abstract void   setValue(object value);
+    }
+
+    public class RValue<T> : ReadValue
+    {
+        public virtual T Value { get; }
+
+        public override object getValue()
+        {
+            return Value;
+        }
+    }
+
+    public class RWValue<T> : ReadWriteValue
+    {
+        public virtual T Value { get; set; }
+
+        public override object getValue()
+        {
+            return Value;
+        }
+
+        public override void setValue(object value)
+        {
+            Value = (T)value;
+        }
     }
 }

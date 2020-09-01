@@ -30,27 +30,6 @@ namespace RunData
         }
 
         [DataVisitorProperty("value")]
-        public double currValue
-        {
-            get
-            {
-                return curr.Value;
-            }
-            set
-            {
-                curr.Value = value;
-            }
-        }
-
-        [DataVisitorProperty("month_surplus")]
-        public double monthSurplus
-        {
-            get
-            {
-                return inComes.Sum(x => x.currValue.value) - outputs.Sum(x => x.currValue.value);
-            }
-        }
-
         public SubjectValue<double> curr;
 
         public IEnumerable<InCome> EnumerateInCome()
@@ -102,7 +81,17 @@ namespace RunData
             outputs = new List<Output>() {
                 new Output("STATIC_COUNTRY_TAX", 100, Root.inst.chaoting.requireTax.obs.Select(x=>x))
             };
+
+            IncomeTotal = Observable.CombineLatest(inComes.Select(x => x.currValue.obs), (IList<double> all) => all.Sum()).ToOBSValue();
+            OuputTotal = Observable.CombineLatest(inComes.Select(x => x.currValue.obs), (IList<double> all) => all.Sum()).ToOBSValue();
+            monthSurplus = Observable.CombineLatest(IncomeTotal.obs, OuputTotal.obs, (i, o) => i - o).ToOBSValue();
         }
+
+        public ObservableValue<double> IncomeTotal;
+        public ObservableValue<double> OuputTotal;
+
+        [DataVisitorProperty("month_surplus")]
+        ObservableValue<double> monthSurplus;
 
         private List<InCome> inComes;
         private List<Output> outputs;

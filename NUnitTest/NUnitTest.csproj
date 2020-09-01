@@ -37,6 +37,7 @@
     <Compile Include="Modder\Mock\Demon.cs" />
     <Compile Include="Modder\Mock\ModFileSystem.cs" />
     <Compile Include="DataVisit\TestDataVisit.cs" />
+    <Compile Include="RunData\TestRunData.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -50,12 +51,17 @@
       <Project>{60624F37-78F3-44EB-AD31-76E1893F5EA9}</Project>
       <Name>DataVisit</Name>
     </ProjectReference>
+    <ProjectReference Include="..\RunData\RunData.csproj">
+      <Project>{638A0033-8E91-475D-80C2-1888B2576151}</Project>
+      <Name>RunData</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Modder\" />
     <Folder Include="Modder\Event\" />
     <Folder Include="Modder\Mock\" />
     <Folder Include="DataVisit\" />
+    <Folder Include="RunData\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

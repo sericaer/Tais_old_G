@@ -43,10 +43,10 @@ namespace RunData
 
 
 
-        [JsonProperty]
+        [JsonProperty, DataVisitorProperty("year")]
         public SubjectValue<int> year;
 
-        [JsonProperty]
+        [JsonProperty, DataVisitorProperty("month")]
         public SubjectValue<int> month;
 
         [JsonProperty, DataVisitorProperty("day")]

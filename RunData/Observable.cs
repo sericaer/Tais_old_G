@@ -1,20 +1,22 @@
 ﻿using System;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
+using DataVisit;
 
 namespace RunData
 {
-    public class ObservableValue<T>
+    public class ObservableValue<T> : RValue<T>
     {
         internal readonly IObservable<T> obs;
+        private T _value;
 
-        public T value { get; private set; }
+        public override T Value { get { return _value; } }
 
         public ObservableValue(IObservable<T> param)
         {
             obs = param;
 
-            obs.Subscribe(x => value = x);
+            obs.Subscribe(x => _value = x);
         }
 
         public IDisposable Subscribe(Action<T> action)
@@ -23,11 +25,11 @@ namespace RunData
         }
     }
 
-    public class SubjectValue<T>
+    public class SubjectValue<T> : RWValue<T>
     {
         internal readonly BehaviorSubject<T> obs;
 
-        public T Value
+        public override T Value
         {
             get
             {
