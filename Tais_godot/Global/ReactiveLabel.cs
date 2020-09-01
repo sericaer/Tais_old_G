@@ -27,7 +27,7 @@ namespace TaisGodot.Scripts
 		protected override void Dispose(bool disposing)
 		{
 			base.Dispose(disposing);
-			reactiveDispose.Dispose();
+			reactiveDispose?.Dispose();
 		}
 
 		private Func<string, string> adpt;
