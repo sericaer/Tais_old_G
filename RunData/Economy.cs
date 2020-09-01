@@ -83,7 +83,7 @@ namespace RunData
             };
 
             IncomeTotal = Observable.CombineLatest(inComes.Select(x => x.currValue.obs), (IList<double> all) => all.Sum()).ToOBSValue();
-            OuputTotal = Observable.CombineLatest(inComes.Select(x => x.currValue.obs), (IList<double> all) => all.Sum()).ToOBSValue();
+            OuputTotal = Observable.CombineLatest(outputs.Select(x => x.currValue.obs), (IList<double> all) => all.Sum()).ToOBSValue();
             monthSurplus = Observable.CombineLatest(IncomeTotal.obs, OuputTotal.obs, (i, o) => i - o).ToOBSValue();
         }
 

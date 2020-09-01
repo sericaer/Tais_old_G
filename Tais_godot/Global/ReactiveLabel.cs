@@ -25,8 +25,8 @@ namespace TaisGodot.Scripts
 		}
 
 		protected override void Dispose(bool disposing)
-        {
-            base.Dispose(disposing);
+		{
+			base.Dispose(disposing);
 			reactiveDispose.Dispose();
 		}
 

@@ -35,6 +35,7 @@ namespace TaisGodot.Scripts
 				GetNode<VBoxContainer>("CenterContainer/EconomyDetail/VBoxContainer/HBoxContainer/Output/VBoxContainer/VBoxContainer").AddChild(outputPanel);
 			}
 
+			GetNode<ReactiveLabel>("CenterContainer/EconomyDetail/VBoxContainer/Bottom/Surplus/Value").Assoc(RunData.Economy.inst.monthSurplus);
 		}
 
 		public override void _ExitTree()
