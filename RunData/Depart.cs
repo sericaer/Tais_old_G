@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reactive.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DataVisit;
 
 namespace RunData
 {
@@ -13,6 +14,7 @@ namespace RunData
         public string name;
         public ObservableValue<int> popNum;
 
+        [DataVisitorProperty("crop_grown")]
         public SubjectValue<double> cropGrown;
 
         public IEnumerable<Pop> pops
@@ -57,14 +59,8 @@ namespace RunData
                 {
                     x.cropGrown.Value += Root.inst.def.crop.growSpeed;
                 }
-
-                if (Date.inst == Root.inst.def.crop.harvestDay)
+                else
                 {
-                    foreach (var pop in x.pops)
-                    {
-                        pop.Harvest(x.cropGrown.Value);
-                    }
-
                     x.cropGrown.Value = 0;
                 }
             });

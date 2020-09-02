@@ -22,7 +22,6 @@ namespace RunData
         public SubjectValue<double> num;
         public ObservableValue<double> expectTax;
 
-
         public Pop(string depart_name, string name, int num)
         {
             this.name = name;
@@ -30,6 +29,15 @@ namespace RunData
 
             this.num = new SubjectValue<double>(num);
             this.expectTax = this.num.obs.Select(x => def.is_collect_tax ? x * 0.01 : 0).ToOBSValue();
+        }
+
+        [DataVisitorProperty("depart")]
+        public Depart depart
+        {
+            get
+            {
+                return Depart.all.Single(x => x.name == depart_name);
+            }
         }
 
         internal Define.PopDef def
@@ -63,11 +71,6 @@ namespace RunData
                                               (IList<double> nums) => nums.Sum(y => (int)y)).ToOBSValue();
 
             return pops;
-        }
-
-        internal void Harvest(double value)
-        {
-            
         }
 
         internal static void DaysInc()

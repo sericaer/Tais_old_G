@@ -183,12 +183,13 @@ namespace UnitTest.RunData
             Assert.True(Date.inst < (12, null, null));
             Assert.True(Date.inst < (12, null, 1));
             Assert.True(Date.inst < (12, 1, 1));
+            Assert.True(Date.inst < (null, 12, 30));
+            Assert.True(Date.inst < (null, 1, 30));
 
-            
             Assert.True(Date.inst > (10, null, null));
             Assert.True(Date.inst > (10, 12, null));
             Assert.True(Date.inst > (10, 12, 30));
-            Assert.True(Date.inst < (null, 12, 30));
+            
         }
 
         [Test()]
@@ -247,21 +248,26 @@ namespace UnitTest.RunData
                 {
                     for (int d = 1; d <= 30; d++)
                     {
-                        if(Date.inst >= def.crop.growStartDay && Date.inst <= def.crop.harvestDay)
+                        if (Date.inst >= def.crop.growStartDay && Date.inst <= def.crop.harvestDay)
                         {
                             cropGrown += def.crop.growSpeed;
                         }
-
-                        Depart.DaysInc();
-
-                        if(Date.inst == def.crop.harvestDay)
+                        else
                         {
                             cropGrown = 0;
                         }
 
+                        Depart.DaysInc();
+
                         foreach(var depart in Depart.all)
                         {
                             Assert.AreEqual(cropGrown, depart.cropGrown.Value);
+                        }
+
+                        Visitor.Pos pos = null;
+                        while (Visitor.EnumerateVisit("pop", ref pos))
+                        {
+                            Assert.AreEqual(cropGrown, Visitor.Get("pop.depart.crop_grown"));
                         }
                         
                         Date.Inc();

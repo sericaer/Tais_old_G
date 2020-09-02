@@ -62,17 +62,26 @@ namespace RunData
 
         public static bool operator >(Date l, (int? year, int? month, int? day) r)
         {
-            if (r.year != null && l.year.Value > r.year.Value)
+            if (r.year != null)
             {
-                return true;
+                if(l.year.Value > r.year.Value)
+                    return true;
+                if (l.year.Value < r.year.Value)
+                    return false;
             }
-            if (r.month != null && l.month.Value > r.month.Value)
+            if (r.month != null)
             {
-                return true;
+                if(l.month.Value > r.month.Value)
+                    return true;
+                if (l.month.Value < r.month.Value)
+                    return false;
             }
-            if (r.day != null && l.day.Value > r.day.Value)
+            if (r.day != null)
             {
-                return true;
+                if (l.day.Value > r.day.Value)
+                    return true;
+                if (l.day.Value < r.day.Value)
+                    return false;
             }
 
             return false;
