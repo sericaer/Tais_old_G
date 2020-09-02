@@ -79,7 +79,7 @@ namespace UnitTest.RunData
             {
                 switch (output.name)
                 {
-                    case "STATIC_REPORT_COUNTRY_TAX":
+                    case "STATIC_REPORT_CHAOTING_TAX":
                         Assert.AreEqual(def.economy.report_tax_percent, output.percent.Value);
                         Assert.AreEqual(Chaoting.inst.currMonthTax.Value * output.percent.Value / 100, output.currValue.Value);
                         break;
@@ -163,9 +163,12 @@ namespace UnitTest.RunData
             Visitor.SetVisitData(Root.inst);
 
             double yearExpertTax = 0;
+            double realYearTax = 0;
+
             for (int y = 1; y <= 10; y++)
             {
                 yearExpertTax = 0;
+                realYearTax = 0;
 
                 for (int m = 1; m <= 12; m++)
                 {
@@ -176,10 +179,15 @@ namespace UnitTest.RunData
                         if(d == 30)
                         {
                             yearExpertTax += Chaoting.inst.currMonthTax.Value;
+                            realYearTax += Economy.inst.outputs.Single(x => x.name == "STATIC_REPORT_CHAOTING_TAX").currValue.Value;
                         }
 
                         Assert.AreEqual(yearExpertTax, Chaoting.inst.expectYearTax.Value);
+                        Assert.AreEqual(realYearTax, Chaoting.inst.realYearTax.Value);
+
                         Assert.AreEqual(Chaoting.inst.expectYearTax.Value, Visitor.Get("chaoting.expect_year_tax"));
+                        Assert.AreEqual(Chaoting.inst.realYearTax.Value, Visitor.Get("chaoting.real_year_tax"));
+
                         Date.Inc();
                     }
                 }
