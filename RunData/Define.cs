@@ -8,6 +8,7 @@ namespace RunData
         public Dictionary<string, DepartDef> departs;
         public Dictionary<string, PopDef> pops;
         public EconomyDef economy;
+        public ChaotingDef chaoting;
 
         public Define()
         {
@@ -29,6 +30,14 @@ namespace RunData
         public class EconomyDef
         {
             public double curr;
+            public double pop_tax_percent;
+            public double report_tax_percent;
+        }
+
+        public class ChaotingDef
+        {
+            public double reportPopPercent;
+            public double taxPercent;
         }
     }
 }

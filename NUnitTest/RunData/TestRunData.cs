@@ -32,7 +32,15 @@ namespace UnitTest.RunData
                 economy = new Define.EconomyDef()
                 {
                     curr = 456,
-                }    
+                    pop_tax_percent = 30,
+                    report_tax_percent = 100,
+                },
+
+                chaoting = new Define.ChaotingDef()
+                {
+                    reportPopPercent = 130,
+                    taxPercent = 20
+                }
 
             };
         }
@@ -52,7 +60,37 @@ namespace UnitTest.RunData
 
             Assert.AreEqual(456, Visitor.Get("economy.value"));
 
-            foreach(var departName in def.departs.Keys)
+            foreach(var income in Root.inst.economy.EnumerateInCome())
+            {
+                switch(income.name)
+                {
+                    case "STATIC_POP_TAX":
+                        Assert.AreEqual(def.economy.pop_tax_percent, income.percent.Value);
+                        Assert.AreEqual(Pop.all.Sum(x => x.expectTax.Value) * income.percent.Value / 100, income.currValue.Value);
+                        break;
+                    default:
+                        Assert.Fail();
+                        break;
+
+                }
+            }
+
+            foreach (var output in Root.inst.economy.EnumerateOutput())
+            {
+                switch (output.name)
+                {
+                    case "STATIC_REPORT_COUNTRY_TAX":
+                        Assert.AreEqual(def.economy.report_tax_percent, output.percent.Value);
+                        Assert.AreEqual(Chaoting.inst.requireTax.Value * output.percent.Value / 100, output.currValue.Value);
+                        break;
+                    default:
+                        Assert.Fail();
+                        break;
+
+                }
+            }
+
+            foreach (var departName in def.departs.Keys)
             {
                 var departDef = def.departs[departName];
 
@@ -68,6 +106,9 @@ namespace UnitTest.RunData
                 }
             }
 
+            Assert.AreEqual((int)(Depart.all.Sum(x=>x.popNum.Value)*def.chaoting.reportPopPercent/100), Chaoting.inst.reportPopNum.Value);
+            Assert.AreEqual(def.chaoting.taxPercent, Chaoting.inst.taxPercent.Value);
+            Assert.AreEqual(Chaoting.inst.reportPopNum.Value * 0.01 * def.chaoting.taxPercent/100, Chaoting.inst.requireTax.Value);
         }
 
         [Test()]

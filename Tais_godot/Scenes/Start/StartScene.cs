@@ -43,22 +43,27 @@ namespace TaisGodot.Scripts
 			{
 				departs = new Dictionary<string, Define.DepartDef>()
 				{
-					{ "JIXIAN", new Define.DepartDef(){color = (63, 72, 204),
-													   pop_init= new (string name, int num)[]{ ("haoqiang", 3000), ("minhu", 60000), ("yinhu", 20000) } } }
+					{ "JIXIAN", new Define.DepartDef() { color = (63, 72, 204),
+						pop_init = new (string name, int num)[] { ("haoqiang", 3000), ("minhu", 60000), ("yinhu", 20000) } } }
 				},
 
 				pops = new Dictionary<string, Define.PopDef>()
 				{
-					{ "haoqiang", new Define.PopDef(){ is_collect_tax = true} },
-					{ "minhu", new Define.PopDef(){ is_collect_tax = true} },
-					{ "yinhu", new Define.PopDef(){ is_collect_tax = false} },
+					{ "haoqiang", new Define.PopDef() { is_collect_tax = true } },
+					{ "minhu", new Define.PopDef() { is_collect_tax = true } },
+					{ "yinhu", new Define.PopDef() { is_collect_tax = false } },
 				},
 
 				economy = new Define.EconomyDef()
 				{
 					curr = 456,
-				}
+				},
 
+				chaoting = new Define.ChaotingDef()
+				{
+					reportPopPercent = 130,
+					taxPercent = 20
+				}
 			};
 
 			ModDataVisit.InitVisitData(Root.Init(def));

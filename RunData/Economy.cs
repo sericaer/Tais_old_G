@@ -75,11 +75,11 @@ namespace RunData
             curr = new SubjectValue<double>(def.curr);
 
             inComes = new List<InCome>() {
-                new InCome( "STATIC_POP_TAX", 30, Observable.CombineLatest(Pop.all.Select(x=>x.expectTax.obs), (IList<double> taxs)=>taxs.Sum()))
+                new InCome( "STATIC_POP_TAX", def.pop_tax_percent, Observable.CombineLatest(Pop.all.Select(x=>x.expectTax.obs), (IList<double> taxs)=>taxs.Sum()))
             };
 
             outputs = new List<Output>() {
-                new Output("STATIC_COUNTRY_TAX", 100, Root.inst.chaoting.requireTax.obs.Select(x=>x))
+                new Output("STATIC_REPORT_COUNTRY_TAX", def.report_tax_percent, Root.inst.chaoting.requireTax.obs.Select(x=>x))
             };
 
             IncomeTotal = Observable.CombineLatest(inComes.Select(x => x.currValue.obs), (IList<double> all) => all.Sum()).ToOBSValue();

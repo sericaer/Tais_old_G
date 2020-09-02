@@ -94,7 +94,7 @@ namespace RunData
 
             pops = Pop.Init(departs);
 
-            chaoting = Chaoting.Init();
+            chaoting = Chaoting.Init(def.chaoting);
 
             economy = Economy.Init(def.economy);
         }

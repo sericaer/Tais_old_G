@@ -29,7 +29,7 @@ namespace RunData
             }
         }
 
-        private static List<Depart> all
+        public static List<Depart> all
         {
             get
             {
