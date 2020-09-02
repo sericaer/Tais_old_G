@@ -93,6 +93,19 @@ namespace RunData
         [DataVisitorProperty("month_surplus")]
         public ObservableValue<double> monthSurplus;
 
+        [DataVisitorProperty("report_chaoting_tax_percent")]
+        public double reportTaxPercent
+        {
+            get
+            {
+                return outputs.Single(x => x.name == "STATIC_REPORT_CHAOTING_TAX").percent.Value;
+            }
+            set
+            {
+                outputs.Single(x => x.name == "STATIC_REPORT_CHAOTING_TAX").percent.Value = value;
+            }
+        }
+
         internal List<InCome> inComes;
         internal List<Output> outputs;
     }

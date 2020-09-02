@@ -66,7 +66,8 @@ namespace UnitTest.RunData
                 {
                     case "STATIC_POP_TAX":
                         Assert.AreEqual(def.economy.pop_tax_percent, income.percent.Value);
-                        Assert.AreEqual(Pop.all.Sum(x => x.expectTax.Value) * income.percent.Value / 100, income.currValue.Value);
+                        Assert.AreEqual(Pop.all.Sum(x => x.expectTax.Value), income.maxValue.Value);
+                        Assert.AreEqual(income.maxValue.Value * income.percent.Value / 100, income.currValue.Value);
                         break;
                     default:
                         Assert.Fail();
@@ -128,6 +129,21 @@ namespace UnitTest.RunData
             Visitor.Set("economy.value", 123.0);
 
             Assert.AreEqual(123, Visitor.Get("economy.value"));
+
+            var reportTaxPercent = 50.0;
+
+            Visitor.Set("economy.report_chaoting_tax_percent", reportTaxPercent);
+            Assert.AreEqual(reportTaxPercent, Visitor.Get("economy.report_chaoting_tax_percent"));
+           
+            var reportChaotingTax = Root.inst.economy.EnumerateOutput().Single(x => x.name == "STATIC_REPORT_CHAOTING_TAX");
+            Assert.AreEqual(reportChaotingTax.maxValue.Value * reportTaxPercent / 100, reportChaotingTax.currValue.Value);
+
+            //var incomes = Root.inst.economy.EnumerateInCome();
+            //var popTax = incomes.Single(x => x.name == "STATIC_POP_TAX");
+
+            //Assert.AreEqual(Pop.all.Sum(x => x.expectTax.Value), popTax.maxValue.Value);
+            //Assert.AreEqual(popTax.maxValue.Value * 50 / 100, popTax.currValue.Value);
+
         }
 
         [Test()]
