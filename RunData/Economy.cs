@@ -79,7 +79,7 @@ namespace RunData
             };
 
             outputs = new List<Output>() {
-                new Output("STATIC_REPORT_COUNTRY_TAX", def.report_tax_percent, Root.inst.chaoting.requireTax.obs.Select(x=>x))
+                new Output("STATIC_REPORT_COUNTRY_TAX", def.report_tax_percent, Root.inst.chaoting.currMonthTax.obs.Select(x=>x))
             };
 
             IncomeTotal = Observable.CombineLatest(inComes.Select(x => x.currValue.obs), (IList<double> all) => all.Sum()).ToOBSValue();

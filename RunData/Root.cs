@@ -59,9 +59,11 @@ namespace RunData
 
         public static void DaysInc()
         {
-            Date.Inc();
-
             Pop.DaysInc();
+
+            Chaoting.DaysInc();
+
+            Date.Inc();
         }
 
         public static Root inst;
@@ -72,6 +74,7 @@ namespace RunData
         [DataVisitorProperty("economy")]
         public Economy economy;
 
+        [DataVisitorProperty("chaoting")]
         public Chaoting chaoting;
 
         [DataVisitorPropertyArray("depart")]

@@ -37,6 +37,7 @@ namespace RunData
             else
             {
                 inst.month.Value = 1;
+                inst.day.Value = 1;
                 inst.year.Value++;
             }
         }

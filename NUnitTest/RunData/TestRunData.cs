@@ -81,7 +81,7 @@ namespace UnitTest.RunData
                 {
                     case "STATIC_REPORT_COUNTRY_TAX":
                         Assert.AreEqual(def.economy.report_tax_percent, output.percent.Value);
-                        Assert.AreEqual(Chaoting.inst.requireTax.Value * output.percent.Value / 100, output.currValue.Value);
+                        Assert.AreEqual(Chaoting.inst.currMonthTax.Value * output.percent.Value / 100, output.currValue.Value);
                         break;
                     default:
                         Assert.Fail();
@@ -108,11 +108,17 @@ namespace UnitTest.RunData
 
             Assert.AreEqual((int)(Depart.all.Sum(x=>x.popNum.Value)*def.chaoting.reportPopPercent/100), Chaoting.inst.reportPopNum.Value);
             Assert.AreEqual(def.chaoting.taxPercent, Chaoting.inst.taxPercent.Value);
-            Assert.AreEqual(Chaoting.inst.reportPopNum.Value * 0.01 * def.chaoting.taxPercent/100, Chaoting.inst.requireTax.Value);
+            Assert.AreEqual(Chaoting.inst.reportPopNum.Value * 0.01 * def.chaoting.taxPercent/100, Chaoting.inst.currMonthTax.Value);
+        }
+
+        [SetUp()]
+        public void SetUp()
+        {
+
         }
 
         [Test()]
-        public void TestSetGetData()
+        public void TestSetGetEconomyData()
         {
             Root.Init(def);
 
@@ -122,6 +128,62 @@ namespace UnitTest.RunData
             Visitor.Set("economy.value", 123.0);
 
             Assert.AreEqual(123, Visitor.Get("economy.value"));
+        }
+
+        [Test()]
+        public void TestDateInc()
+        {
+            Root.Init(def);
+
+            Visitor.InitVisitMap(typeof(Root));
+            Visitor.SetVisitData(Root.inst);
+
+            for (int y = 1; y<=10; y++)
+            {
+                for(int m=1; m<=12; m++)
+                {
+                    for(int d=1; d<=30; d++)
+                    {
+                        Assert.AreEqual(d, Visitor.Get("date.day"));
+                        Assert.AreEqual(m, Visitor.Get("date.month"));
+                        Assert.AreEqual(y, Visitor.Get("date.year"));
+
+                        Date.Inc();
+                    }
+                }
+            }
+        }
+
+        [Test()]
+        public void TestChaotingDaysInc()
+        {
+            Root.Init(def);
+
+            Visitor.InitVisitMap(typeof(Root));
+            Visitor.SetVisitData(Root.inst);
+
+            double yearExpertTax = 0;
+            for (int y = 1; y <= 10; y++)
+            {
+                yearExpertTax = 0;
+
+                for (int m = 1; m <= 12; m++)
+                {
+                    for (int d = 1; d <= 30; d++)
+                    {
+                        Chaoting.DaysInc();
+
+                        if(d == 30)
+                        {
+                            yearExpertTax += Chaoting.inst.currMonthTax.Value;
+                        }
+
+                        Assert.AreEqual(yearExpertTax, Chaoting.inst.expectYearTax.Value);
+                        Assert.AreEqual(Chaoting.inst.expectYearTax.Value, Visitor.Get("chaoting.expect_year_tax"));
+                        Date.Inc();
+                    }
+                }
+            }
         }
     }
 }
