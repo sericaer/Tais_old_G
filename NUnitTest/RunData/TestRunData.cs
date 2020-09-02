@@ -18,15 +18,15 @@ namespace UnitTest.RunData
             {
                 departs = new Dictionary<string, Define.DepartDef>()
                 {
-                    { "JIXIAN", new Define.DepartDef(){color = (63, 72, 204),
-                                                       pop_init= new (string name, int num)[]{ ("haoqiang", 3000), ("minhu", 60000), ("yinhu", 20000) } } }
+                    { "JIXIAN", new Define.DepartDef() { color = (63, 72, 204),
+                        pop_init = new (string name, int num)[] { ("haoqiang", 3000), ("minhu", 60000), ("yinhu", 20000) } } }
                 },
 
                 pops = new Dictionary<string, Define.PopDef>()
                 {
-                    { "haoqiang", new Define.PopDef(){ is_collect_tax = true} },
-                    { "minhu", new Define.PopDef(){ is_collect_tax = true} },
-                    { "yinhu", new Define.PopDef(){ is_collect_tax = false} },
+                    { "haoqiang", new Define.PopDef() { is_collect_tax = true } },
+                    { "minhu", new Define.PopDef() { is_collect_tax = true } },
+                    { "yinhu", new Define.PopDef() { is_collect_tax = false } },
                 },
 
                 economy = new Define.EconomyDef()
@@ -40,8 +40,14 @@ namespace UnitTest.RunData
                 {
                     reportPopPercent = 130,
                     taxPercent = 20
-                }
+                },
 
+                crop = new Define.CropDef()
+                {
+                    growSpeed = 0.4,
+                    growStartDay = (null, 2, 1),
+                    harvestDay = (null, 9, 1),
+                }
             };
         }
 
@@ -60,9 +66,9 @@ namespace UnitTest.RunData
 
             Assert.AreEqual(456, Visitor.Get("economy.value"));
 
-            foreach(var income in Root.inst.economy.EnumerateInCome())
+            foreach (var income in Root.inst.economy.EnumerateInCome())
             {
-                switch(income.name)
+                switch (income.name)
                 {
                     case "STATIC_POP_TAX":
                         Assert.AreEqual(def.economy.pop_tax_percent, income.percent.Value);
@@ -98,18 +104,18 @@ namespace UnitTest.RunData
                 var depart = Depart.GetByColor(departDef.color.r, departDef.color.g, departDef.color.b);
                 Assert.AreEqual(departName, depart.name);
 
-                Assert.AreEqual(departDef.pop_init.Where(x=> def.pops[x.name].is_collect_tax).Sum(x=>x.num), depart.popNum.Value);
+                Assert.AreEqual(departDef.pop_init.Where(x => def.pops[x.name].is_collect_tax).Sum(x => x.num), depart.popNum.Value);
 
-                foreach(var init in departDef.pop_init)
+                foreach (var init in departDef.pop_init)
                 {
                     var pop = depart.pops.Single(x => x.name == init.name);
                     Assert.AreEqual(init.num, pop.num.Value);
                 }
             }
 
-            Assert.AreEqual((int)(Depart.all.Sum(x=>x.popNum.Value)*def.chaoting.reportPopPercent/100), Chaoting.inst.reportPopNum.Value);
+            Assert.AreEqual((int)(Depart.all.Sum(x => x.popNum.Value) * def.chaoting.reportPopPercent / 100), Chaoting.inst.reportPopNum.Value);
             Assert.AreEqual(def.chaoting.taxPercent, Chaoting.inst.taxPercent.Value);
-            Assert.AreEqual(Chaoting.inst.reportPopNum.Value * 0.01 * def.chaoting.taxPercent/100, Chaoting.inst.currMonthTax.Value);
+            Assert.AreEqual(Chaoting.inst.reportPopNum.Value * 0.01 * def.chaoting.taxPercent / 100, Chaoting.inst.currMonthTax.Value);
         }
 
         [SetUp()]
@@ -134,7 +140,7 @@ namespace UnitTest.RunData
 
             Visitor.Set("economy.report_chaoting_tax_percent", reportTaxPercent);
             Assert.AreEqual(reportTaxPercent, Visitor.Get("economy.report_chaoting_tax_percent"));
-           
+
             var reportChaotingTax = Root.inst.economy.EnumerateOutput().Single(x => x.name == "STATIC_REPORT_CHAOTING_TAX");
             Assert.AreEqual(reportChaotingTax.maxValue.Value * reportTaxPercent / 100, reportChaotingTax.currValue.Value);
 
@@ -154,11 +160,11 @@ namespace UnitTest.RunData
             Visitor.InitVisitMap(typeof(Root));
             Visitor.SetVisitData(Root.inst);
 
-            for (int y = 1; y<=10; y++)
+            for (int y = 1; y <= 10; y++)
             {
-                for(int m=1; m<=12; m++)
+                for (int m = 1; m <= 12; m++)
                 {
-                    for(int d=1; d<=30; d++)
+                    for (int d = 1; d <= 30; d++)
                     {
                         Assert.AreEqual(d, Visitor.Get("date.day"));
                         Assert.AreEqual(m, Visitor.Get("date.month"));
@@ -168,6 +174,21 @@ namespace UnitTest.RunData
                     }
                 }
             }
+
+            Assert.True(Date.inst == (11, null, null));
+            Assert.True(Date.inst == (11, null, 1));
+            Assert.True(Date.inst == (11, 1, 1));
+            Assert.True(Date.inst == (null, 1, 1));
+
+            Assert.True(Date.inst < (12, null, null));
+            Assert.True(Date.inst < (12, null, 1));
+            Assert.True(Date.inst < (12, 1, 1));
+
+            
+            Assert.True(Date.inst > (10, null, null));
+            Assert.True(Date.inst > (10, 12, null));
+            Assert.True(Date.inst > (10, 12, 30));
+            Assert.True(Date.inst < (null, 12, 30));
         }
 
         [Test()]
@@ -192,7 +213,7 @@ namespace UnitTest.RunData
                     {
                         Chaoting.DaysInc();
 
-                        if(d == 30)
+                        if (d == 30)
                         {
                             yearExpertTax += Chaoting.inst.currMonthTax.Value;
                             realYearTax += Economy.inst.outputs.Single(x => x.name == "STATIC_REPORT_CHAOTING_TAX").currValue.Value;
@@ -204,6 +225,45 @@ namespace UnitTest.RunData
                         Assert.AreEqual(Chaoting.inst.expectYearTax.Value, Visitor.Get("chaoting.expect_year_tax"));
                         Assert.AreEqual(Chaoting.inst.realYearTax.Value, Visitor.Get("chaoting.real_year_tax"));
 
+                        Date.Inc();
+                    }
+                }
+            }
+        }
+
+        [Test()]
+        public void TestDepartDaysInc()
+        {
+            Root.Init(def);
+
+            Visitor.InitVisitMap(typeof(Root));
+            Visitor.SetVisitData(Root.inst);
+
+            double cropGrown = 0;
+
+            for (int y = 1; y <= 10; y++)
+            {
+                for (int m = 1; m <= 12; m++)
+                {
+                    for (int d = 1; d <= 30; d++)
+                    {
+                        if(Date.inst >= def.crop.growStartDay && Date.inst <= def.crop.harvestDay)
+                        {
+                            cropGrown += def.crop.growSpeed;
+                        }
+
+                        Depart.DaysInc();
+
+                        if(Date.inst == def.crop.harvestDay)
+                        {
+                            cropGrown = 0;
+                        }
+
+                        foreach(var depart in Depart.all)
+                        {
+                            Assert.AreEqual(cropGrown, depart.cropGrown.Value);
+                        }
+                        
                         Date.Inc();
                     }
                 }

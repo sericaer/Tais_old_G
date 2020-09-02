@@ -13,6 +13,8 @@ namespace RunData
         public string name;
         public ObservableValue<int> popNum;
 
+        public SubjectValue<double> cropGrown;
+
         public IEnumerable<Pop> pops
         {
             get
@@ -29,7 +31,7 @@ namespace RunData
             }
         }
 
-        public static List<Depart> all
+        internal static List<Depart> all
         {
             get
             {
@@ -47,9 +49,32 @@ namespace RunData
             return departs.Select(x => new Depart(x)).ToList();
         }
 
-        public Depart(string name)
+        internal static void DaysInc()
+        {
+            all.ForEach(x =>
+            {
+                if (Date.inst >= Root.inst.def.crop.growStartDay && Date.inst <= Root.inst.def.crop.harvestDay)
+                {
+                    x.cropGrown.Value += Root.inst.def.crop.growSpeed;
+                }
+
+                if (Date.inst == Root.inst.def.crop.harvestDay)
+                {
+                    foreach (var pop in x.pops)
+                    {
+                        pop.Harvest(x.cropGrown.Value);
+                    }
+
+                    x.cropGrown.Value = 0;
+                }
+            });
+
+        }
+
+        internal Depart(string name)
         {
             this.name = name;
+            this.cropGrown = new SubjectValue<double>(0);
         }
 
         private bool SameColor((int r, int g, int b) p)

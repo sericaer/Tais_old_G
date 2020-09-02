@@ -9,6 +9,7 @@ namespace RunData
         public Dictionary<string, PopDef> pops;
         public EconomyDef economy;
         public ChaotingDef chaoting;
+        public CropDef crop;
 
         public Define()
         {
@@ -38,6 +39,13 @@ namespace RunData
         {
             public double reportPopPercent;
             public double taxPercent;
+        }
+
+        public class CropDef
+        {
+            public double growSpeed;
+            public (int?, int?, int?) growStartDay;
+            public (int?, int?, int?) harvestDay;
         }
     }
 }

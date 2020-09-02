@@ -65,6 +65,11 @@ namespace RunData
             return pops;
         }
 
+        internal void Harvest(double value)
+        {
+            
+        }
+
         internal static void DaysInc()
         {
             all.ForEach(pop =>

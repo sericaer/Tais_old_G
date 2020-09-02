@@ -42,7 +42,91 @@ namespace RunData
             }
         }
 
+        public static bool operator ==(Date l, (int? year, int? month, int? day) r)
+        {
+            if(r.year != null && l.year.Value != r.year.Value)
+            {
+                return false;
+            }
+            if (r.month != null && l.month.Value != r.month.Value)
+            {
+                return false;
+            }
+            if (r.day != null && l.day.Value != r.day.Value)
+            {
+                return false;
+            }
 
+            return true;
+        }
+
+        public static bool operator >(Date l, (int? year, int? month, int? day) r)
+        {
+            if (r.year != null && l.year.Value > r.year.Value)
+            {
+                return true;
+            }
+            if (r.month != null && l.month.Value > r.month.Value)
+            {
+                return true;
+            }
+            if (r.day != null && l.day.Value > r.day.Value)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        public static bool operator <(Date l, (int? year, int? month, int? day) r)
+        {
+            return !(l > r || l == r);
+        }
+
+        public static bool operator <= (Date l, (int? year, int? month, int? day) r)
+        {
+            return l < r || l == r;
+        }
+
+        public static bool operator >=(Date l, (int? year, int? month, int? day) r)
+        {
+            return l > r || l == r;
+        }
+
+        public static bool operator !=(Date l, (int? year, int? month, int? day) r)
+        {
+            return !(l == r);
+        }
+
+        public static bool operator ==(Date l, Date r)
+        {
+            return l == (r.year.Value, r.month.Value, r.day.Value);
+        }
+
+        public static bool operator !=(Date l, Date r)
+        {
+            return !(l==r);
+        }
+
+        public static bool operator >(Date l, Date r)
+        {
+            return l > (r.year.Value, r.month.Value, r.day.Value);
+        }
+
+        public static bool operator <(Date l, Date r)
+        {
+            return !(l > r || l == r);
+        }
+
+        public static bool operator >=(Date l, Date r)
+        {
+            return l > r || l == r;
+        }
+
+        public static bool operator <=(Date l, Date r)
+        {
+            return l < r || l == r;
+        }
 
         [JsonProperty, DataVisitorProperty("year")]
         public SubjectValue<int> year;
