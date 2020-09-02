@@ -57,6 +57,8 @@ namespace TaisGodot.Scripts
 				economy = new Define.EconomyDef()
 				{
 					curr = 456,
+					pop_tax_percent = 30,
+					report_tax_percent = 100,
 				},
 
 				chaoting = new Define.ChaotingDef()
