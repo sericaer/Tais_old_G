@@ -44,9 +44,9 @@ namespace Modder
             }
         }
 
-        public static IEnumerable<GEvent> Process()
+        public static IEnumerable<GEvent> Process((int y, int m, int d) date)
         {
-            foreach (var eventObj in GEvent.Process())
+            foreach (var eventObj in GEvent.Process(date))
             {
                 yield return eventObj;
             }

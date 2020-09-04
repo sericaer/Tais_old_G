@@ -111,7 +111,7 @@ option =
         {
             Demon.inst.item1.data1 = 10;
 
-            foreach(var eventobj in Mod.Process())
+            foreach(var eventobj in Mod.Process((1,1,1)))
             {
                 Assert.Fail();
             }
@@ -123,7 +123,7 @@ option =
 
             Demon.inst.item1.data1 = 11;
 
-            var eventobjs = Mod.Process().ToArray();
+            var eventobjs = Mod.Process((1,1,1)).ToArray();
 
             Assert.AreEqual(eventobjs.Count(), 1);
 
@@ -155,7 +155,7 @@ option =
             Demon.inst.item1.data1 = 12;
             Demon.inst.item1.data2 = 101;
 
-            var eventobjs = Mod.Process().ToArray();
+            var eventobjs = Mod.Process((1,1,1)).ToArray();
 
             Assert.AreEqual(eventobjs.Count(), 1);
 

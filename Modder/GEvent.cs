@@ -12,6 +12,14 @@ namespace Modder
 {
     public class GEvent
     {
+        public Desc title;
+        public Desc desc;
+        public Option[] options;
+
+        internal string file;
+        internal Date date;
+        internal GEventParse parse;
+
         internal static void Load(string mod, string path)
         {
             LoadSub(mod, path + "/common", ref common);
@@ -29,140 +37,27 @@ namespace Modder
             List<GEvent> events = new List<GEvent>();
             foreach(var file in Directory.EnumerateFiles(path, "*.txt"))
             {
-                var eventobj = ModElementLoader.Load<GEvent>(file, File.ReadAllText(file));
-                eventobj.file = file;
+                var eventobj = new GEvent(file, ModElementLoader.Load<GEventParse>(file, File.ReadAllText(file)));
                 events.Add(eventobj);
             }
 
             eventGroup.Add((mod, events));
         }
 
-        public class Desc
+        public bool isValid((int y, int m, int d) date)
         {
-            public string Format;
-            public string[] Params;
-
-            internal Desc()
-            {
-
-            }
-
-            internal Desc(GroupValue groupValue)
-            {
-                Format = groupValue.First().ToString();
-                Params = groupValue.Skip(1).Select(x => x.ToString()).ToArray();
-            }
+            return (this.date.isEqual(date) && parse.trigger.Rslt() && Tools.GRandom.isOccur(100 / + parse.occur));
         }
-
-        public class Option
-        {
-            public Desc desc
-            {
-                get
-                {
-                    if(semantic.desc == null)
-                    {
-                        return new Desc() { Format = $"{Path.GetFileNameWithoutExtension(owner.file)}_OPTION_{index}_DESC" };
-                    }
-
-                    return new Desc(semantic.desc);
-                }
-            }
-
-            public void Selected()
-            {
-                semantic.set.Do();
-            }
-
-            public (string op, string left, SingleValue right)[] sets
-            {
-                get
-                {
-                    return semantic.set.info;
-                }
-            }
-
-            internal GEvent owner;
-            internal int index;
-            internal Parser.Semantic.Option semantic;
-        }
-
-        public Desc title
-        {
-            get
-            {
-                if(_title == null)
-                {
-                    return new Desc() { Format = $"{Path.GetFileNameWithoutExtension(file)}_TITLE" };
-                }
-
-                return new Desc(_title);
-            }
-        }
-
-        public Desc desc
-        {
-            get
-            {
-                if (_desc == null)
-                {
-                    return new Desc() { Format = $"{Path.GetFileNameWithoutExtension(file)}_DESC" };
-                }
-
-                return new Desc(_desc);
-            }
-        }
-
-
-        public Option[] options
-        {
-            get
-            {
-                var rslt = new List<Option>();
-                for(int i=0; i< _options.Count; i++)
-                {
-
-                    rslt.Add(new Option() { semantic = _options[i], index = i + 1, owner = this });
-                }
-
-                return rslt.ToArray();
-            }
-        }
-
-        public bool isOccur
-        {
-            get
-            {
-                return Tools.GRandom.isOccur(100/+_occur);
-            }
-        }
-
-        internal string file;
-
-        [SemanticPropertyArray("option")]
-        public List<Parser.Semantic.Option> _options;
-
-        [SemanticProperty("trigger")]
-        public Condition trigger;
-
-        [SemanticProperty("occur")]
-        internal int _occur;
-
-        [SemanticProperty("title")]
-        internal GroupValue _title;
-
-        [SemanticProperty("desc")]
-        internal GroupValue _desc;
 
         internal static List<(string mod, List<GEvent> events)> common = new List<(string mod, List<GEvent> events)>();
         internal static List<(string mod, List<GEvent> events)> depart = new List<(string mod, List<GEvent> events)>();
         internal static List<(string mod, List<GEvent> events)> pop = new List<(string mod, List<GEvent> events)>();
 
-        internal static IEnumerable<GEvent> Process()
+        internal static IEnumerable<GEvent> Process((int y, int m, int d) date)
         {
             foreach (var gEvent in common.SelectMany(x => x.events))
             {
-                if (gEvent.trigger.Rslt() && gEvent.isOccur)
+                if (gEvent.isValid(date))
                 {
                     yield return gEvent;
                 }
@@ -172,7 +67,7 @@ namespace Modder
             {
                 foreach (var gEvent in depart.SelectMany(x => x.events))
                 {
-                    if (gEvent.trigger.Rslt() && gEvent.isOccur)
+                    if (gEvent.isValid(date))
                     {
                         yield return gEvent;
                     }
@@ -226,12 +121,112 @@ namespace Modder
         //    }
         //}
 
-        public GEvent()
+        public GEvent(string file, GEventParse gEventParse)
         {
-            trigger = new ConditionDefault(false);
+            this.file = file;
+            this.title = gEventParse.title != null ? new Desc(gEventParse.title) : new Desc() { Format = $"{Path.GetFileNameWithoutExtension(file)}_TITLE" };
+            this.desc = gEventParse.desc != null ? new Desc(gEventParse.desc) : new Desc() { Format = $"{Path.GetFileNameWithoutExtension(file)}_DESC" };
+            this.options = gEventParse.options.Select((v, i) => new Option { semantic = v, index = i + 1, owner = this }).ToArray();
+            this.date = new Date(gEventParse.date);
 
-            _desc = null;
-            _title = null;
+            this.parse = gEventParse;
+
+            //var rslt = new List<Option>();
+            //for (int i = 0; i < _options.Count; i++)
+            //{
+
+            //    rslt.Add(new Option() { semantic = _options[i], index = i + 1, owner = this });
+            //}
+
+            //return rslt.ToArray();
+        }
+
+        public class GEventParse
+        {
+            [SemanticPropertyArray("option")]
+            public List<Parser.Semantic.Option> options;
+
+            [SemanticProperty("trigger")]
+            public Condition trigger;
+
+            [SemanticProperty("occur")]
+            internal int occur;
+
+            [SemanticProperty("title")]
+            internal GroupValue title;
+
+            [SemanticProperty("desc")]
+            internal GroupValue desc;
+
+            [SemanticProperty("date")]
+            internal GroupValue date;
+        }
+
+        public class Date
+        {
+            internal Date(GroupValue raw)
+            {
+
+            }
+
+            internal bool isEqual((int year, int month, int day) date)
+            {
+                return true;
+            }
+
+            internal int? year;
+            internal int? month;
+            internal int? day;
+        }
+
+        public class Desc
+        {
+            public string Format;
+            public string[] Params;
+
+            internal Desc()
+            {
+
+            }
+
+            internal Desc(GroupValue groupValue)
+            {
+                Format = groupValue.First().ToString();
+                Params = groupValue.Skip(1).Select(x => x.ToString()).ToArray();
+            }
+        }
+
+        public class Option
+        {
+            public Desc desc
+            {
+                get
+                {
+                    if (semantic.desc == null)
+                    {
+                        return new Desc() { Format = $"{Path.GetFileNameWithoutExtension(owner.file)}_OPTION_{index}_DESC" };
+                    }
+
+                    return new Desc(semantic.desc);
+                }
+            }
+
+            public void Selected()
+            {
+                semantic.set.Do();
+            }
+
+            public (string op, string left, SingleValue right)[] sets
+            {
+                get
+                {
+                    return semantic.set.info;
+                }
+            }
+
+            internal GEvent owner;
+            internal int index;
+            internal Parser.Semantic.Option semantic;
         }
     }
 }
