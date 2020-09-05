@@ -10,7 +10,7 @@ namespace TaisGodot.Scripts
 		{
 			RunData.Root.DaysInc();
 
-			foreach(var eventobj in Modder.Mod.Process())
+			foreach (var eventobj in Modder.Mod.Process(RunData.Date.Value))
 			{
 				var dialog = ShowDialog(eventobj);
 

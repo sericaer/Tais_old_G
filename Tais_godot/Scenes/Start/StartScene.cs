@@ -65,6 +65,13 @@ namespace TaisGodot.Scripts
 				{
 					reportPopPercent = 130,
 					taxPercent = 20
+				},
+
+				crop = new Define.CropDef()
+				{
+					growSpeed = 0.4,
+					growStartDay = (null, 2, 1),
+					harvestDay = (null, 9, 1),
 				}
 			};
 
