@@ -18,6 +18,18 @@ namespace Parser.Semantic
                     throw new Exception($"have more than one values");
                 }
 
+                var strValue = item.values[0] as StringValue;
+                if(strValue != null)
+                {
+                    bool bValue;
+                    if(!bool.TryParse(strValue.ToString(), out bValue))
+                    {
+                        throw new Exception($"key {item.key} must have single value true or false");
+                    }
+
+                    return new ConditionDefault(bValue);
+                }
+
                 var value = item.values[0] as SyntaxItem;
                 if (value == null)
                 {

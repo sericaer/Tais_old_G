@@ -12,78 +12,21 @@ namespace Modder
 {
     public class GEvent
     {
-        public Desc title;
+        public Title title;
         public Desc desc;
         public Option[] options;
 
         internal string file;
+
         internal Date date;
+        internal Trigger trigger;
+        internal Occur occur;
+
         internal GEventParse parse;
-
-        internal static void Load(string mod, string path)
-        {
-            LoadSub(mod, path + "/common", ref common);
-            LoadSub(mod, path + "/depart", ref depart);
-            LoadSub(mod, path + "/pop", ref pop);
-        }
-
-        private static void LoadSub(string mod, string path, ref List<(string mod, List<GEvent> events)> eventGroup)
-        {
-            if (!Directory.Exists(path))
-            {
-                return;
-            }
-
-            List<GEvent> events = new List<GEvent>();
-            foreach(var file in Directory.EnumerateFiles(path, "*.txt"))
-            {
-                var eventobj = new GEvent(file, ModElementLoader.Load<GEventParse>(file, File.ReadAllText(file)));
-                events.Add(eventobj);
-            }
-
-            eventGroup.Add((mod, events));
-        }
 
         public bool isValid((int y, int m, int d) date)
         {
-            return (this.date.isEqual(date) && parse.trigger.Rslt() && Tools.GRandom.isOccur(100 / + parse.occur));
-        }
-
-        internal static List<(string mod, List<GEvent> events)> common = new List<(string mod, List<GEvent> events)>();
-        internal static List<(string mod, List<GEvent> events)> depart = new List<(string mod, List<GEvent> events)>();
-        internal static List<(string mod, List<GEvent> events)> pop = new List<(string mod, List<GEvent> events)>();
-
-        internal static IEnumerable<GEvent> Process((int y, int m, int d) date)
-        {
-            foreach (var gEvent in common.SelectMany(x => x.events))
-            {
-                if (gEvent.isValid(date))
-                {
-                    yield return gEvent;
-                }
-            }
-
-            while (ModDataVisit.EnumerateVisit("depart"))
-            {
-                foreach (var gEvent in depart.SelectMany(x => x.events))
-                {
-                    if (gEvent.isValid(date))
-                    {
-                        yield return gEvent;
-                    }
-                }
-            }
-
-            //DataVisit.ForechPop(() =>
-            //{
-            //    foreach (var gEvent in depart.SelectMany(x => x.events))
-            //    {
-            //        if (gEvent.trigger.Rslt() && gEvent.occur.Rslt())
-            //        {
-            //            yield return gEvent;
-            //        }
-            //    }
-            //});
+            return (this.date.isEqual(date) && trigger.isTrue() && occur.isTrue());
         }
 
         //internal static IEnumerable<GEvent> Process(object rootObj, IEnumerable<object> departObjs, IEnumerable<object> popObjs)
@@ -121,25 +64,20 @@ namespace Modder
         //    }
         //}
 
-        public GEvent(string file, GEventParse gEventParse)
+        public GEvent(string file)
         {
             this.file = file;
-            this.title = gEventParse.title != null ? new Desc(gEventParse.title) : new Desc() { Format = $"{Path.GetFileNameWithoutExtension(file)}_TITLE" };
-            this.desc = gEventParse.desc != null ? new Desc(gEventParse.desc) : new Desc() { Format = $"{Path.GetFileNameWithoutExtension(file)}_DESC" };
-            this.options = gEventParse.options.Select((v, i) => new Option { semantic = v, index = i + 1, owner = this }).ToArray();
-            this.date = new Date(gEventParse.date);
 
-            this.parse = gEventParse;
+            this.parse = ModElementLoader.Load<GEventParse>(file, File.ReadAllText(file));
 
-            //var rslt = new List<Option>();
-            //for (int i = 0; i < _options.Count; i++)
-            //{
-
-            //    rslt.Add(new Option() { semantic = _options[i], index = i + 1, owner = this });
-            //}
-
-            //return rslt.ToArray();
+            this.title = new Title(parse.title, Path.GetFileNameWithoutExtension(file)); 
+            this.desc = new Desc(parse.desc, Path.GetFileNameWithoutExtension(file));  
+            this.options = parse.options.Select((v, i) => new Option { semantic = v, index = i + 1, owner = this }).ToArray();
+            this.date = new Date(parse.date);
+            this.trigger = new Trigger(parse.trigger);
+            this.occur = new Occur(parse.occur);
         }
+
 
         public class GEventParse
         {
@@ -150,7 +88,7 @@ namespace Modder
             public Condition trigger;
 
             [SemanticProperty("occur")]
-            internal int occur;
+            internal int? occur;
 
             [SemanticProperty("title")]
             internal GroupValue title;
@@ -159,40 +97,73 @@ namespace Modder
             internal GroupValue desc;
 
             [SemanticProperty("date")]
-            internal GroupValue date;
+            internal Parser.Semantic.Date date;
         }
 
         public class Date
         {
-            internal Date(GroupValue raw)
+            internal Date(Parser.Semantic.Date raw)
             {
-
+                this.raw = raw;
             }
 
             internal bool isEqual((int year, int month, int day) date)
             {
+                if(raw == null)
+                {
+                    return true;
+                }
+                
+                if(raw.year != null && raw.year != date.year)
+                {
+                    return false;
+                }
+                if (raw.month != null && raw.month != date.month)
+                {
+                    return false;
+                }
+                if (raw.day != null && raw.day != date.day)
+                {
+                    return false;
+                }
+
                 return true;
             }
 
-            internal int? year;
-            internal int? month;
-            internal int? day;
+            Parser.Semantic.Date raw;
         }
 
-        public class Desc
+        public abstract class TEXT
         {
             public string Format;
             public string[] Params;
 
-            internal Desc()
+            internal TEXT(GroupValue groupValue, string defaultValue)
+            {
+                if (groupValue == null)
+                {
+                    Format = defaultValue;
+                    return;
+                } 
+
+                Format = groupValue.First().ToString();
+                Params = groupValue.Skip(1).Select(x => x.ToString()).ToArray();
+            }
+        }
+
+        public class Title : TEXT
+        {
+            public Title(GroupValue groupValue, string fileName) : base(groupValue, $"{fileName}_TITLE")
             {
 
             }
+        }
 
-            internal Desc(GroupValue groupValue)
+        public class Desc : TEXT
+        {
+            public Desc(GroupValue groupValue, string fileName) : base(groupValue, $"{fileName}_DESC")
             {
-                Format = groupValue.First().ToString();
-                Params = groupValue.Skip(1).Select(x => x.ToString()).ToArray();
+
             }
         }
 
@@ -202,12 +173,7 @@ namespace Modder
             {
                 get
                 {
-                    if (semantic.desc == null)
-                    {
-                        return new Desc() { Format = $"{Path.GetFileNameWithoutExtension(owner.file)}_OPTION_{index}_DESC" };
-                    }
-
-                    return new Desc(semantic.desc);
+                    return new Desc(semantic.desc, Path.GetFileNameWithoutExtension(owner.file), index);
                 }
             }
 
@@ -227,6 +193,34 @@ namespace Modder
             internal GEvent owner;
             internal int index;
             internal Parser.Semantic.Option semantic;
+
+            public class Desc : TEXT
+            {
+                public Desc(GroupValue groupValue, string fileName, int index) : base(groupValue, $"{fileName}_OPTION_{index}_DESC")
+                {
+
+                }
+            }
+        }
+
+        internal class Trigger
+        {
+            private Condition raw;
+
+            public Trigger(Condition raw)
+            {
+                if(raw == null)
+                {
+                    throw new Exception("event must have trigger");
+                }
+
+                this.raw = raw;
+            }
+
+            internal bool isTrue()
+            {
+                return raw.Rslt();
+            }
         }
     }
 }

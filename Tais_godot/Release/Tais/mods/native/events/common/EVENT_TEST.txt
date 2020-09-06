@@ -1,10 +1,9 @@
 title = EVENT_TEST_TITLE
 desc = EVENT_TEST_DESC
 
-trigger =
-{
-	EQUAL = {date.day, 11}
-}
+trigger = true
+
+date = {month=1, day=11}
 
 occur = 1
 

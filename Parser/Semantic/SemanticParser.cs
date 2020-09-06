@@ -89,7 +89,17 @@ namespace Parser.Semantic
 
         private static object ConvertItem(SyntaxItem item, Type type)
         {
-            if(type.IsValueType)
+            Type currType = type;
+            if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>))
+            {
+                Type[] listParameters = type.GetGenericArguments();
+                if(listParameters[0].IsValueType)
+                {
+                    currType = listParameters[0];
+                }
+            }
+
+            if(currType.IsValueType)
             {
                 if (item.values.Count() != 1 || !(item.values[0] is SingleValue))
                 {
@@ -97,11 +107,11 @@ namespace Parser.Semantic
                 }
 
                 var strValue = item.values[0] as SingleValue;
-                if (type == typeof(string))
+                if (currType == typeof(string))
                 {
                     return strValue.ToString();
                 }
-                else if (type == typeof(double) || type == typeof(int))
+                else if (currType == typeof(double) || currType == typeof(int))
                 {
                     var digitValue = strValue as DigitValue;
                     if (digitValue == null)
@@ -109,19 +119,19 @@ namespace Parser.Semantic
                         throw new Exception($"can not support type {type} with key:{item.key}");
                     }
 
-                    return Convert.ChangeType(digitValue.digit, type);
+                    return Convert.ChangeType(digitValue.digit, currType);
                 }
                 else
                 {
-                    throw new Exception($"can not support type {type} with key:{item.key}");
+                    throw new Exception($"can not support type {currType} with key:{item.key}");
                 }
             }
             else
             {
-                var ParseMethod = type.GetMethod("Parse", BindingFlags.Static | BindingFlags.Public);
+                var ParseMethod = currType.GetMethod("Parse", BindingFlags.Static | BindingFlags.Public);
                 if (ParseMethod == null)
                 {
-                    throw new Exception($"can not support type {type}");
+                    throw new Exception($"can not support type {currType}");
                 }
 
                 return ParseMethod.Invoke(null, new object[] { item });
