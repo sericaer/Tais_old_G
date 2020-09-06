@@ -16,6 +16,11 @@ namespace TaisGodot.Scripts
 
 				await ToSignal(dialog, "tree_exited");
 			}
+
+			if(Root.inst.isEnd)
+			{
+				GetTree().ChangeScene("res://Scenes/End/EndScene.tscn");
+			}
 		}
 
 		private Node ShowDialog(Modder.GEvent eventobj)

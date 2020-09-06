@@ -29,41 +29,6 @@ namespace Modder
             return (this.date.isEqual(date) && trigger.isTrue() && occur.isTrue());
         }
 
-        //internal static IEnumerable<GEvent> Process(object rootObj, IEnumerable<object> departObjs, IEnumerable<object> popObjs)
-        //{
-        //    foreach(var gEvent in common.SelectMany(x=>x.events))
-        //    {
-        //        if (gEvent.trigger.Rslt() && gEvent.occur.Rslt())
-        //        {
-        //            yield return gEvent;
-        //        }
-        //    }
-
-        //    foreach(var departObj in departObjs)
-        //    {
-        //        //DataVisit.SetObj("depart", departObj);
-        //        foreach (var gEvent in depart.SelectMany(x => x.events))
-        //        {
-        //            if (gEvent.trigger.Rslt() && gEvent.occur.Rslt())
-        //            {
-        //                yield return gEvent;
-        //            }
-        //        }
-        //    }
-
-        //    foreach (var popObj in popObjs)
-        //    {
-        //        //DataVisit.SetObj("pop", popObj);
-        //        foreach (var gEvent in pop.SelectMany(x => x.events))
-        //        {
-        //            if (gEvent.trigger.Rslt() && gEvent.occur.Rslt())
-        //            {
-        //                yield return gEvent;
-        //            }
-        //        }
-        //    }
-        //}
-
         public GEvent(string file)
         {
             this.file = file;
@@ -77,7 +42,6 @@ namespace Modder
             this.trigger = new Trigger(parse.trigger);
             this.occur = new Occur(parse.occur);
         }
-
 
         public class GEventParse
         {

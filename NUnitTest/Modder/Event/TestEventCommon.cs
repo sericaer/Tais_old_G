@@ -47,6 +47,14 @@ namespace UnitTest.Modder.Event
                 {
                     assign = {item1.data2, 103}
                 }
+            }
+            option =
+            {
+                desc = EVENT_TEST_OPTION_4_DESC
+                select =
+                {
+                    assign = {item1.data3, true}
+                }
             }");
 
         private (string file, string content) EVENT_TEST_DEFAULT = ("EVENT_TEST_DEFAULT.txt",
@@ -205,7 +213,7 @@ namespace UnitTest.Modder.Event
             Assert.AreEqual(eventobj.title.Format, "EVENT_DIFF_TITLE");
             Assert.AreEqual(eventobj.desc.Format, "EVENT_DIFF_DESC");
 
-            Assert.AreEqual(eventobj.options.Length, 3);
+            Assert.AreEqual(eventobj.options.Length, 4);
             Assert.AreEqual(eventobj.options[0].desc.Format, "EVENT_TEST_OPTION_1_DESC");
             Assert.AreEqual(eventobj.options[1].desc.Format, "EVENT_TEST_OPTION_2_DESC");
             Assert.AreEqual(eventobj.options[2].desc.Format, "EVENT_TEST_OPTION_3_DESC");
@@ -218,6 +226,9 @@ namespace UnitTest.Modder.Event
 
             eventobj.options[2].Selected();
             Assert.AreEqual(103, Demon.inst.item1.data2);
+
+            eventobj.options[3].Selected();
+            Assert.AreEqual(true, Demon.inst.item1.data3);
 
         }
 

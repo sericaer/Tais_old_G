@@ -74,10 +74,16 @@ namespace Parser.Syntax
 
                             values = new List<Value>();
                             var substr = raw.Substring(start, end - start);
+
                             double dbValue;
-                            if(double.TryParse(substr, out dbValue))
+                            bool bValue;
+                            if (double.TryParse(substr, out dbValue))
                             {
                                 values.Add(new DigitValue() { digit = dbValue});
+                            }
+                            else if (bool.TryParse(substr, out bValue))
+                            {
+                                values.Add(new BoolValue() { data = bValue });
                             }
                             else
                             {
@@ -176,6 +182,11 @@ namespace Parser.Syntax
     public class DigitValue : SingleValue
     {
         public double digit;
+    }
+
+    public class BoolValue : SingleValue
+    {
+        public bool data;
     }
 
     internal enum ELEM_TYPE

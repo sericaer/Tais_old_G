@@ -13,5 +13,6 @@ option =
 	select = 
 	{
 	    add = {economy.value, economy.month_surplus}
+	    assign = {taishou.is_revoke, true}
 	}
 }
