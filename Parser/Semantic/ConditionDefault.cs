@@ -3,7 +3,7 @@ namespace Parser.Semantic
 {
     public class ConditionDefault : Condition
     {
-        public ConditionDefault(bool defaultValue)
+        public ConditionDefault(bool defaultValue) : base(null)
         {
             this.defaultValue = defaultValue;
         }

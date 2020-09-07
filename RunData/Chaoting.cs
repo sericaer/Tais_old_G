@@ -45,15 +45,12 @@ namespace RunData
 
         public static void DaysInc()
         {
-            if(Date.inst.day.Value == 1)
+            if(Date.inst == (null, 1, 1))
             {
-                if(Date.inst.month.Value == 1)
-                {
-                    inst.expectYearTax.Value = 0;
-                    inst.realYearTax.Value = 0;
-                }
+                inst.expectYearTax.Value = 0;
+                inst.realYearTax.Value = 0;
             }
-            if(Date.inst.day.Value == 30)
+            if(Date.inst == (null, null, 30))
             {
                 inst.expectYearTax.Value += inst.currMonthTax.Value;
                 inst.realYearTax.Value += Economy.inst.outputs.Single(x => x.name == "STATIC_REPORT_CHAOTING_TAX").currValue.Value;

@@ -57,6 +57,14 @@ namespace RunData
             return rslt;
         }
 
+        internal static void DaysInc()
+        {
+            if(Date.inst == (null, null, 30))
+            {
+                inst.curr.Value += inst.monthSurplus.Value;
+            }
+        }
+
         public void LoadMemento(Memento memento)
         {
             foreach(var pair in memento.incomes)

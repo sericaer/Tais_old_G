@@ -20,6 +20,17 @@ namespace Parser.Semantic
 
         public static Date Parse(SyntaxItem item)
         {
+            if(item.values.Count == 1)
+            {
+                var sValue = item.values[0] as StringValue;
+                if (sValue.ToString() != "every_day")
+                {
+                    throw new Exception($"date with single value expect be 'every_day', but curr is {sValue.ToString()}");
+                }
+
+                return new Date();
+            }
+
             return SemanticParser.DoParser<Date>(item);
         }
     }

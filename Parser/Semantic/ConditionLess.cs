@@ -7,16 +7,16 @@ using Parser.Syntax;
 
 namespace Parser.Semantic
 {
-    public class ConditionEqual : Condition
+    public class ConditionLess : Condition
     {
-        public ConditionEqual(SyntaxItem item) : base(item)
+        public ConditionLess(SyntaxItem item) : base(item)
         {
 
         }
 
         public override bool Rslt()
         {
-            return Visitor.GetValue(right) == Visitor.GetValue(left);
+            return Visitor.GetValue(right) < Visitor.GetValue(left);
         }
     }
 }

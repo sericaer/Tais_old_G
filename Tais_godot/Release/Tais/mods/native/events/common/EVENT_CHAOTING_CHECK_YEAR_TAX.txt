@@ -1,0 +1,16 @@
+trigger = 
+{
+    less = {real_year_tax, expect_year_tax}
+}
+
+date = {month=12, day=30}
+
+occur = 1
+
+option =
+{
+	select = 
+	{
+	    assign = {taishou.is_revoke, true}
+	}
+}

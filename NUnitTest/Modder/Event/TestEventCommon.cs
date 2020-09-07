@@ -17,8 +17,10 @@ namespace UnitTest.Modder.Event
 
             trigger =
             {
-	            EQUAL = {item1.data1, 11}
+	            equal = {item1.data1, 11}
             }
+
+            date = every_day
 
             occur = 1
 
@@ -61,8 +63,10 @@ namespace UnitTest.Modder.Event
             @"
             trigger =
             {
-	            EQUAL = {item1.data1, 12}
+	            equal = {item1.data1, 12}
             }
+
+            date = every_day
 
             occur = 1
 
@@ -130,7 +134,43 @@ namespace UnitTest.Modder.Event
 
             trigger =
             {
-	            EQUAL = {item1.data1, 55}
+	            equal = {item1.data1, 55}
+            }
+
+            occur = 1
+
+            option =
+            {
+                select =
+                {
+                    assign = {item1.data2, 101}
+                }
+            }
+
+            option =
+            {
+                select =
+                {
+                    assign = {item1.data2, 102}
+                }
+            }
+
+            option =
+            {
+                select =
+                {
+                    assign = {item1.data2, 103}
+                }
+            }");
+
+        private (string file, string content) EVENT_TEST_CONDITION_LESS = ("EVENT_TEST_CONDITION_LESS.txt",
+        @"
+
+            date = {month = 4, day = 22}
+
+            trigger =
+            {
+	            equal = {item1.data1, 55}
             }
 
             occur = 1

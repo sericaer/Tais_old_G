@@ -59,6 +59,8 @@ namespace RunData
 
         public static void DaysInc()
         {
+            Economy.DaysInc();
+
             Depart.DaysInc();
 
             Pop.DaysInc();

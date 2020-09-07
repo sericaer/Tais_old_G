@@ -22,8 +22,10 @@ desc = EVENT_DIFF_DESC
 
 trigger =
 {
-	EQUAL = {depart.data1, 11}
+	equal = {depart.data1, 11}
 }
+
+date = every_day
 
 occur = 1
 

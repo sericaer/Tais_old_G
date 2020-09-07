@@ -32,8 +32,10 @@ namespace Parser.Semantic
 
                 switch (value.key)
                 {
-                    case "EQUAL":
-                        return ConditionEqual.Parse(value);
+                    case "equal":
+                        return new ConditionEqual(value);
+                    case "less":
+                        return new ConditionLess(value);
                     default:
                         throw new Exception($"not support value {value.key}");
                 }
@@ -45,6 +47,32 @@ namespace Parser.Semantic
 
         }
 
+        internal Condition(SyntaxItem item)
+        {
+            if(item == null && this is ConditionDefault)
+            {
+                return;
+            }
+
+            if (item.values.Count() != 2)
+            {
+                throw new Exception("conditon equal must have 2 values!");
+            }
+
+            var value0 = item.values[0] as SingleValue;
+            var value1 = item.values[1] as SingleValue;
+            if (value0 == null || value1 == null)
+            {
+                throw new Exception("conditon equal value must be SingleValue");
+            }
+
+            right = value0;
+            left = value1;
+        }
+
         public abstract bool Rslt();
+
+        internal SingleValue right;
+        internal SingleValue left;
     }
 }
