@@ -18,6 +18,12 @@ namespace Parser.Semantic
                     throw new Exception($"have more than one values");
                 }
 
+                var bValue = item.values[0] as BoolValue;
+                if(bValue != null)
+                {
+                    return new ConditionDefault(bValue.data);
+                }
+
                 var value = item.values[0] as SyntaxItem;
                 if (value == null)
                 {

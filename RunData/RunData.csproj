@@ -71,6 +71,7 @@
     <Compile Include="Chaoting.cs" />
     <Compile Include="Observable.cs" />
     <Compile Include="Define.cs" />
+    <Compile Include="Taishou.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

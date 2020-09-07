@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,6 +16,7 @@ namespace Modder
         public string path;
 
         public List<Language> languages;
+        public EventGroup eventGroup;
 
         static Mod()
         {
@@ -37,6 +39,8 @@ namespace Modder
 
         public static void Load(string path)
         {
+            modDict = new Dictionary<string, Mod>();
+
             foreach (var sub in System.IO.Directory.EnumerateDirectories(path))
             {
                 var modname = System.IO.Path.GetFileName(sub);
@@ -44,9 +48,9 @@ namespace Modder
             }
         }
 
-        public static IEnumerable<GEvent> Process()
+        public static IEnumerable<GEvent> Process((int y, int m, int d) date)
         {
-            foreach (var eventObj in GEvent.Process())
+            foreach (var eventObj in EventGroup.Process(date))
             {
                 yield return eventObj;
             }
@@ -74,10 +78,92 @@ namespace Modder
             this.path = path;
 
             this.languages = Language.Load(path + "/languages");
-            GEvent.Load(modname, path + "/events");
+            this.eventGroup = EventGroup.Load(modname, path + "/events");
+
         }
 
-        private static Dictionary<string, Mod> modDict = new Dictionary<string, Mod>();
+        internal static Dictionary<string, Mod> modDict;
 
+    }
+
+    public class EventGroup
+    {
+        internal List<GEvent> _common = new List<GEvent>();
+        internal List<GEvent> _depart = new List<GEvent>();
+        internal List<GEvent> _pop = new List<GEvent>();
+
+        internal static IEnumerable<(string mod, List<GEvent> events)> common
+        {
+            get
+            {
+                return Mod.modDict.Select(x => (x.Key, x.Value.eventGroup._common));
+            }
+        }
+
+        internal static IEnumerable<(string mod, List<GEvent> events)> depart
+        {
+            get
+            {
+                return Mod.modDict.Select(x => (x.Key, x.Value.eventGroup._depart));
+            }
+        }
+
+        internal static IEnumerable<(string mod, List<GEvent> events)> pop
+        {
+            get
+            {
+                return Mod.modDict.Select(x => (x.Key, x.Value.eventGroup._pop));
+            }
+        }
+
+        internal static EventGroup Load(string modname, string path)
+        {
+            return new EventGroup()
+            {
+                _common = LoadSub(path + "/common"),
+                _depart = LoadSub(path + "/depart"),
+                _pop = LoadSub(path + "/pop")
+            };
+        }
+
+        internal static IEnumerable<GEvent> Process((int y, int m, int d) date)
+        {
+            foreach (var gEvent in common.SelectMany(x => x.events))
+            {
+                if (gEvent.isValid(date))
+                {
+                    yield return gEvent;
+                }
+            }
+
+            while (ModDataVisit.EnumerateVisit("depart"))
+            {
+                foreach (var gEvent in depart.SelectMany(x => x.events))
+                {
+                    if (gEvent.isValid(date))
+                    {
+                        yield return gEvent;
+                    }
+                }
+            }
+        }
+
+        private static List<GEvent> LoadSub(string path)
+        {
+            List<GEvent> rslt = new List<GEvent>();
+
+            if (!Directory.Exists(path))
+            {
+                return rslt;
+            }
+
+            foreach (var file in Directory.EnumerateFiles(path, "*.txt"))
+            {
+                var eventobj = new GEvent(file);
+                rslt.Add(eventobj);
+            }
+
+            return rslt;
+        }
     }
 }

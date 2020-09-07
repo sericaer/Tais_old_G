@@ -15,9 +15,16 @@ namespace UnitTest.Modder.Mock
             }
         }
 
+        public string commonPath
+        {
+            get
+            {
+                return modPath + "events/common/"; ;
+            }
+        }
+
         internal void AddCommonEvent(string fileName, string fileContent)
         {
-            var commonPath = modPath + "events/common/";
             Directory.CreateDirectory(commonPath);
 
             File.WriteAllText(commonPath + fileName, fileContent);

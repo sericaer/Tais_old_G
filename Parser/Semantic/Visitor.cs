@@ -7,6 +7,8 @@ namespace Parser.Semantic
         {
             switch(raw)
             {
+                case Syntax.BoolValue bValue:
+                    return bValue.data;
                 case Syntax.DigitValue dValue:
                     return dValue.digit;
                 case Syntax.StringValue sValue:

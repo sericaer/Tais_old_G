@@ -162,6 +162,14 @@ namespace RunData
         {
             return new Date();
         }
+    
+        public static (int y, int m, int d) Value
+        {
+            get
+            {
+                return (inst.year.Value, inst.month.Value, inst.day.Value);
+            }
+        }
 
         //internal static void ToJson(ref JObject jObject)
         //{

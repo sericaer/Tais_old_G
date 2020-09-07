@@ -12,45 +12,122 @@ namespace Modder
 {
     public class GEvent
     {
-        internal static void Load(string mod, string path)
+        public Title title;
+        public Desc desc;
+        public Option[] options;
+
+        internal string file;
+
+        internal Date date;
+        internal Trigger trigger;
+        internal Occur occur;
+
+        internal GEventParse parse;
+
+        public bool isValid((int y, int m, int d) date)
         {
-            LoadSub(mod, path + "/common", ref common);
-            LoadSub(mod, path + "/depart", ref depart);
-            LoadSub(mod, path + "/pop", ref pop);
+            return (this.date.isEqual(date) && trigger.isTrue() && occur.isTrue());
         }
 
-        private static void LoadSub(string mod, string path, ref List<(string mod, List<GEvent> events)> eventGroup)
+        public GEvent(string file)
         {
-            if (!Directory.Exists(path))
-            {
-                return;
-            }
+            this.file = file;
 
-            List<GEvent> events = new List<GEvent>();
-            foreach(var file in Directory.EnumerateFiles(path, "*.txt"))
-            {
-                var eventobj = ModElementLoader.Load<GEvent>(file, File.ReadAllText(file));
-                eventobj.file = file;
-                events.Add(eventobj);
-            }
+            this.parse = ModElementLoader.Load<GEventParse>(file, File.ReadAllText(file));
 
-            eventGroup.Add((mod, events));
+            this.title = new Title(parse.title, Path.GetFileNameWithoutExtension(file)); 
+            this.desc = new Desc(parse.desc, Path.GetFileNameWithoutExtension(file));  
+            this.options = parse.options.Select((v, i) => new Option { semantic = v, index = i + 1, owner = this }).ToArray();
+            this.date = new Date(parse.date);
+            this.trigger = new Trigger(parse.trigger);
+            this.occur = new Occur(parse.occur);
         }
 
-        public class Desc
+        public class GEventParse
+        {
+            [SemanticPropertyArray("option")]
+            public List<Parser.Semantic.Option> options;
+
+            [SemanticProperty("trigger")]
+            public Condition trigger;
+
+            [SemanticProperty("occur")]
+            internal int? occur;
+
+            [SemanticProperty("title")]
+            internal GroupValue title;
+
+            [SemanticProperty("desc")]
+            internal GroupValue desc;
+
+            [SemanticProperty("date")]
+            internal Parser.Semantic.Date date;
+        }
+
+        public class Date
+        {
+            internal Date(Parser.Semantic.Date raw)
+            {
+                this.raw = raw;
+            }
+
+            internal bool isEqual((int year, int month, int day) date)
+            {
+                if(raw == null)
+                {
+                    return true;
+                }
+                
+                if(raw.year != null && raw.year != date.year)
+                {
+                    return false;
+                }
+                if (raw.month != null && raw.month != date.month)
+                {
+                    return false;
+                }
+                if (raw.day != null && raw.day != date.day)
+                {
+                    return false;
+                }
+
+                return true;
+            }
+
+            Parser.Semantic.Date raw;
+        }
+
+        public abstract class TEXT
         {
             public string Format;
             public string[] Params;
 
-            internal Desc()
+            internal TEXT(GroupValue groupValue, string defaultValue)
+            {
+                if (groupValue == null)
+                {
+                    Format = defaultValue;
+                    return;
+                } 
+
+                Format = groupValue.First().ToString();
+                Params = groupValue.Skip(1).Select(x => x.ToString()).ToArray();
+            }
+        }
+
+        public class Title : TEXT
+        {
+            public Title(GroupValue groupValue, string fileName) : base(groupValue, $"{fileName}_TITLE")
             {
 
             }
+        }
 
-            internal Desc(GroupValue groupValue)
+        public class Desc : TEXT
+        {
+            public Desc(GroupValue groupValue, string fileName) : base(groupValue, $"{fileName}_DESC")
             {
-                Format = groupValue.First().ToString();
-                Params = groupValue.Skip(1).Select(x => x.ToString()).ToArray();
+
             }
         }
 
@@ -60,12 +137,7 @@ namespace Modder
             {
                 get
                 {
-                    if(semantic.desc == null)
-                    {
-                        return new Desc() { Format = $"{Path.GetFileNameWithoutExtension(owner.file)}_OPTION_{index}_DESC" };
-                    }
-
-                    return new Desc(semantic.desc);
+                    return new Desc(semantic.desc, Path.GetFileNameWithoutExtension(owner.file), index);
                 }
             }
 
@@ -85,153 +157,34 @@ namespace Modder
             internal GEvent owner;
             internal int index;
             internal Parser.Semantic.Option semantic;
-        }
 
-        public Desc title
-        {
-            get
+            public class Desc : TEXT
             {
-                if(_title == null)
-                {
-                    return new Desc() { Format = $"{Path.GetFileNameWithoutExtension(file)}_TITLE" };
-                }
-
-                return new Desc(_title);
-            }
-        }
-
-        public Desc desc
-        {
-            get
-            {
-                if (_desc == null)
-                {
-                    return new Desc() { Format = $"{Path.GetFileNameWithoutExtension(file)}_DESC" };
-                }
-
-                return new Desc(_desc);
-            }
-        }
-
-
-        public Option[] options
-        {
-            get
-            {
-                var rslt = new List<Option>();
-                for(int i=0; i< _options.Count; i++)
+                public Desc(GroupValue groupValue, string fileName, int index) : base(groupValue, $"{fileName}_OPTION_{index}_DESC")
                 {
 
-                    rslt.Add(new Option() { semantic = _options[i], index = i + 1, owner = this });
                 }
-
-                return rslt.ToArray();
             }
         }
 
-        public bool isOccur
+        internal class Trigger
         {
-            get
+            private Condition raw;
+
+            public Trigger(Condition raw)
             {
-                return Tools.GRandom.isOccur(100/+_occur);
-            }
-        }
-
-        internal string file;
-
-        [SemanticPropertyArray("option")]
-        public List<Parser.Semantic.Option> _options;
-
-        [SemanticProperty("trigger")]
-        public Condition trigger;
-
-        [SemanticProperty("occur")]
-        internal int _occur;
-
-        [SemanticProperty("title")]
-        internal GroupValue _title;
-
-        [SemanticProperty("desc")]
-        internal GroupValue _desc;
-
-        internal static List<(string mod, List<GEvent> events)> common = new List<(string mod, List<GEvent> events)>();
-        internal static List<(string mod, List<GEvent> events)> depart = new List<(string mod, List<GEvent> events)>();
-        internal static List<(string mod, List<GEvent> events)> pop = new List<(string mod, List<GEvent> events)>();
-
-        internal static IEnumerable<GEvent> Process()
-        {
-            foreach (var gEvent in common.SelectMany(x => x.events))
-            {
-                if (gEvent.trigger.Rslt() && gEvent.isOccur)
+                if(raw == null)
                 {
-                    yield return gEvent;
+                    throw new Exception("event must have trigger");
                 }
+
+                this.raw = raw;
             }
 
-            while (ModDataVisit.EnumerateVisit("depart"))
+            internal bool isTrue()
             {
-                foreach (var gEvent in depart.SelectMany(x => x.events))
-                {
-                    if (gEvent.trigger.Rslt() && gEvent.isOccur)
-                    {
-                        yield return gEvent;
-                    }
-                }
+                return raw.Rslt();
             }
-
-            //DataVisit.ForechPop(() =>
-            //{
-            //    foreach (var gEvent in depart.SelectMany(x => x.events))
-            //    {
-            //        if (gEvent.trigger.Rslt() && gEvent.occur.Rslt())
-            //        {
-            //            yield return gEvent;
-            //        }
-            //    }
-            //});
-        }
-
-        //internal static IEnumerable<GEvent> Process(object rootObj, IEnumerable<object> departObjs, IEnumerable<object> popObjs)
-        //{
-        //    foreach(var gEvent in common.SelectMany(x=>x.events))
-        //    {
-        //        if (gEvent.trigger.Rslt() && gEvent.occur.Rslt())
-        //        {
-        //            yield return gEvent;
-        //        }
-        //    }
-
-        //    foreach(var departObj in departObjs)
-        //    {
-        //        //DataVisit.SetObj("depart", departObj);
-        //        foreach (var gEvent in depart.SelectMany(x => x.events))
-        //        {
-        //            if (gEvent.trigger.Rslt() && gEvent.occur.Rslt())
-        //            {
-        //                yield return gEvent;
-        //            }
-        //        }
-        //    }
-
-        //    foreach (var popObj in popObjs)
-        //    {
-        //        //DataVisit.SetObj("pop", popObj);
-        //        foreach (var gEvent in pop.SelectMany(x => x.events))
-        //        {
-        //            if (gEvent.trigger.Rslt() && gEvent.occur.Rslt())
-        //            {
-        //                yield return gEvent;
-        //            }
-        //        }
-        //    }
-        //}
-
-        public GEvent()
-        {
-            trigger = new ConditionDefault(false);
-
-            _desc = null;
-            _title = null;
         }
     }
 }

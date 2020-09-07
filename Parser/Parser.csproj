@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Semantic\Date.cs" />
     <Compile Include="Semantic\Option.cs" />
     <Compile Include="Syntax\Syntax.cs" />
     <Compile Include="Syntax\SyntaxRoot.cs" />

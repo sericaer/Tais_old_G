@@ -35,6 +35,10 @@ namespace UnitTest.Modder.Mock
 
         [DataVisitorProperty("data2")]
         public double data2;
+
+
+        [DataVisitorProperty("data3")]
+        public bool data3;
     }
 
     public class Depart

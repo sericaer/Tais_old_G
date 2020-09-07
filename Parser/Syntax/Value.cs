@@ -36,8 +36,23 @@ namespace Parser.Syntax
                         }
                     case ELEM_TYPE.STRING:
                         {
-                            var node = new StringValue() { data = raw.Substring(start, end - start) };
-                            rslt.Add(node);
+                            var substr = raw.Substring(start, end - start);
+
+                            double dbValue;
+                            bool bValue;
+                            if (double.TryParse(substr, out dbValue))
+                            {
+                                rslt.Add(new DigitValue() { digit = dbValue });
+                            }
+                            else if (bool.TryParse(substr, out bValue))
+                            {
+                                rslt.Add(new BoolValue() { data = bValue });
+                            }
+                            else
+                            {
+                                rslt.Add(new StringValue() { data = substr });
+                            }
+
                             start = end;
 
                         }

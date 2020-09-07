@@ -13,21 +13,20 @@ namespace Modder
 
         }
 
-        internal Occur(bool defaultValue)
+        internal Occur(int? raw)
         {
-            this.defaultValue = defaultValue;
-        }
-
-        internal bool Rslt()
-        {
-            if(defaultValue != null)
+            this.raw = raw;
+            if (raw == null)
             {
-                return defaultValue.Value;
+                throw new Exception("event must have occur");
             }
-
-            throw new NotImplementedException();
         }
 
-        bool? defaultValue;
+        int? raw;
+
+        internal bool isTrue()
+        {
+            return Tools.GRandom.isOccur(100 / +raw.Value);
+        }
     }
 }

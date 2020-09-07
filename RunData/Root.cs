@@ -70,6 +70,9 @@ namespace RunData
 
         public static Root inst;
 
+        [DataVisitorProperty("taishou")]
+        public Taishou taishou;
+
         [DataVisitorProperty("date")]
         public Date date;
 
@@ -85,13 +88,25 @@ namespace RunData
         [DataVisitorPropertyArray("pop")]
         public List<Pop> pops;
 
+
         internal Define def;
+
+        public bool isEnd
+        {
+            get
+            {
+                return taishou.isRevoke;
+            }
+        }
 
         public Root(Define def)
         {
             this.def = def;
 
+
             inst = this;
+
+            taishou = new Taishou();
 
             date = Date.Init();
 
