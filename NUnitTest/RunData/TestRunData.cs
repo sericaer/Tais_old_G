@@ -189,7 +189,7 @@ namespace UnitTest.RunData
             Assert.True(Date.inst > (10, null, null));
             Assert.True(Date.inst > (10, 12, null));
             Assert.True(Date.inst > (10, 12, 30));
-            
+
         }
 
         [Test()]
@@ -259,7 +259,7 @@ namespace UnitTest.RunData
 
                         Depart.DaysInc();
 
-                        foreach(var depart in Depart.all)
+                        foreach (var depart in Depart.all)
                         {
                             Assert.AreEqual(cropGrown, depart.cropGrown.Value);
                         }
@@ -269,11 +269,27 @@ namespace UnitTest.RunData
                         {
                             Assert.AreEqual(cropGrown, Visitor.Get("pop.depart.crop_grown"));
                         }
-                        
+
                         Date.Inc();
                     }
                 }
             }
+        }
+
+        [Test()]
+        public void TestTaishou()
+        {
+            Root.Init(def);
+
+            Visitor.InitVisitMap(typeof(Root));
+            Visitor.SetVisitData(Root.inst);
+
+            Assert.AreEqual(false, Visitor.Get("taishou.is_revoke"));
+            Assert.AreEqual(false, Root.inst.isEnd);
+
+            Visitor.Set("taishou.is_revoke", true);
+            Assert.AreEqual(true, Visitor.Get("taishou.is_revoke"));
+            Assert.AreEqual(true, Root.inst.isEnd);
         }
     }
 }
