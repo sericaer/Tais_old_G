@@ -1,9 +1,9 @@
 trigger = 
 {
-    less = {real_year_tax, expect_year_tax}
+    less = {chaoting.real_year_tax, chaoting.expect_year_tax}
 }
 
-date = {month=12, day=30}
+date = {day=30}
 
 occur = 1
 

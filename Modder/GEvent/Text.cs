@@ -23,6 +23,7 @@ namespace Modder
                 if (groupValue == null)
                 {
                     Format = defaultValue;
+                    Params = new string[] { };
                     return;
                 } 
 

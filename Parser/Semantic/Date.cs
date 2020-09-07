@@ -20,7 +20,7 @@ namespace Parser.Semantic
 
         public static Date Parse(SyntaxItem item)
         {
-            if(item.values.Count == 1)
+            if(item.values.Count == 1 && item.values[0] is StringValue)
             {
                 var sValue = item.values[0] as StringValue;
                 if (sValue.ToString() != "every_day")

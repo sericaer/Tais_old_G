@@ -99,7 +99,7 @@ namespace UnitTest.Modder.Event
 
             trigger = true
 
-            date = {month = 4, day = 22}
+            date = {day = 22}
 
             occur = 1
 
@@ -166,11 +166,11 @@ namespace UnitTest.Modder.Event
         private (string file, string content) EVENT_TEST_CONDITION_LESS = ("EVENT_TEST_CONDITION_LESS.txt",
         @"
 
-            date = {month = 4, day = 22}
+            date = every_day
 
             trigger =
             {
-	            equal = {item1.data1, 55}
+	            less = {item1.data1, 55}
             }
 
             occur = 1
@@ -359,37 +359,44 @@ namespace UnitTest.Modder.Event
             }
         }
 
-        //[Test()]
-        //public void TestEventCommonDefaultAndAdd()
-        //{
+        [Test()]
+        public void TestEventCommoLess()
+        {
+            LoadEvent(EVENT_TEST_CONDITION_LESS);
 
-        //    Demon.inst.item1.data1 = 12;
-        //    Demon.inst.item1.data2 = 101;
+            Demon.inst.item1.data1 = 55;
+            Demon.inst.item1.data2 = 101;
 
-        //    var eventobjs = Mod.Process((1, 1, 1)).ToArray();
+            var eventobjs = Mod.Process((1, 1, 1)).ToArray();
+            Assert.AreEqual(0, eventobjs.Count());
 
-        //    Assert.AreEqual(eventobjs.Count(), 1);
+            Demon.inst.item1.data1 = 54;
+            Demon.inst.item1.data2 = 101;
 
-        //    var eventobj = eventobjs[0];
+            eventobjs = Mod.Process((1, 1, 1)).ToArray();
 
-        //    Assert.AreEqual(eventobj.title.Format, "EVENT_TEST_DEFAULT_TITLE");
-        //    Assert.AreEqual(eventobj.desc.Format, "EVENT_TEST_DEFAULT_DESC");
+            Assert.AreEqual(1, eventobjs.Count());
 
-        //    Assert.AreEqual(eventobj.options.Length, 3);
-        //    Assert.AreEqual(eventobj.options[0].desc.Format, "EVENT_TEST_DEFAULT_OPTION_1_DESC");
-        //    Assert.AreEqual(eventobj.options[1].desc.Format, "EVENT_TEST_DEFAULT_OPTION_2_DESC");
-        //    Assert.AreEqual(eventobj.options[2].desc.Format, "EVENT_TEST_DEFAULT_OPTION_3_DESC");
+            var eventobj = eventobjs[0];
 
-        //    eventobj.options[0].Selected();
-        //    Assert.AreEqual(101, Demon.inst.item1.data2);
+            Assert.AreEqual("EVENT_TEST_CONDITION_LESS_TITLE", eventobj.title.Format);
+            Assert.AreEqual("EVENT_TEST_CONDITION_LESS_DESC", eventobj.desc.Format);
 
-        //    eventobj.options[1].Selected();
-        //    Assert.AreEqual(102, Demon.inst.item1.data2);
+            Assert.AreEqual(3,eventobj.options.Length);
+            Assert.AreEqual("EVENT_TEST_CONDITION_LESS_OPTION_1_DESC", eventobj.options[0].desc.Format);
+            Assert.AreEqual("EVENT_TEST_CONDITION_LESS_OPTION_2_DESC", eventobj.options[1].desc.Format);
+            Assert.AreEqual("EVENT_TEST_CONDITION_LESS_OPTION_3_DESC", eventobj.options[2].desc.Format);
 
-        //    eventobj.options[2].Selected();
-        //    Assert.AreEqual(104, Demon.inst.item1.data2);
+            eventobj.options[0].Selected();
+            Assert.AreEqual(101, Demon.inst.item1.data2);
 
-        //}
+            eventobj.options[1].Selected();
+            Assert.AreEqual(102, Demon.inst.item1.data2);
+
+            eventobj.options[2].Selected();
+            Assert.AreEqual(103, Demon.inst.item1.data2);
+
+        }
 
         private void LoadEvent(params (string file, string content)[] events)
         {
