@@ -2,12 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using DataVisit;
+using Newtonsoft.Json;
 
 namespace RunData
 {
+    [JsonObject(MemberSerialization.OptIn)]
     public class Economy
     {
         public class Memento
@@ -29,8 +32,33 @@ namespace RunData
             return new Economy(def);
         }
 
-        [DataVisitorProperty("value")]
+        [JsonProperty, DataVisitorProperty("value")]
         public SubjectValue<double> curr;
+
+        public ObservableValue<double> IncomeTotal;
+        public ObservableValue<double> OuputTotal;
+
+        [DataVisitorProperty("month_surplus")]
+        public ObservableValue<double> monthSurplus;
+
+        [DataVisitorProperty("report_chaoting_tax_percent")]
+        public double reportTaxPercent
+        {
+            get
+            {
+                return outputs.Single(x => x.name == "STATIC_REPORT_CHAOTING_TAX").percent.Value;
+            }
+            set
+            {
+                outputs.Single(x => x.name == "STATIC_REPORT_CHAOTING_TAX").percent.Value = value;
+            }
+        }
+
+        [JsonProperty]
+        internal List<InCome> inComes;
+
+        [JsonProperty]
+        internal List<Output> outputs;
 
         public IEnumerable<InCome> EnumerateInCome()
         {
@@ -82,71 +110,130 @@ namespace RunData
         {
             curr = new SubjectValue<double>(def.curr);
 
-            inComes = new List<InCome>() {
-                new InCome( "STATIC_POP_TAX", def.pop_tax_percent, Observable.CombineLatest(Pop.all.Select(x=>x.expectTax.obs), (IList<double> taxs)=>taxs.Sum()))
-            };
+            inComes = InCome.Generate(def);
+            outputs = Output.Generate(def);
 
-            outputs = new List<Output>() {
-                new Output("STATIC_REPORT_CHAOTING_TAX", def.report_tax_percent, Root.inst.chaoting.currMonthTax.obs.Select(x=>x))
-            };
+            InitObservableData(new StreamingContext());
+        }
 
+        [JsonConstructor]
+        private Economy()
+        {
+
+        }
+
+        [OnDeserialized]
+        private void InitObservableData(StreamingContext context)
+        {
             IncomeTotal = Observable.CombineLatest(inComes.Select(x => x.currValue.obs), (IList<double> all) => all.Sum()).ToOBSValue();
             OuputTotal = Observable.CombineLatest(outputs.Select(x => x.currValue.obs), (IList<double> all) => all.Sum()).ToOBSValue();
             monthSurplus = Observable.CombineLatest(IncomeTotal.obs, OuputTotal.obs, (i, o) => i - o).ToOBSValue();
         }
+    }
 
-        public ObservableValue<double> IncomeTotal;
-        public ObservableValue<double> OuputTotal;
+    [JsonObject(MemberSerialization.OptIn)]
+    public class InCome
+    {
+        [JsonProperty]
+        public string name;
 
-        [DataVisitorProperty("month_surplus")]
-        public ObservableValue<double> monthSurplus;
+        [JsonProperty]
+        public SubjectValue<double> percent;
 
-        [DataVisitorProperty("report_chaoting_tax_percent")]
-        public double reportTaxPercent
+        public ObservableValue<double> currValue;
+
+        private static Dictionary<string, ObservableValue<double>> dictMax = new Dictionary<string, ObservableValue<double>>()
+        {
+            { "STATIC_POP_TAX", Observable.CombineLatest(Pop.all.Select(x=>x.expectTax.obs), (IList<double> taxs)=>taxs.Sum()).ToOBSValue()}
+        };
+
+        public ObservableValue<double> maxValue
         {
             get
             {
-                return outputs.Single(x => x.name == "STATIC_REPORT_CHAOTING_TAX").percent.Value;
-            }
-            set
-            {
-                outputs.Single(x => x.name == "STATIC_REPORT_CHAOTING_TAX").percent.Value = value;
+                return dictMax[name];
             }
         }
 
-        internal List<InCome> inComes;
-        internal List<Output> outputs;
-    }
+        internal static List<InCome> Generate(Define.EconomyDef def)
+        {
+            return new List<InCome>()
+            {
+                new InCome("STATIC_POP_TAX", def.pop_tax_percent)
+            };
+        }
 
-    public class InCome
-    {
-        public string name;
-        public SubjectValue<double> percent;
-        public ObservableValue<double> currValue;
-        public ObservableValue<double> maxValue;
-
-        internal InCome(string name, double percent, IObservable<double> max)
+        internal InCome(string name, double percent)
         {
             this.name = name;
             this.percent = new SubjectValue<double>(percent);
-            this.maxValue = max.ToOBSValue();
-            this.currValue = Observable.CombineLatest(this.percent.obs, this.maxValue.obs, (p, m) => p * m / 100).ToOBSValue();
+
+            InitObservableData(new StreamingContext());
+        }
+
+        [JsonConstructor]
+        private InCome()
+        {
+
+        }
+
+        [OnDeserialized]
+        private void InitObservableData(StreamingContext context)
+        {
+            this.currValue = Observable.CombineLatest(this.percent.obs, maxValue.obs, (p, m) => p * m / 100).ToOBSValue();
         }
     }
 
+    [JsonObject(MemberSerialization.OptIn)]
     public class Output
     {
+        [JsonProperty]
         public string name;
-        public SubjectValue<double> percent;
-        public ObservableValue<double> currValue;
-        public ObservableValue<double> maxValue;
 
-        internal Output(string name, double percent, IObservable<double> max)
+        [JsonProperty]
+        public SubjectValue<double> percent;
+
+        public ObservableValue<double> currValue;
+
+        private static Dictionary<string, ObservableValue<double>> dictMax = new Dictionary<string, ObservableValue<double>>()
+        {
+            { "STATIC_REPORT_CHAOTING_TAX", Root.inst.chaoting.currMonthTax.obs.Select(x=>x).ToOBSValue()}
+        };
+
+        public ObservableValue<double> maxValue
+        {
+            get
+            {
+                return dictMax[name];
+            }
+        }
+
+        internal static List<Output> Generate(Define.EconomyDef def)
+        {
+            return new List<Output>()
+            {
+                new Output("STATIC_REPORT_CHAOTING_TAX", def.report_tax_percent)
+            };
+        }
+
+        internal Output(string name, double percent)
         {
             this.name = name;
             this.percent = new SubjectValue<double>(percent);
-            this.maxValue = max.ToOBSValue();
-            this.currValue = Observable.CombineLatest(this.percent.obs, this.maxValue.obs, (p, m) => p * m / 100).ToOBSValue();
+
+            InitObservableData(new StreamingContext());
+        }
+
+        [JsonConstructor]
+        private Output()
+        {
+
+        }
+
+        [OnDeserialized]
+        private void InitObservableData(StreamingContext context)
+        {
+            this.currValue = Observable.CombineLatest(this.percent.obs, maxValue.obs, (p, m) => p * m / 100).ToOBSValue();
         }
     }
 }

@@ -19,6 +19,7 @@ namespace TaisGodot.Scripts
 
 			if(Root.inst.isEnd)
 			{
+				Root.Exit();
 				GetTree().ChangeScene("res://Scenes/End/EndScene.tscn");
 			}
 		}

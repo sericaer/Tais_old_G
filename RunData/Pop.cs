@@ -3,9 +3,12 @@ using System.Linq;
 using System.Collections.Generic;
 using DataVisit;
 using System.Reactive.Linq;
+using Newtonsoft.Json;
+using System.Runtime.Serialization;
 
 namespace RunData
 {
+    [JsonObject(MemberSerialization.OptIn)]
     public class Pop
     {
         public static List<Pop> all
@@ -16,20 +19,16 @@ namespace RunData
             }
         }
 
+        [JsonProperty]
         public string name;
+
+        [JsonProperty]
         public string depart_name;
 
+        [JsonProperty]
         public SubjectValue<double> num;
+
         public ObservableValue<double> expectTax;
-
-        public Pop(string depart_name, string name, int num)
-        {
-            this.name = name;
-            this.depart_name = depart_name;
-
-            this.num = new SubjectValue<double>(num);
-            this.expectTax = this.num.obs.Select(x => def.is_collect_tax ? x * 0.01 : 0).ToOBSValue();
-        }
 
         [DataVisitorProperty("depart")]
         public Depart depart
@@ -79,6 +78,28 @@ namespace RunData
             {
                 pop.num.Value++;
             });
+        }
+
+        internal Pop(string depart_name, string name, int num)
+        {
+            this.name = name;
+            this.depart_name = depart_name;
+
+            this.num = new SubjectValue<double>(num);
+
+            InitObservableData(new StreamingContext());
+        }
+
+        [JsonConstructor]
+        private Pop()
+        {
+
+        }
+
+        [OnDeserialized]
+        private void InitObservableData(StreamingContext context)
+        {
+            this.expectTax = this.num.obs.Select(x => def.is_collect_tax ? x * 0.01 : 0).ToOBSValue();
         }
     }
 }

@@ -3,18 +3,22 @@ using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq;
 using System.Reactive.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using DataVisit;
+using Newtonsoft.Json;
 
 namespace RunData
 {
+    [JsonObject(MemberSerialization.OptIn)]
     public class Depart
     {
+        [JsonProperty]
         public string name;
         public ObservableValue<int> popNum;
 
-        [DataVisitorProperty("crop_grown")]
+        [JsonProperty, DataVisitorProperty("crop_grown")]
         public SubjectValue<double> cropGrown;
 
         public IEnumerable<Pop> pops
@@ -71,6 +75,19 @@ namespace RunData
         {
             this.name = name;
             this.cropGrown = new SubjectValue<double>(0);
+        }
+
+        [JsonConstructor]
+        private Depart()
+        {
+
+        }
+
+        [OnDeserialized]
+        private void InitObservableData(StreamingContext context)
+        {
+            popNum = Observable.CombineLatest(pops.Where(x => x.def.is_collect_tax).Select(x => x.num.obs),
+                                  (IList<double> nums) => nums.Sum(y => (int)y)).ToOBSValue();
         }
 
         private bool SameColor((int r, int g, int b) p)

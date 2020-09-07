@@ -291,5 +291,14 @@ namespace UnitTest.RunData
             Assert.AreEqual(true, Visitor.Get("taishou.is_revoke"));
             Assert.AreEqual(true, Root.inst.isEnd);
         }
+
+        [Test()]
+        public void TestSerialize()
+        {
+            Root.Init(def);
+            var json = Root.Serialize();
+
+            Root.Deserialize(json, def);
+        }
     }
 }

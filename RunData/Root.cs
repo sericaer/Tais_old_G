@@ -7,9 +7,11 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using DataVisit;
+using Newtonsoft.Json;
 
 namespace RunData
 {
+    [JsonObject(MemberSerialization.OptIn)]
     public class Root
     {
         public static Action<string> logger;
@@ -18,17 +20,6 @@ namespace RunData
         public static Root Init(Define def)
         {
             new Root(def);
-
-
-
-            //Background.Init();
-            //Chaoting.Init(Background.Enumerate());
-
-            //Depart.Init();
-            //Pop.Init(Depart.Enumerate());
-            //Family.Init(Pop.Enumerate(), Background.Enumerate());
-            //Person.Init(Family.Enumerate());
-
             return inst;
         }
 
@@ -37,25 +28,17 @@ namespace RunData
             inst = null;
         }
 
-        //public static void Load(string path)
-        //{
-        //    var str = File.ReadAllText(path);
-        //    var josnObject = JObject.Parse(str);
-
-        //    Date.LoadJson(josnObject);
-        //}
-
-        //public static void Save(string path)
-        //{
-        //    JObject josnObject = new JObject();
-        //    Date.ToJson(ref josnObject);
-
-        //    var json = josnObject.ToString();
-
-        //    File.WriteAllText(path, json);
-        //}
+        public static string Serialize()
+        {
+            return JsonConvert.SerializeObject(inst, Formatting.Indented);
+        }
 
 
+        internal static void Deserialize(string json, Define def)
+        {
+            inst = JsonConvert.DeserializeObject<Root>(json);
+            inst.def = def;
+        }
 
         public static void DaysInc()
         {
@@ -72,23 +55,23 @@ namespace RunData
 
         public static Root inst;
 
-        [DataVisitorProperty("taishou")]
+        [JsonProperty, DataVisitorProperty("taishou")]
         public Taishou taishou;
 
-        [DataVisitorProperty("date")]
+        [JsonProperty, DataVisitorProperty("date")]
         public Date date;
 
-        [DataVisitorProperty("economy")]
-        public Economy economy;
-
-        [DataVisitorProperty("chaoting")]
+        [JsonProperty, DataVisitorProperty("chaoting")]
         public Chaoting chaoting;
 
-        [DataVisitorPropertyArray("depart")]
+        [JsonProperty, DataVisitorPropertyArray("pop")]
+        public List<Pop> pops;
+
+        [JsonProperty, DataVisitorPropertyArray("depart")]
         public List<Depart> departs;
 
-        [DataVisitorPropertyArray("pop")]
-        public List<Pop> pops;
+        [JsonProperty, DataVisitorProperty("economy")]
+        public Economy economy;
 
 
         internal Define def;
@@ -119,6 +102,12 @@ namespace RunData
             chaoting = Chaoting.Init(def.chaoting);
 
             economy = Economy.Init(def.economy);
+        }
+
+        [JsonConstructor]
+        private Root()
+        {
+
         }
     }
 }
