@@ -7,9 +7,9 @@
 [ext_resource path="res://Scenes/Main/Top/SpeedContrl.cs" type="Script" id=5]
 [ext_resource path="res://Scenes/Main/Top/Economy.cs" type="Script" id=7]
 
-[sub_resource type="StyleBoxTexture" id=4]
+[sub_resource type="StyleBoxTexture" id=1]
 
-[sub_resource type="StyleBoxTexture" id=5]
+[sub_resource type="StyleBoxTexture" id=2]
 
 [node name="Panel" type="Panel"]
 anchor_right = 1.0
@@ -30,7 +30,7 @@ __meta__ = {
 [node name="TopContainer" type="PanelContainer" parent="VBoxContainer"]
 margin_right = 1440.0
 margin_bottom = 40.0
-custom_styles/panel = SubResource( 4 )
+custom_styles/panel = SubResource( 1 )
 
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/TopContainer"]
 margin_right = 1440.0
@@ -159,7 +159,7 @@ margin_right = 1440.0
 margin_bottom = 900.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_styles/panel = SubResource( 5 )
+custom_styles/panel = SubResource( 2 )
 
 [node name="MapContainer" type="CenterContainer" parent="VBoxContainer/WinContainer"]
 margin_right = 1440.0
