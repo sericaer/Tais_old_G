@@ -61,7 +61,6 @@
     <Compile Include="Global\ClickFreeMask.cs" />
     <Compile Include="Scenes\Main\Dynamic\EconomyDetail\EconomyDetailPanel.cs" />
     <Compile Include="Scenes\Main\Top\SpeedContrl.cs" />
-    <Compile Include="Scenes\Start\LoadPanel\LoadPanel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Scenes\Main\SysPanel\SavePanel\SavePanel.cs" />
     <Compile Include="Scenes\Main\SysPanel\SysPanel.cs" />
@@ -83,6 +82,7 @@
     <Compile Include="Global\SaveFileContainer\SaveFileContainer.cs" />
     <Compile Include="Global\SaveFileContainer\SaveFileItemPanel.cs" />
     <Compile Include="Global\MsgboxPanel\MsgboxPanel.cs" />
+    <Compile Include="Scenes\Start\Dynamic\LoadPanel\LoadPanel.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Modder\Modder.csproj">
@@ -101,6 +101,8 @@
   <ItemGroup>
     <Folder Include="Global\SaveFileContainer\" />
     <Folder Include="Global\MsgboxPanel\" />
+    <Folder Include="Scenes\Start\Dynamic\" />
+    <Folder Include="Scenes\Start\Dynamic\LoadPanel\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -11,16 +11,16 @@ namespace TaisGodot.Scripts
 {
     class SaveFileItemPanel : HBoxContainer
     {
-        internal string filePath;
+        internal string fileName;
 
         public override void _Ready()
         {
-            GetNode<Label>("Label").Text = System.IO.Path.GetFileNameWithoutExtension(filePath);
+            GetNode<Label>("Label").Text = fileName;
         }
 
         private void _on_Button_Delete_pressed()
         {
-            System.IO.File.Delete(filePath);
+            System.IO.File.Delete(GlobalPath.save + fileName);
             QueueFree();
         }
     }

@@ -49,13 +49,16 @@ namespace UnitTest.RunData
                     harvestDay = (null, 9, 1),
                 }
             };
+
+            Root.def = def;
         }
 
         [Test()]
         public void TestInitData()
         {
+            Root.Init();
 
-            Root.Init(def);
+            ModDataVisit.InitVisitData(Root.inst);
 
             Visitor.InitVisitMap(typeof(Root));
             Visitor.SetVisitData(Root.inst);
@@ -127,7 +130,9 @@ namespace UnitTest.RunData
         [Test()]
         public void TestSetGetEconomyData()
         {
-            Root.Init(def);
+            Root.Init();
+
+            ModDataVisit.InitVisitData(Root.inst);
 
             Visitor.InitVisitMap(typeof(Root));
             Visitor.SetVisitData(Root.inst);
@@ -155,7 +160,9 @@ namespace UnitTest.RunData
         [Test()]
         public void TestDateInc()
         {
-            Root.Init(def);
+            Root.Init();
+
+            ModDataVisit.InitVisitData(Root.inst);
 
             Visitor.InitVisitMap(typeof(Root));
             Visitor.SetVisitData(Root.inst);
@@ -195,7 +202,9 @@ namespace UnitTest.RunData
         [Test()]
         public void TestChaotingDaysInc()
         {
-            Root.Init(def);
+            Root.Init();
+
+            ModDataVisit.InitVisitData(Root.inst);
 
             Visitor.InitVisitMap(typeof(Root));
             Visitor.SetVisitData(Root.inst);
@@ -235,7 +244,9 @@ namespace UnitTest.RunData
         [Test()]
         public void TestDepartDaysInc()
         {
-            Root.Init(def);
+            Root.Init();
+
+            ModDataVisit.InitVisitData(Root.inst);
 
             Visitor.InitVisitMap(typeof(Root));
             Visitor.SetVisitData(Root.inst);
@@ -279,7 +290,9 @@ namespace UnitTest.RunData
         [Test()]
         public void TestTaishou()
         {
-            Root.Init(def);
+            Root.Init();
+
+            ModDataVisit.InitVisitData(Root.inst);
 
             Visitor.InitVisitMap(typeof(Root));
             Visitor.SetVisitData(Root.inst);
@@ -295,11 +308,13 @@ namespace UnitTest.RunData
         [Test()]
         public void TestSerialize()
         {
-            Root.Init(def);
+            Root.Init();
+
+            ModDataVisit.InitVisitData(Root.inst);
 
             var json = Root.Serialize();
 
-            Root.Deserialize(json, def);
+            Root.Deserialize(json);
 
             Visitor.InitVisitMap(typeof(Root));
             Visitor.SetVisitData(Root.inst);

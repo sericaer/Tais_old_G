@@ -33,7 +33,7 @@ namespace RunData
         {
             get
             {
-                return Root.inst.def.departs[name];
+                return Root.def.departs[name];
             }
         }
 
@@ -59,9 +59,9 @@ namespace RunData
         {
             all.ForEach(x =>
             {
-                if (Date.inst >= Root.inst.def.crop.growStartDay && Date.inst <= Root.inst.def.crop.harvestDay)
+                if (Date.inst >= Root.def.crop.growStartDay && Date.inst <= Root.def.crop.harvestDay)
                 {
-                    x.cropGrown.Value += Root.inst.def.crop.growSpeed;
+                    x.cropGrown.Value += Root.def.crop.growSpeed;
                 }
                 else
                 {

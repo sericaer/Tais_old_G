@@ -23,23 +23,7 @@ namespace TaisGodot.Scripts
 
 			Mod.Load(GlobalPath.mod);
 
-			foreach (var mod in Mod.Enumerate())
-			{
-				TranslateServerEx.AddTranslate(mod.languages);
-			}
-
-		}
-
-		// Called when the node enters the scene tree for the first time.
-		public override void _Ready()
-		{
-			
-
-		}
-
-		private void _on_Button_Start_button_up()
-		{
-			var def = new Define()
+			Root.def = new Define()
 			{
 				departs = new Dictionary<string, Define.DepartDef>()
 				{
@@ -75,24 +59,50 @@ namespace TaisGodot.Scripts
 				}
 			};
 
-			ModDataVisit.InitVisitData(Root.Init(def));
-			//DataVisit.Init(Root.GetData());
+			foreach (var mod in Mod.Enumerate())
+			{
+				TranslateServerEx.AddTranslate(mod.languages);
+			}
 
-			//Mod.InitVisit(Root.inst, Root.GetReflectionDict());
+		}
+
+		// Called when the node enters the scene tree for the first time.
+		public override void _Ready()
+		{
+			
+
+		}
+
+		private void _on_Button_Start_button_up()
+		{
+
+			Root.Init();
+
+			ModDataVisit.InitVisitData(Root.inst);
 
 			GetTree().ChangeScene("res://Scenes/Main/MainScene.tscn");
-			// Replace with function body.
 		}
 
 		private void _on_Button_Load_button_up()
 		{
-			var savePanel = ResourceLoader.Load<PackedScene>("res://Scenes/Start/Dynamic/SavePanel/SavePanel.tscn").Instance();
-			AddChild(savePanel);
+			var loadPanel = (LoadPanel)ResourceLoader.Load<PackedScene>("res://Scenes/Start/Dynamic/LoadPanel/LoadPanel.tscn").Instance();
+			AddChild(loadPanel);
+
+			loadPanel.Connect("LoadSaveFile", this, nameof(_on_LoadSaveFile_Signed));
 		}
 
 		private void _on_Button_Quit_pressed()
 		{
 			GetTree().Quit();
+		}
+
+		private void _on_LoadSaveFile_Signed(string fileName)
+		{
+			var content = System.IO.File.ReadAllText(GlobalPath.save + fileName + ".save");
+			Root.Deserialize(content);
+
+
+			GetTree().ChangeScene("res://Scenes/Main/MainScene.tscn");
 		}
 
 		//  // Called every frame. 'delta' is the elapsed time since the previous frame.

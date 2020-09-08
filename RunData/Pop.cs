@@ -43,7 +43,7 @@ namespace RunData
         {
             get
             {
-                return Root.inst.def.pops[name];
+                return Root.def.pops[name];
             }
         }
 

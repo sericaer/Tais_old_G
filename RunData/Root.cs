@@ -16,11 +16,14 @@ namespace RunData
     {
         public static Action<string> logger;
 
-
-        public static Root Init(Define def)
+        public static void SetDef(Define def)
         {
-            new Root(def);
-            return inst;
+            Root.def = def;
+        }
+
+        public static void Init()
+        {
+            inst = new Root("");
         }
 
         public static void Exit()
@@ -33,11 +36,9 @@ namespace RunData
             return JsonConvert.SerializeObject(inst, Formatting.Indented);
         }
 
-
-        internal static void Deserialize(string json, Define def)
+        public static void Deserialize(string json)
         {
             inst = JsonConvert.DeserializeObject<Root>(json);
-            inst.def = def;
         }
 
         public static void DaysInc()
@@ -52,7 +53,7 @@ namespace RunData
 
             Date.Inc();
         }
-
+        public static Define def;
         public static Root inst;
 
         [JsonProperty, DataVisitorProperty("taishou")]
@@ -73,9 +74,6 @@ namespace RunData
         [JsonProperty, DataVisitorProperty("economy")]
         public Economy economy;
 
-
-        internal Define def;
-
         public bool isEnd
         {
             get
@@ -84,11 +82,8 @@ namespace RunData
             }
         }
 
-        public Root(Define def)
+        public Root(string name)
         {
-            this.def = def;
-
-
             inst = this;
 
             taishou = new Taishou();
