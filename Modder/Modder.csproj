@@ -67,6 +67,8 @@
     <Compile Include="GEvent\Option.cs" />
     <Compile Include="GEvent\Trigger.cs" />
     <Compile Include="GEvent\EventGroup.cs" />
+    <Compile Include="Warn\WarnGroup.cs" />
+    <Compile Include="Warn\Warn.cs" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.7">
@@ -93,6 +95,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="GEvent\" />
+    <Folder Include="Warn\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

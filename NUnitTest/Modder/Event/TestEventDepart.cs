@@ -68,7 +68,7 @@ option =
         [Test()]
         public void TestEventNotTrigger()
         {
-            foreach(var eventobj in Mod.Process((1,1,1)))
+            foreach(var eventobj in Mod.EventProcess((1,1,1)))
             {
                 Assert.Fail();
             }
@@ -80,7 +80,7 @@ option =
 
             Demon.inst.departs[0].data1 = 11;
             int eventCount = 0;
-            foreach(var eventobj in Mod.Process((1, 1, 1)))
+            foreach(var eventobj in Mod.EventProcess((1, 1, 1)))
             {
                 Assert.AreEqual(eventobj.title.Format, "EVENT_DIFF_TITLE");
                 Assert.AreEqual(eventobj.desc.Format, "EVENT_DIFF_DESC");
@@ -112,7 +112,7 @@ option =
             Demon.inst.departs[0].data1 = 11;
             Demon.inst.departs[1].data1 = 11;
             int count = 0;
-            foreach (var eventobj in Mod.Process((1, 1, 1)))
+            foreach (var eventobj in Mod.EventProcess((1, 1, 1)))
             {
                 Assert.AreEqual(eventobj.title.Format, "EVENT_DIFF_TITLE");
                 Assert.AreEqual(eventobj.desc.Format, "EVENT_DIFF_DESC");

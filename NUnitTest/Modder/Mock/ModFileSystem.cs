@@ -55,5 +55,13 @@ namespace UnitTest.Modder.Mock
             }
             
         }
+
+        internal void AddCommonWarn(string fileName, string fileContent)
+        {
+            var commonPath = modPath + "warns/common/";
+            Directory.CreateDirectory(commonPath);
+
+            File.WriteAllText(commonPath + fileName, fileContent);
+        }
     }
 }

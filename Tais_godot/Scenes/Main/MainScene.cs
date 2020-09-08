@@ -10,7 +10,7 @@ namespace TaisGodot.Scripts
 		{
 			RunData.Root.DaysInc();
 
-			foreach (var eventobj in Modder.Mod.Process(RunData.Date.Value))
+			foreach (var eventobj in Modder.Mod.EventProcess(RunData.Date.Value))
 			{
 				var dialog = ShowDialog(eventobj);
 
@@ -22,6 +22,8 @@ namespace TaisGodot.Scripts
 				Root.Exit();
 				GetTree().ChangeScene("res://Scenes/End/EndScene.tscn");
 			}
+
+			//GetNode<WarnContainer>("").Refresh(Modder.Mod.WarnProcess());
 		}
 
 		private Node ShowDialog(Modder.GEvent eventobj)

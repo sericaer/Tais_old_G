@@ -16,7 +16,8 @@ namespace Modder
         public string path;
 
         public List<Language> languages;
-        public EventGroup eventGroup;
+        internal EventGroup eventGroup;
+        internal WarnGroup warnGroup;
 
         static Mod()
         {
@@ -48,28 +49,20 @@ namespace Modder
             }
         }
 
-        public static IEnumerable<GEvent> Process((int y, int m, int d) date)
+        public static IEnumerable<GEvent> EventProcess((int y, int m, int d) date)
         {
             foreach (var eventObj in EventGroup.Process(date))
             {
                 yield return eventObj;
             }
+        }
 
-            //var testDialog = new GEvent();
-            //testDialog._title = new GroupValue("EVENT_TEST_TITLE");
-            //testDialog._desc = new GroupValue("EVENT_TEST_DESC");
-
-            //testDialog.options = new GEvent.Option[]
-            //{
-            //    new GEvent.Option(){_desc = new GroupValue("OPTION_1_DESC"),
-            //                        Selected = ()=>logger("Select OPTION_1_DESC") },
-            //    new GEvent.Option(){_desc = new GroupValue("OPTION_2_DESC"),
-            //                        Selected = ()=>logger("Select OPTION_2_DESC") },
-            //    new GEvent.Option(){_desc = new GroupValue("OPTION_3_DESC"),
-            //                        Selected = ()=>logger("Select OPTION_3_DESC") },
-            //};
-
-            //showDialogAction(testDialog);
+        public static IEnumerable<(string key, List<string> datas)> WarnProcess()
+        {
+            foreach (var warnObj in WarnGroup.Process())
+            {
+                yield return (warnObj.key, warnObj.datas);
+            }
         }
 
         internal Mod(string modname, string path)
@@ -79,7 +72,7 @@ namespace Modder
 
             this.languages = Language.Load(path + "/languages");
             this.eventGroup = EventGroup.Load(modname, path + "/events");
-
+            this.warnGroup = WarnGroup.Load(modname, path + "/warns");
         }
 
         internal static Dictionary<string, Mod> modDict;

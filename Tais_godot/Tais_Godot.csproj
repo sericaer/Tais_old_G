@@ -83,6 +83,9 @@
     <Compile Include="Global\SaveFileContainer\SaveFileItemPanel.cs" />
     <Compile Include="Global\MsgboxPanel\MsgboxPanel.cs" />
     <Compile Include="Scenes\Start\Dynamic\LoadPanel\LoadPanel.cs" />
+    <Compile Include="Scenes\Main\Warn\WarnItem.cs" />
+    <Compile Include="Global\Extensions.cs" />
+    <Compile Include="Scenes\Main\Warn\WarnContainer.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Modder\Modder.csproj">
@@ -103,6 +106,7 @@
     <Folder Include="Global\MsgboxPanel\" />
     <Folder Include="Scenes\Start\Dynamic\" />
     <Folder Include="Scenes\Start\Dynamic\LoadPanel\" />
+    <Folder Include="Scenes\Main\Warn\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

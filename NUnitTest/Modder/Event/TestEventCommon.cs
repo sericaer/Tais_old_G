@@ -231,7 +231,7 @@ namespace UnitTest.Modder.Event
 
             Demon.inst.item1.data1 = 10;
 
-            foreach(var eventobj in Mod.Process((1,1,1)))
+            foreach(var eventobj in Mod.EventProcess((1,1,1)))
             {
                 Assert.Fail();
             }
@@ -244,7 +244,7 @@ namespace UnitTest.Modder.Event
 
             Demon.inst.item1.data1 = 11;
 
-            var eventobjs = Mod.Process((1,1,1)).ToArray();
+            var eventobjs = Mod.EventProcess((1,1,1)).ToArray();
 
             Assert.AreEqual(eventobjs.Count(), 1);
 
@@ -281,7 +281,7 @@ namespace UnitTest.Modder.Event
             Demon.inst.item1.data1 = 12;
             Demon.inst.item1.data2 = 101;
 
-            var eventobjs = Mod.Process((1,1,1)).ToArray();
+            var eventobjs = Mod.EventProcess((1,1,1)).ToArray();
 
             Assert.AreEqual(eventobjs.Count(), 1);
 
@@ -312,13 +312,13 @@ namespace UnitTest.Modder.Event
             LoadEvent(EVENT_TEST_DATE_ONLY);
 
             {
-                var eventobjs = Mod.Process((1, 1, 1)).ToArray();
+                var eventobjs = Mod.EventProcess((1, 1, 1)).ToArray();
 
                 Assert.AreEqual(0, eventobjs.Count());
             }
 
             {
-                var eventobjs = Mod.Process((1, 4, 22)).ToArray();
+                var eventobjs = Mod.EventProcess((1, 4, 22)).ToArray();
 
                 Assert.AreEqual(1, eventobjs.Count());
                 Assert.AreEqual(eventobjs[0].title.Format, "EVENT_TEST_DATE_ONLY_TITLE");
@@ -333,7 +333,7 @@ namespace UnitTest.Modder.Event
             {
                 Demon.inst.item1.data1 = 55;
 
-                var eventobjs = Mod.Process((1, 1, 1)).ToArray();
+                var eventobjs = Mod.EventProcess((1, 1, 1)).ToArray();
 
                 Assert.AreEqual(0, eventobjs.Count());
             }
@@ -341,7 +341,7 @@ namespace UnitTest.Modder.Event
             {
                 Demon.inst.item1.data1 = 56;
 
-                var eventobjs = Mod.Process((1, 4, 22)).ToArray();
+                var eventobjs = Mod.EventProcess((1, 4, 22)).ToArray();
 
                 Assert.AreEqual(0, eventobjs.Count());
             }
@@ -350,7 +350,7 @@ namespace UnitTest.Modder.Event
             {
                 Demon.inst.item1.data1 = 55;
 
-                var eventobjs = Mod.Process((1, 4, 22)).ToArray();
+                var eventobjs = Mod.EventProcess((1, 4, 22)).ToArray();
 
                 Assert.AreEqual(1, eventobjs.Count());
                 Assert.AreEqual(eventobjs[0].title.Format, "EVENT_TEST_DATE_WITH_TRIGGER_TITLE");
@@ -367,13 +367,13 @@ namespace UnitTest.Modder.Event
             Demon.inst.item1.data1 = 55;
             Demon.inst.item1.data2 = 101;
 
-            var eventobjs = Mod.Process((1, 1, 1)).ToArray();
+            var eventobjs = Mod.EventProcess((1, 1, 1)).ToArray();
             Assert.AreEqual(0, eventobjs.Count());
 
             Demon.inst.item1.data1 = 54;
             Demon.inst.item1.data2 = 101;
 
-            eventobjs = Mod.Process((1, 1, 1)).ToArray();
+            eventobjs = Mod.EventProcess((1, 1, 1)).ToArray();
 
             Assert.AreEqual(1, eventobjs.Count());
 

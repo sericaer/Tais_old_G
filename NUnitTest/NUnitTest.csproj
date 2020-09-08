@@ -38,6 +38,7 @@
     <Compile Include="Modder\Mock\ModFileSystem.cs" />
     <Compile Include="DataVisit\TestDataVisit.cs" />
     <Compile Include="RunData\TestRunData.cs" />
+    <Compile Include="Modder\Warn\TestWarnCommon.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -62,6 +63,7 @@
     <Folder Include="Modder\Mock\" />
     <Folder Include="DataVisit\" />
     <Folder Include="RunData\" />
+    <Folder Include="Modder\Warn\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
