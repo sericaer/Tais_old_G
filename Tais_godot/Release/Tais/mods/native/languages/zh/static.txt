@@ -1,5 +1,9 @@
 ﻿NEW:新建
+LOAD:加载
+SAVE:保存
+QUIT:退出
+CONFIRM:确认
+CANCEL:取消
+DELETE:删除
 DATE_VALUE:{0}年{1}月{2}日
 POP_NUM:人口
-CONFIRM:确认
-QUIT:退出

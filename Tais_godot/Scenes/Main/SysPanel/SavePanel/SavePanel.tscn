@@ -44,27 +44,25 @@ margin_right = 350.0
 margin_bottom = 30.0
 
 [node name="TextEdit" type="TextEdit" parent="CenterContainer/PanelContainer/VBoxContainer/HBoxContainer"]
-margin_right = 282.0
+margin_right = 48.0
 margin_bottom = 30.0
 rect_min_size = Vector2( 0, 30 )
 size_flags_horizontal = 3
 text = "30"
 
 [node name="ButtonConfirm" type="Button" parent="CenterContainer/PanelContainer/VBoxContainer/HBoxContainer"]
-margin_left = 286.0
-margin_right = 316.0
+margin_left = 52.0
+margin_right = 204.0
 margin_bottom = 30.0
 rect_min_size = Vector2( 30, 30 )
 text = "STATIC_CONFIRM"
-clip_text = true
 
 [node name="ButtonCancel" type="Button" parent="CenterContainer/PanelContainer/VBoxContainer/HBoxContainer"]
-margin_left = 320.0
+margin_left = 208.0
 margin_right = 350.0
 margin_bottom = 30.0
 rect_min_size = Vector2( 30, 30 )
 text = "STATIC_CANCEL"
-clip_text = true
 
 [node name="SaveFileContainer" parent="CenterContainer/PanelContainer/VBoxContainer" instance=ExtResource( 2 )]
 [connection signal="pressed" from="CenterContainer/PanelContainer/VBoxContainer/HBoxContainer/ButtonConfirm" to="." method="_on_ButtonConfirm_pressed"]
