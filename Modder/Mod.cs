@@ -57,12 +57,9 @@ namespace Modder
             }
         }
 
-        public static IEnumerable<(string key, List<string> datas)> WarnProcess()
+        public static (string key, List<string> datas)[] WarnProcess()
         {
-            foreach (var warnObj in WarnGroup.Process())
-            {
-                yield return (warnObj.key, warnObj.datas);
-            }
+            return WarnGroup.Process();
         }
 
         internal Mod(string modname, string path)

@@ -45,26 +45,35 @@ namespace Modder
             };
         }
 
-        internal static IEnumerable<Warn> Process()
+        internal static (string key, List<string> datas)[] Process()
         {
+            var rslt = new List<(string, List<string>)>();
             foreach (var warn in common.SelectMany(x => x.events))
             {
                 if (warn.isValid())
                 {
-                    yield return warn;
+                    rslt.Add((warn.key, new List<string>()));
                 }
             }
 
-            //while (ModDataVisit.EnumerateVisit("depart"))
-            //{
-            //    foreach (var gEvent in depart.SelectMany(x => x.events))
-            //    {
-            //        if (gEvent.isValid(date))
-            //        {
-            //            yield return gEvent;
-            //        }
-            //    }
-            //}
+            foreach (var warn in depart.SelectMany(x => x.events))
+            {
+                var departs = new List<string>();
+                while (ModDataVisit.EnumerateVisit("depart"))
+                {
+                    if (warn.isValid())
+                    {
+                        departs.Add(ModDataVisit.Get("depart.name") as string);
+                    }
+                }
+
+                if (departs.Count != 0)
+                {
+                    rslt.Add((warn.key, departs));
+                }
+            }
+
+            return rslt.ToArray();
         }
 
         private static List<Warn> LoadSub(string path)

@@ -116,6 +116,12 @@ namespace UnitTest.RunData
                 }
             }
 
+            Visitor.Pos pos = null;
+            while (Visitor.EnumerateVisit("depart", ref pos))
+            {
+                def.departs.ContainsKey(Visitor.Get("depart.name") as string);
+            }
+
             Assert.AreEqual((int)(Depart.all.Sum(x => x.popNum.Value) * def.chaoting.reportPopPercent / 100), Chaoting.inst.reportPopNum.Value);
             Assert.AreEqual(def.chaoting.taxPercent, Chaoting.inst.taxPercent.Value);
             Assert.AreEqual(Chaoting.inst.reportPopNum.Value * 0.01 * def.chaoting.taxPercent / 100, Chaoting.inst.currMonthTax.Value);

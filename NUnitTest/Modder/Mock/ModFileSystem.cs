@@ -38,6 +38,22 @@ namespace UnitTest.Modder.Mock
             File.WriteAllText(commonPath + fileName, fileContent);
         }
 
+        internal void AddCommonWarn(string fileName, string fileContent)
+        {
+            var commonPath = modPath + "warns/common/";
+            Directory.CreateDirectory(commonPath);
+
+            File.WriteAllText(commonPath + fileName, fileContent);
+        }
+
+        internal void AddDepartWarn(string fileName, string fileContent)
+        {
+            var commonPath = modPath + "warns/depart/";
+            Directory.CreateDirectory(commonPath);
+
+            File.WriteAllText(commonPath + fileName, fileContent);
+        }
+
         public static ModFileSystem Generate(string modName)
         {
             return new ModFileSystem() { name = modName };
@@ -54,14 +70,6 @@ namespace UnitTest.Modder.Mock
                 Directory.Delete(dir, true);
             }
             
-        }
-
-        internal void AddCommonWarn(string fileName, string fileContent)
-        {
-            var commonPath = modPath + "warns/common/";
-            Directory.CreateDirectory(commonPath);
-
-            File.WriteAllText(commonPath + fileName, fileContent);
         }
     }
 }

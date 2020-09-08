@@ -14,12 +14,13 @@ namespace RunData
     [JsonObject(MemberSerialization.OptIn)]
     public class Depart
     {
-        [JsonProperty]
+        [JsonProperty, DataVisitorProperty("name")]
         public string name;
-        public ObservableValue<int> popNum;
 
         [JsonProperty, DataVisitorProperty("crop_grown")]
         public SubjectValue<double> cropGrown;
+
+        public ObservableValue<int> popNum;
 
         public IEnumerable<Pop> pops
         {

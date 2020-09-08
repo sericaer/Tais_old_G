@@ -43,6 +43,9 @@ namespace UnitTest.Modder.Mock
 
     public class Depart
     {
+        [DataVisitorProperty("name")]
+        public string name;
+
         [DataVisitorProperty("data1")]
         public double data1;
 

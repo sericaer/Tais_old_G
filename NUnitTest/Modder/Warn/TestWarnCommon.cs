@@ -7,7 +7,7 @@ using UnitTest.Modder.Mock;
 namespace UnitTest.Modder.Warn
 {
     [TestFixture()]
-    public class TestWarnCommon
+    public class TestWarnDepart
     {
         private ModFileSystem modFileSystem;
 
@@ -25,7 +25,7 @@ namespace UnitTest.Modder.Warn
 	            equal = {item1.data2, 12}
             }");
 
-        public TestWarnCommon()
+        public TestWarnDepart()
         {
             ModDataVisit.InitVisitMap(typeof(Demon));
 

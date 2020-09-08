@@ -39,6 +39,7 @@
     <Compile Include="DataVisit\TestDataVisit.cs" />
     <Compile Include="RunData\TestRunData.cs" />
     <Compile Include="Modder\Warn\TestWarnCommon.cs" />
+    <Compile Include="Modder\Warn\TestWarnDepart.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
