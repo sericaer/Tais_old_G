@@ -1,4 +1,4 @@
-﻿using Godot;
+using Godot;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,19 +9,19 @@ using RunData;
 
 namespace TaisGodot.Scripts
 {
-    class SaveFileItemPanel : HBoxContainer
-    {
-        internal string fileName;
+	class SaveFileItemPanel : PanelContainer
+	{
+		internal string fileName;
 
-        public override void _Ready()
-        {
-            GetNode<Label>("Label").Text = fileName;
-        }
+		public override void _Ready()
+		{
+			GetNode<Label>("HBoxContainer/CheckBox/Label").Text = fileName;
+		}
 
-        private void _on_Button_Delete_pressed()
-        {
-            System.IO.File.Delete(GlobalPath.save + fileName);
-            QueueFree();
-        }
-    }
+		private void _on_ButtonDelete_pressed()
+		{
+			System.IO.File.Delete(GlobalPath.save + fileName + ".save");
+			QueueFree();
+		}
+	}
 }

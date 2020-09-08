@@ -16,6 +16,8 @@ namespace TaisGodot.Scripts
 
 		static StartScene()
 		{
+			System.IO.Directory.CreateDirectory(GlobalPath.save);
+
 			Root.logger = (value) => GD.Print(value);
 			Mod.logger = (value) => GD.Print(value);
 

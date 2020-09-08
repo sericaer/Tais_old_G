@@ -1,4 +1,4 @@
-﻿using Godot;
+using Godot;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,27 +9,37 @@ using RunData;
 
 namespace TaisGodot.Scripts
 {
-    class SaveFileContainer : VBoxContainer
-    {
-        [Signal]
-        public delegate void FileItemSelected(string name);
+	class SaveFileContainer : ScrollContainer
+	{
+		public bool enableSelect;
 
-        public override void _Ready()
-        {
-            foreach (var filePath in System.IO.Directory.EnumerateFiles(GlobalPath.save, "*.save"))
-            {
-                var saveItemPanel = (SaveFileItemPanel)ResourceLoader.Load<PackedScene>("res://Global/Main/SysPanel/SavePanel/SavePanel.tscn").Instance();
-                saveItemPanel.fileName = System.IO.Path.GetFileNameWithoutExtension(filePath);
-                
-                AddChild(saveItemPanel);
+		public SaveFileContainer()
+		{
+			enableSelect = false;
+		}
 
-                saveItemPanel.GetNode<Button>("SelectFile").Connect("press", this, nameof(TriggleFileItemSelectedSignal), new Godot.Collections.Array() { filePath });
-            }
-        }
+		[Signal]
+		public delegate void FileItemSelected(string name);
 
-        private void TriggleFileItemSelectedSignal(string fileName)
-        {
-            EmitSignal(nameof(FileItemSelected), fileName);
-        }
-    }
+		public override void _Ready()
+		{
+			foreach (var filePath in System.IO.Directory.EnumerateFiles(GlobalPath.save, "*.save"))
+			{
+				var saveItemPanel = (SaveFileItemPanel)ResourceLoader.Load<PackedScene>("res://Global/SaveFileContainer/SaveFileItem.tscn").Instance();
+				saveItemPanel.fileName = System.IO.Path.GetFileNameWithoutExtension(filePath);
+				
+				GetNode<VBoxContainer>("VBoxContainer").AddChild(saveItemPanel);
+
+				saveItemPanel.GetNode<CheckBox>("HBoxContainer/CheckBox").Disabled = !enableSelect;
+
+				if(!saveItemPanel.GetNode<CheckBox>("HBoxContainer/CheckBox").Disabled)
+					saveItemPanel.GetNode<CheckBox>("HBoxContainer/CheckBox").Connect("toggled", this, nameof(TriggleFileItemSelectedSignal), new Godot.Collections.Array() { filePath });
+			}
+		}
+
+		private void TriggleFileItemSelectedSignal(string fileName)
+		{
+			EmitSignal(nameof(FileItemSelected), fileName);
+		}
+	}
 }
