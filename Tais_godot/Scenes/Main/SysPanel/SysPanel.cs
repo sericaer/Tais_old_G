@@ -28,7 +28,8 @@ namespace TaisGodot.Scripts
 
 		private void _on_Button_Save_pressed()
 		{
-			// Replace with function body.
+			var savePanel = ResourceLoader.Load<PackedScene>("res://Scenes/Main/SysPanel/SavePanel/SavePanel.tscn").Instance();
+			AddChild(savePanel);
 		}
 	}
 }

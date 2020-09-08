@@ -86,7 +86,8 @@ namespace TaisGodot.Scripts
 
 		private void _on_Button_Load_button_up()
 		{
-			GetNode<SavePanel>("LoadPanel").Visible = true;
+			var savePanel = ResourceLoader.Load<PackedScene>("res://Scenes/Start/Dynamic/SavePanel/SavePanel.tscn").Instance();
+			AddChild(savePanel);
 		}
 
 		private void _on_Button_Quit_pressed()

@@ -80,6 +80,9 @@
     <Compile Include="Scenes\Main\Dynamic\EconomyDetail\IncomePanel.cs" />
     <Compile Include="Scenes\Main\Dynamic\EconomyDetail\OutputPanel.cs" />
     <Compile Include="Scenes\End\EndScene.cs" />
+    <Compile Include="Global\SaveFileContainer\SaveFileContainer.cs" />
+    <Compile Include="Global\SaveFileContainer\SaveFileItemPanel.cs" />
+    <Compile Include="Global\MsgboxPanel\MsgboxPanel.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Modder\Modder.csproj">
@@ -94,6 +97,10 @@
       <Project>{60624F37-78F3-44EB-AD31-76E1893F5EA9}</Project>
       <Name>DataVisit</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Global\SaveFileContainer\" />
+    <Folder Include="Global\MsgboxPanel\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
