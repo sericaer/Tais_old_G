@@ -59,10 +59,10 @@
   <ItemGroup>
     <Compile Include="Global\ButtonEx.cs" />
     <Compile Include="Global\ClickFreeMask.cs" />
+    <Compile Include="Global\SaveLoadPanel\SaveLoadPanel.cs" />
     <Compile Include="Scenes\Main\Dynamic\EconomyDetail\EconomyDetailPanel.cs" />
     <Compile Include="Scenes\Main\Top\SpeedContrl.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Scenes\Main\SysPanel\SavePanel\SavePanel.cs" />
     <Compile Include="Scenes\Main\SysPanel\SysPanel.cs" />
     <Compile Include="Scenes\Main\Top\Date.cs" />
     <Compile Include="Scenes\Main\Dynamic\DepartPanel\DepartPanel.cs" />
@@ -79,8 +79,8 @@
     <Compile Include="Scenes\Main\Dynamic\EconomyDetail\IncomePanel.cs" />
     <Compile Include="Scenes\Main\Dynamic\EconomyDetail\OutputPanel.cs" />
     <Compile Include="Scenes\End\EndScene.cs" />
-    <Compile Include="Global\SaveFileContainer\SaveFileContainer.cs" />
-    <Compile Include="Global\SaveFileContainer\SaveFileItemPanel.cs" />
+    <Compile Include="Global\SaveLoadPanel\FileContainer\SaveFileContainer.cs" />
+    <Compile Include="Global\SaveLoadPanel\FileContainer\SaveFileItemPanel.cs" />
     <Compile Include="Global\MsgboxPanel\MsgboxPanel.cs" />
     <Compile Include="Scenes\Start\Dynamic\LoadPanel\LoadPanel.cs" />
     <Compile Include="Scenes\Main\Warn\WarnItem.cs" />
@@ -101,12 +101,6 @@
       <Name>DataVisit</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Global\SaveFileContainer\" />
-    <Folder Include="Global\MsgboxPanel\" />
-    <Folder Include="Scenes\Start\Dynamic\" />
-    <Folder Include="Scenes\Start\Dynamic\LoadPanel\" />
-    <Folder Include="Scenes\Main\Warn\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

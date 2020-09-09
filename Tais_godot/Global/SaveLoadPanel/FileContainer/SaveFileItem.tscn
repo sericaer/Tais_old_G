@@ -1,8 +1,8 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=2 format=2]
 
-[ext_resource path="res://Global/SaveFileContainer/SaveFileItemPanel.cs" type="Script" id=1]
+[ext_resource path="res://Global/SaveLoadPanel/FileContainer/SaveFileItemPanel.cs" type="Script" id=1]
 
-[sub_resource type="StyleBoxTexture" id=1]
+
 
 [node name="PanelContainer" type="PanelContainer"]
 margin_right = 350.0
@@ -17,29 +17,30 @@ margin_left = 7.0
 margin_top = 7.0
 margin_right = 343.0
 margin_bottom = 37.0
-alignment = 1
 
-[node name="CheckBox" type="CheckBox" parent="HBoxContainer"]
-margin_right = 302.0
-margin_bottom = 30.0
+[node name="Label" type="Label" parent="HBoxContainer"]
+margin_top = 4.0
+margin_right = 64.0
+margin_bottom = 25.0
 size_flags_horizontal = 3
-custom_styles/normal = SubResource( 1 )
-
-[node name="Label" type="Label" parent="HBoxContainer/CheckBox"]
-anchor_right = 1.0
-anchor_bottom = 1.0
 text = "--"
 valign = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="ButtonLoad" type="Button" parent="HBoxContainer"]
+margin_left = 68.0
+margin_right = 190.0
+margin_bottom = 30.0
+size_flags_horizontal = 8
+text = "STATIC_LOAD"
+
 [node name="ButtonDelete" type="Button" parent="HBoxContainer"]
-margin_left = 306.0
+margin_left = 194.0
 margin_right = 336.0
 margin_bottom = 30.0
-rect_min_size = Vector2( 30, 30 )
+size_flags_horizontal = 10
 text = "STATIC_DELETE"
-flat = true
-clip_text = true
+[connection signal="pressed" from="HBoxContainer/ButtonLoad" to="." method="_on_ButtonLoad_pressed"]
 [connection signal="pressed" from="HBoxContainer/ButtonDelete" to="." method="_on_ButtonDelete_pressed"]

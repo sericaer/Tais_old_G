@@ -13,15 +13,25 @@ namespace TaisGodot.Scripts
 	{
 		internal string fileName;
 
+		[Signal]
+		internal delegate void LoadFileSignal(string name);
+
 		public override void _Ready()
 		{
-			GetNode<Label>("HBoxContainer/CheckBox/Label").Text = fileName;
+			GetNode<Label>("HBoxContainer/Label").Text = fileName;
 		}
 
 		private void _on_ButtonDelete_pressed()
 		{
 			System.IO.File.Delete(GlobalPath.save + fileName + ".save");
 			QueueFree();
+		}
+
+
+		private void _on_ButtonLoad_pressed()
+		{
+			EmitSignal(nameof(LoadFileSignal), fileName);
+			// Replace with function body.
 		}
 	}
 }
