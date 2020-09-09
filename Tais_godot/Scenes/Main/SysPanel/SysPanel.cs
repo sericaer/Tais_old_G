@@ -31,8 +31,11 @@ namespace TaisGodot.Scripts
 			var savePanel = ResourceLoader.Load<PackedScene>("res://Scenes/Main/SysPanel/SavePanel/SavePanel.tscn").Instance();
 			AddChild(savePanel);
 		}
+		
+		private void _on_Button_Cancel_pressed()
+		{
+			QueueFree();
+		}
+
 	}
 }
-
-
-
