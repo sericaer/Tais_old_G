@@ -109,7 +109,7 @@ namespace UnitTest.Modder.Warn
 
             var warns = Mod.WarnProcess();
 
-            Assert.AreEqual(4, warns.Length);
+            Assert.AreEqual(2, warns.Length);
 
             var warn1 = warns.SingleOrDefault(x => x.key == "WARN_TEST_DEPART_DATA_1");
             Assert.NotNull(warn1);
