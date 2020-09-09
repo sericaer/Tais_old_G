@@ -50,26 +50,32 @@ namespace Modder
             var rslt = new List<(string, List<string>)>();
             foreach (var warn in common.SelectMany(x => x.events))
             {
+                var datas = new List<string>();
                 if (warn.isValid())
                 {
-                    rslt.Add((warn.key, new List<string>()));
+                    if(warn.desc_str != "")
+                    {
+                        datas.Add(warn.desc_str);
+                    }
+
+                    rslt.Add((warn.key, datas));
                 }
             }
 
             foreach (var warn in depart.SelectMany(x => x.events))
             {
-                var departs = new List<string>();
+                var datas = new List<string>();
                 while (ModDataVisit.EnumerateVisit("depart"))
                 {
                     if (warn.isValid())
                     {
-                        departs.Add(ModDataVisit.Get("depart.name") as string);
+                        datas.Add((ModDataVisit.Get("depart.name") as string + "|" + warn.desc_str).TrimEnd('|'));
                     }
                 }
 
-                if (departs.Count != 0)
+                if (datas.Count != 0)
                 {
-                    rslt.Add((warn.key, departs));
+                    rslt.Add((warn.key, datas));
                 }
             }
 

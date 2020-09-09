@@ -63,8 +63,8 @@ namespace Parser.Syntax
                         {
                             line++;
                             start = end;
-                            continue;
                         }
+                        break;
                     case ELEM_TYPE.STRING:
                         {
                             if (key == null)
@@ -110,6 +110,8 @@ namespace Parser.Syntax
 
                 }
             }
+
+            charIndex = end;
         }
 
         public override string ToString()

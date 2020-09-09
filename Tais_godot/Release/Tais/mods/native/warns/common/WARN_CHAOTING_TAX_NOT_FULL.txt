@@ -1,0 +1,9 @@
+trigger = 
+{
+    less = {chaoting.real_year_tax, chaoting.expect_year_tax}
+}
+
+desc = 
+{
+    chaoting.expect_year_tax, chaoting.real_year_tax
+}

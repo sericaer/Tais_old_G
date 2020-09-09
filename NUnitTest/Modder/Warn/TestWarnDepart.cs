@@ -23,7 +23,8 @@ namespace UnitTest.Modder.Warn
             trigger =
             {
 	            equal = {depart.data2, 12}
-            }");
+            }
+            desc = {depart.data2, 12}");
 
         public TestWarnCommon()
         {
@@ -91,7 +92,7 @@ namespace UnitTest.Modder.Warn
             var warn2 = warns.SingleOrDefault(x => x.key == "WARN_TEST_DEPART_DATA_2");
             Assert.NotNull(warn2);
             Assert.AreEqual(1, warn2.datas.Count);
-            Assert.AreEqual("depart1", warn2.datas[0]);
+            Assert.AreEqual("depart1|12|12", warn2.datas[0]);
         }
 
         [Test()]
@@ -120,8 +121,8 @@ namespace UnitTest.Modder.Warn
             var warn2 = warns.SingleOrDefault(x => x.key == "WARN_TEST_DEPART_DATA_2");
             Assert.NotNull(warn2);
             Assert.AreEqual(2, warn2.datas.Count);
-            Assert.IsTrue(warn2.datas.Contains("depart1"));
-            Assert.IsTrue(warn2.datas.Contains("depart2"));
+            Assert.IsTrue(warn2.datas.Contains("depart1|12|12"));
+            Assert.IsTrue(warn2.datas.Contains("depart2|12|12"));
         }
 
         private void LoadWarn(params (string file, string content)[] warns)

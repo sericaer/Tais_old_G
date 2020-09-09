@@ -36,9 +36,11 @@ namespace TaisGodot.Scripts
 			}
 
 			GetNode<ReactiveLabel>("CenterContainer/EconomyDetail/VBoxContainer/Bottom/Surplus/Value").Assoc(RunData.Economy.inst.monthSurplus);
+
+			UpDateTempOutputStatus();
 		}
 
-		public override void _ExitTree()
+        public override void _ExitTree()
 		{
 			memento = null;
 			SpeedContrl.UnPause();
@@ -55,11 +57,50 @@ namespace TaisGodot.Scripts
 			QueueFree();
 		}
 
-		//  // Called every frame. 'delta' is the elapsed time since the previous frame.
-		//  public override void _Process(float delta)
-		//  {
-		//      
-		//  }
-	}
+		private void _onButtonFullFillCountryTax()
+        {
+			var need = RunData.Chaoting.inst.expectYearTax.Value- RunData.Chaoting.inst.realYearTax.Value;
+
+			RunData.Chaoting.inst.expectYearTax.Value = RunData.Chaoting.inst.realYearTax.Value;
+			RunData.Economy.inst.curr.Value -= need;
+		}
+
+		private void UpDateTempOutputStatus()
+        {
+            UpdateFullFillCountryTax();
+        }
+
+        private void UpdateFullFillCountryTax()
+        {
+            var btn = GetNode<Button>("ButtonFullFillCountryTax");
+
+            var lackCountryTax = RunData.Chaoting.inst.expectYearTax.Value - RunData.Chaoting.inst.realYearTax.Value;
+            if (lackCountryTax >= 0)
+            {
+                btn.Disabled = false;
+                btn.HintTooltip = TranslateServerEx.Translate("STATIC_COUNTRY_TAX_NOT_LACK");
+            }
+            else if (RunData.Economy.inst.curr.Value < lackCountryTax)
+            {
+                btn.Disabled = false;
+                btn.HintTooltip = TranslateServerEx.Translate("STATIC_COUNTRY_TAX_LACK_AND_ECONOMY_NOT_SUFFICENT",
+                    lackCountryTax.ToString(),
+                    RunData.Economy.inst.curr.Value.ToString());
+            }
+            else
+            {
+                btn.Disabled = true;
+                btn.HintTooltip = TranslateServerEx.Translate("STATIC_COUNTRY_TAX_LACK_AND_ECONOMY_SUFFICENT",
+                    lackCountryTax.ToString(),
+                    RunData.Economy.inst.curr.Value.ToString());
+            }
+        }
+
+        //  // Called every frame. 'delta' is the elapsed time since the previous frame.
+        //  public override void _Process(float delta)
+        //  {
+        //      
+        //  }
+    }
 }
 
