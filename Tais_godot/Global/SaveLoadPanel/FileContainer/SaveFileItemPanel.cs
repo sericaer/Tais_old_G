@@ -11,27 +11,33 @@ namespace TaisGodot.Scripts
 {
 	class SaveFileItemPanel : PanelContainer
 	{
-		internal string fileName;
+		internal bool enableLoad
+        {
+			set
+            {
+				buttonLoad.Visible = value;
+            }
+        }
 
-		[Signal]
-		internal delegate void LoadFileSignal(string name);
+		internal Button buttonLoad
+        {
+			get
+            {
+				return GetNode<Button>("HBoxContainer/ButtonLoad");
+			}
+        }
+
+		internal Button buttonDelete
+		{
+			get
+			{
+				return GetNode<Button>("HBoxContainer/ButtonDelete");
+			}
+		}
 
 		public override void _Ready()
 		{
-			GetNode<Label>("HBoxContainer/Label").Text = fileName;
-		}
-
-		private void _on_ButtonDelete_pressed()
-		{
-			System.IO.File.Delete(GlobalPath.save + fileName + ".save");
-			QueueFree();
-		}
-
-
-		private void _on_ButtonLoad_pressed()
-		{
-			EmitSignal(nameof(LoadFileSignal), fileName);
-			// Replace with function body.
+			GetNode<Label>("HBoxContainer/Label").Text = Name;
 		}
 	}
 }

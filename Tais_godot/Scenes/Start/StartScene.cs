@@ -87,7 +87,9 @@ namespace TaisGodot.Scripts
 
 		private void _on_Button_Load_button_up()
 		{
-			var loadPanel = (LoadPanel)ResourceLoader.Load<PackedScene>("res://Scenes/Start/Dynamic/LoadPanel/LoadPanel.tscn").Instance();
+			var loadPanel = (SaveLoadPanel)ResourceLoader.Load<PackedScene>("res://Global/SaveLoadPanel/SaveLoadPanel.tscn").Instance();
+			loadPanel.enableLoad = true;
+
 			AddChild(loadPanel);
 
 			loadPanel.Connect("LoadSaveFile", this, nameof(_on_LoadSaveFile_Signed));

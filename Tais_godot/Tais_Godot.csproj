@@ -82,10 +82,10 @@
     <Compile Include="Global\SaveLoadPanel\FileContainer\SaveFileContainer.cs" />
     <Compile Include="Global\SaveLoadPanel\FileContainer\SaveFileItemPanel.cs" />
     <Compile Include="Global\MsgboxPanel\MsgboxPanel.cs" />
-    <Compile Include="Scenes\Start\Dynamic\LoadPanel\LoadPanel.cs" />
     <Compile Include="Scenes\Main\Warn\WarnItem.cs" />
     <Compile Include="Global\Extensions.cs" />
     <Compile Include="Scenes\Main\Warn\WarnContainer.cs" />
+    <Compile Include="Global\SaveLoadPanel\FileContainer\NewSaveContainer.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Modder\Modder.csproj">
