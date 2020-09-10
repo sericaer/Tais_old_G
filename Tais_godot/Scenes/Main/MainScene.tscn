@@ -179,26 +179,40 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/WinContainer"]
-margin_right = 241.0
+[node name="ImpContainer" type="HBoxContainer" parent="VBoxContainer/WinContainer"]
+margin_right = 1440.0
 margin_bottom = 150.0
 rect_min_size = Vector2( 0, 150 )
-size_flags_horizontal = 0
 size_flags_vertical = 0
 custom_constants/separation = 1
 
-[node name="Button" type="Button" parent="VBoxContainer/WinContainer/HBoxContainer"]
+[node name="Button" type="Button" parent="VBoxContainer/WinContainer/ImpContainer"]
 margin_right = 120.0
 margin_bottom = 150.0
 rect_min_size = Vector2( 120, 150 )
 text = "STATIC_CHAOTING"
 clip_text = true
 
-[node name="Button2" type="Button" parent="VBoxContainer/WinContainer/HBoxContainer"]
+[node name="Button2" type="Button" parent="VBoxContainer/WinContainer/ImpContainer"]
 margin_left = 121.0
 margin_right = 241.0
 margin_bottom = 150.0
 rect_min_size = Vector2( 120, 150 )
+
+[node name="WarnContainer" type="HBoxContainer" parent="VBoxContainer/WinContainer/ImpContainer"]
+margin_left = 242.0
+margin_right = 1440.0
+margin_bottom = 70.0
+rect_min_size = Vector2( 0, 70 )
+size_flags_horizontal = 3
+size_flags_vertical = 0
+alignment = 1
+
+[node name="Button" type="Button" parent="VBoxContainer/WinContainer/ImpContainer/WarnContainer"]
+margin_left = 569.0
+margin_right = 629.0
+margin_bottom = 70.0
+rect_min_size = Vector2( 60, 70 )
 [connection signal="pressed" from="VBoxContainer/TopContainer/HBoxContainer/Economy" to="." method="_on_Button_Economy_pressed"]
 [connection signal="DaysInc" from="VBoxContainer/TopContainer/HBoxContainer/Control" to="." method="_on_DaysInc"]
 [connection signal="pressed" from="VBoxContainer/TopContainer/HBoxContainer/Control/Button_Inc" to="VBoxContainer/TopContainer/HBoxContainer/Control" method="_on_Button_Inc_pressed"]
