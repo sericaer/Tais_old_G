@@ -37,7 +37,7 @@ namespace TaisGodot.Scripts
 
 			GetNode<ReactiveLabel>("CenterContainer/EconomyDetail/VBoxContainer/Bottom/Surplus/Value").Assoc(RunData.Economy.inst.monthSurplus);
 
-			UpDateTempOutputStatus();
+			//UpDateTempOutputStatus();
 		}
 
 		public override void _ExitTree()

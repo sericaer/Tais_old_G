@@ -11,35 +11,30 @@ namespace TaisGodot.Scripts
 {
 	class SaveLoadPanel : Panel
 	{
+		[Signal]
+		internal delegate void LoadSaveFile(string name);
+
 		internal bool enableLoad;
+
+		private NewSaveContainer newSaveContainter;
+		private SaveFileContainer saveFileContainer;
 
 		public override void _Ready()
 		{
-			GD.Print("bbb");
+			newSaveContainter = GetNode<NewSaveContainer>("CenterContainer/PanelContainer/VBoxContainer/NewSaveContainer");
+			saveFileContainer = GetNode<SaveFileContainer>("CenterContainer/PanelContainer/VBoxContainer/SaveFileContainer");
 
-			GetNode<Control>("CenterContainer/PanelContainer/VBoxContainer/NewSaveContainer").Visible = !enableLoad;
-			//GetNode<SaveFileContainer>("CenterContainer/PanelContainer/VBoxContainer/SaveFileContainer").enuProcess = SaveFileContainer.Process.Save;
-		}
+			newSaveContainter.Visible = !enableLoad;
+			newSaveContainter.buttonConfirm.Connect("pressed", this, nameof(onTriggerSave));
 
-		private void _on_ButtonConfirm_pressed()
-		{
-			var filePath = GlobalPath.save + GetNode<TextEdit>("CenterContainer/PanelContainer/VBoxContainer/NewSaveContainer/TextEdit").Text + ".save";
-			if(System.IO.File.Exists(filePath))
+			foreach(var fileItem in saveFileContainer.EnumSaveFileItems())
 			{
-				var MsgboxPanel = (MsgboxPanel)ResourceLoader.Load<PackedScene>("res://Global/MsgboxPanel/MsgboxPanel.tscn").Instance();
-				MsgboxPanel.desc = "STATIC_SAVE_FILE_EXIT";
-				MsgboxPanel.action = () =>
-				{
-					SaveFile(filePath);
-					QueueFree();
-				};
+				fileItem.buttonDelete.Connect("pressed", this, nameof(onTriggerDelete), new Godot.Collections.Array() { fileItem });
+				fileItem.buttonLoad.Connect("pressed", this, nameof(onTriggerLoad), new Godot.Collections.Array() { fileItem });
 
-				AddChild(MsgboxPanel);
-				return;
+				fileItem.buttonLoad.Visible = enableLoad;
+
 			}
-
-			SaveFile(filePath);
-			QueueFree();
 		}
 
 		private void _on_ButtonCancel_pressed()
@@ -48,10 +43,40 @@ namespace TaisGodot.Scripts
 			QueueFree();
 		}
 
-		private void SaveFile(string path)
+		private void onTriggerSave()
 		{
-			var content = Root.Serialize();
-			System.IO.File.WriteAllText(path, content);
+			var filePath = GlobalPath.save + newSaveContainter.fileNameEdit.Text + ".save";
+
+			if (System.IO.File.Exists(filePath))
+			{
+				var MsgboxPanel = (MsgboxPanel)ResourceLoader.Load<PackedScene>("res://Global/MsgboxPanel/MsgboxPanel.tscn").Instance();
+				MsgboxPanel.desc = "STATIC_SAVE_FILE_EXIT";
+				MsgboxPanel.action = () =>
+				{
+					System.IO.File.WriteAllText(filePath, Root.Serialize());
+					QueueFree();
+				};
+
+				AddChild(MsgboxPanel);
+				return;
+			}
+
+			System.IO.File.WriteAllText(filePath, Root.Serialize());
+			QueueFree();
+		}
+
+		private void onTriggerDelete(SaveFileItemPanel fileItem)
+		{
+			var filePath = GlobalPath.save + fileItem.Name + ".save";
+			System.IO.File.Delete(filePath);
+
+			fileItem.QueueFree();
+		}
+
+		private void onTriggerLoad(SaveFileItemPanel fileItem)
+		{
+			EmitSignal(nameof(LoadSaveFile), fileItem.Name);
+			fileItem.QueueFree();
 		}
 	}
 }

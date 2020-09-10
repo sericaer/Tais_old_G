@@ -43,4 +43,5 @@ margin_right = 122.0
 margin_bottom = 89.0
 text = "STATIC_QUIT"
 [connection signal="button_up" from="VBoxContainer/Button_Start" to="." method="_on_Button_Start_button_up"]
+[connection signal="pressed" from="VBoxContainer/Button_Load" to="." method="_on_Button_Load_pressed"]
 [connection signal="pressed" from="VBoxContainer/Button_Quit" to="." method="_on_Button_Quit_pressed"]

@@ -85,7 +85,7 @@ namespace TaisGodot.Scripts
 			GetTree().ChangeScene("res://Scenes/Main/MainScene.tscn");
 		}
 
-		private void _on_Button_Load_button_up()
+		private void _on_Button_Load_pressed()
 		{
 			var loadPanel = (SaveLoadPanel)ResourceLoader.Load<PackedScene>("res://Global/SaveLoadPanel/SaveLoadPanel.tscn").Instance();
 			loadPanel.enableLoad = true;
@@ -105,7 +105,7 @@ namespace TaisGodot.Scripts
 			var content = System.IO.File.ReadAllText(GlobalPath.save + fileName + ".save");
 			Root.Deserialize(content);
 
-
+			ModDataVisit.InitVisitData(Root.inst);
 			GetTree().ChangeScene("res://Scenes/Main/MainScene.tscn");
 		}
 

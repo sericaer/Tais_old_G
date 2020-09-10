@@ -12,20 +12,20 @@ namespace TaisGodot.Scripts
 	class SaveFileItemPanel : PanelContainer
 	{
 		internal bool enableLoad
-        {
+		{
 			set
-            {
+			{
 				buttonLoad.Visible = value;
-            }
-        }
+			}
+		}
 
 		internal Button buttonLoad
-        {
+		{
 			get
-            {
+			{
 				return GetNode<Button>("HBoxContainer/ButtonLoad");
 			}
-        }
+		}
 
 		internal Button buttonDelete
 		{

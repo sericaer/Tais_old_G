@@ -1,28 +1,28 @@
-﻿using Godot;
+using Godot;
 using System;
 namespace TaisGodot.Scripts
 {
-    class NewSaveContainer : HBoxContainer
-    {
-        internal Button buttonConfirm
-        {
-            get
-            {
-                return GetNode<Button>("ButtonConfirm");
-            }
-        }
+	class NewSaveContainer : HBoxContainer
+	{
+		internal Button buttonConfirm
+		{
+			get
+			{
+				return GetNode<Button>("ButtonConfirm");
+			}
+		}
 
-        internal TextEdit fileNameEdit
-        {
-            get
-            {
-                return GetNode<TextEdit>("TextEdit");
-            }
-        }
+		internal TextEdit fileNameEdit
+		{
+			get
+			{
+				return GetNode<TextEdit>("TextEdit");
+			}
+		}
 
-        private void _on_FileNameEdit_Text_Changed()
-        {
-            buttonConfirm.Disabled = fileNameEdit.Text.Length == 0;
-        }
-    }
+		private void _on_FileNameEdit_Text_Changed()
+		{
+			buttonConfirm.Disabled = fileNameEdit.Text.Length == 0;
+		}
+	}
 }

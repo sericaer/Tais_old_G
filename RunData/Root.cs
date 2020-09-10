@@ -103,7 +103,7 @@ namespace RunData
         [JsonConstructor]
         private Root()
         {
-
+            inst = this;
         }
     }
 }

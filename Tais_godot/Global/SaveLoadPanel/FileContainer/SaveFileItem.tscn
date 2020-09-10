@@ -2,8 +2,6 @@
 
 [ext_resource path="res://Global/SaveLoadPanel/FileContainer/SaveFileItemPanel.cs" type="Script" id=1]
 
-
-
 [node name="PanelContainer" type="PanelContainer"]
 margin_right = 350.0
 margin_bottom = 44.0
@@ -17,6 +15,7 @@ margin_left = 7.0
 margin_top = 7.0
 margin_right = 343.0
 margin_bottom = 37.0
+alignment = 1
 
 [node name="Label" type="Label" parent="HBoxContainer"]
 margin_top = 4.0
@@ -33,14 +32,14 @@ __meta__ = {
 margin_left = 68.0
 margin_right = 190.0
 margin_bottom = 30.0
-size_flags_horizontal = 8
+size_flags_horizontal = 10
 text = "STATIC_LOAD"
 
 [node name="ButtonDelete" type="Button" parent="HBoxContainer"]
 margin_left = 194.0
 margin_right = 336.0
 margin_bottom = 30.0
-size_flags_horizontal = 10
+size_flags_horizontal = 8
 text = "STATIC_DELETE"
 [connection signal="pressed" from="HBoxContainer/ButtonLoad" to="." method="_on_ButtonLoad_pressed"]
 [connection signal="pressed" from="HBoxContainer/ButtonDelete" to="." method="_on_ButtonDelete_pressed"]

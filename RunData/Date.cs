@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Sockets;
 using System.Reactive.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -160,7 +161,7 @@ namespace RunData
 
         public static Date Init()
         {
-            return new Date();
+            return new Date(1,1,1);
         }
     
         public static (int y, int m, int d) Value
@@ -181,14 +182,23 @@ namespace RunData
         //    inst = jObject.GetValue("date").ToObject<Date>();
         //}
 
+        private Date(int y, int m, int d)
+        {
+            year = new SubjectValue<int>(y);
+            month = new SubjectValue<int>(m);
+            day = new SubjectValue<int>(d);
+        }
+
+        [JsonConstructor]
         private Date()
         {
-            year = new SubjectValue<int>(1);
-            month = new SubjectValue<int>(1);
-            day = new SubjectValue<int>(1);
+        }
 
+        [OnDeserialized]
+        private void InitObservableData(StreamingContext context)
+        {
             desc = Observable.CombineLatest(year.obs, month.obs, day.obs, (y, m, d) => $"{y}-{m}-{d}").ToOBSValue();
-            total_days = Observable.CombineLatest(year.obs, month.obs, day.obs, (y, m, d) => d + (m-1) * 12 + (y-1) * 360).ToOBSValue();
+            total_days = Observable.CombineLatest(year.obs, month.obs, day.obs, (y, m, d) => d + (m - 1) * 12 + (y - 1) * 360).ToOBSValue();
         }
     }
 
