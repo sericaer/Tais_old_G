@@ -187,6 +187,8 @@ namespace RunData
             year = new SubjectValue<int>(y);
             month = new SubjectValue<int>(m);
             day = new SubjectValue<int>(d);
+
+            InitObservableData(new StreamingContext());
         }
 
         [JsonConstructor]
