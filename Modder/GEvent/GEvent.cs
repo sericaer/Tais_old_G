@@ -37,7 +37,7 @@ namespace Modder
 
             this.title = new Title(parse.title, Path.GetFileNameWithoutExtension(file)); 
             this.desc = new Desc(parse.desc, Path.GetFileNameWithoutExtension(file));  
-            this.options = parse.options.Select((v, i) => new Option { semantic = v, index = i + 1, owner = this }).ToArray();
+            this.options = parse.options.Select((v, i) => new Option { semantic = v, index = i + 1, ownerName = Path.GetFileNameWithoutExtension(file) }).ToArray();
             this.date = new Date(parse.date);
             this.trigger = new Trigger(parse.trigger);
             this.occur = new Occur(parse.occur);

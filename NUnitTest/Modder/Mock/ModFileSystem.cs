@@ -54,6 +54,14 @@ namespace UnitTest.Modder.Mock
             File.WriteAllText(commonPath + fileName, fileContent);
         }
 
+        internal void AddInitSelect(string fileName, string fileContent)
+        {
+            var initSelectPath = modPath + "init_selects/";
+            Directory.CreateDirectory(initSelectPath);
+
+            File.WriteAllText(initSelectPath + fileName, fileContent);
+        }
+
         public static ModFileSystem Generate(string modName)
         {
             return new ModFileSystem() { name = modName };

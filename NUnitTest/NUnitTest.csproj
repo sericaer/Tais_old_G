@@ -40,6 +40,7 @@
     <Compile Include="RunData\TestRunData.cs" />
     <Compile Include="Modder\Warn\TestWarnCommon.cs" />
     <Compile Include="Modder\Warn\TestWarnDepart.cs" />
+    <Compile Include="Modder\InitSelect\TestInitSelect.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -65,6 +66,7 @@
     <Folder Include="DataVisit\" />
     <Folder Include="RunData\" />
     <Folder Include="Modder\Warn\" />
+    <Folder Include="Modder\InitSelect\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

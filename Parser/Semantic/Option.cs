@@ -15,6 +15,9 @@ namespace Parser.Semantic
         [SemanticProperty("select")]
         public Select set;
 
+        [SemanticProperty("next")]
+        public string next;
+
         public static Option Parse(SyntaxItem item)
         {
             return SemanticParser.DoParser<Option>(item);

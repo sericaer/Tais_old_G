@@ -18,6 +18,7 @@ namespace Modder
         public List<Language> languages;
         internal EventGroup eventGroup;
         internal WarnGroup warnGroup;
+        internal List<InitSelect> initSelects;
 
         static Mod()
         {
@@ -70,6 +71,7 @@ namespace Modder
             this.languages = Language.Load(path + "/languages");
             this.eventGroup = EventGroup.Load(modname, path + "/events");
             this.warnGroup = WarnGroup.Load(modname, path + "/warns");
+            this.initSelects = InitSelect.Load(modname, path + "/init_selects");
         }
 
         internal static Dictionary<string, Mod> modDict;

@@ -99,7 +99,7 @@ namespace Parser.Semantic
                 }
             }
 
-            if(currType.IsValueType)
+            if(currType.IsValueType || currType == typeof(string))
             {
                 if (item.values.Count() != 1 || !(item.values[0] is SingleValue))
                 {
@@ -120,6 +120,16 @@ namespace Parser.Semantic
                     }
 
                     return Convert.ChangeType(digitValue.digit, currType);
+                }
+                else if (currType == typeof(bool))
+                {
+                    var bValue = strValue as BoolValue;
+                    if (bValue == null)
+                    {
+                        throw new Exception($"can not support type {type} with key:{item.key}");
+                    }
+
+                    return Convert.ChangeType(bValue.data, currType);
                 }
                 else
                 {

@@ -63,12 +63,13 @@
     <Compile Include="GEvent\GEvent.cs" />
     <Compile Include="GEvent\GEventParse.cs" />
     <Compile Include="GEvent\Date.cs" />
-    <Compile Include="GEvent\Text.cs" />
-    <Compile Include="GEvent\Option.cs" />
     <Compile Include="GEvent\Trigger.cs" />
     <Compile Include="GEvent\EventGroup.cs" />
     <Compile Include="Warn\WarnGroup.cs" />
     <Compile Include="Warn\Warn.cs" />
+    <Compile Include="InitSelect.cs" />
+    <Compile Include="Option.cs" />
+    <Compile Include="Text.cs" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.7">
