@@ -86,6 +86,10 @@
     <Compile Include="Global\Extensions.cs" />
     <Compile Include="Scenes\Main\Warn\WarnContainer.cs" />
     <Compile Include="Global\SaveLoadPanel\FileContainer\NewSaveContainer.cs" />
+    <Compile Include="Global\Table\TitleElement.cs" />
+    <Compile Include="Global\Table\TitleContainer.cs" />
+    <Compile Include="Global\Table\Table.cs" />
+    <Compile Include="Global\Table\DataElement.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Modder\Modder.csproj">
@@ -102,5 +106,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Global\Table\" />
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
