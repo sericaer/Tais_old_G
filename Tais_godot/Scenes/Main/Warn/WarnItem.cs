@@ -13,12 +13,22 @@ namespace TaisGodot.Scripts
 	{
 		public override void _Ready()
 		{
-            GetNode<Label>("Label").Text = Name;
+            GetNode<Label>("Label").Text = Name + "_TITLE";
 		}
 
         internal void Refresh(List<string> datas)
         {
-            GetNode<Label>("Label").HintTooltip = string.Format("\n", datas);
+            var strItem = datas.Select(x =>
+            {
+                var split = x.Split("|");
+                return string.Format(TranslateServerEx.Translate(Name + "_ITEM"), split);
+            });
+
+            var strInfo = TranslateServerEx.Translate(Name + "_DESC")
+                          + "\n\n-----------------\n\n"
+                          + string.Join("\n", strItem);
+
+            this.HintTooltip = strInfo;
         }
     }
 }
