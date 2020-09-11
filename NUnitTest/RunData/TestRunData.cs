@@ -52,9 +52,12 @@ namespace UnitTest.RunData
 
             init = new InitData()
             {
-                name = "TEST1",
-                age = 34,
-                background = "BACKGROUND1"
+                common = new InitData.Common()
+                {
+                    name = "TEST1",
+                    age = 34,
+                    background = "BACKGROUND1"
+                }
             };
         }
 
@@ -74,9 +77,9 @@ namespace UnitTest.RunData
 
             Assert.AreEqual(456, Visitor.Get("economy.value"));
 
-            Assert.AreEqual(init.name, Visitor.Get("taishou.name"));
-            Assert.AreEqual(init.age, Visitor.Get("taishou.age"));
-            Assert.AreEqual(init.background, Visitor.Get("taishou.background"));
+            Assert.AreEqual(init.common.name, Visitor.Get("taishou.name"));
+            Assert.AreEqual(init.common.age, Visitor.Get("taishou.age"));
+            Assert.AreEqual(init.common.background, Visitor.Get("taishou.background"));
 
             foreach (var income in Root.inst.economy.EnumerateInCome())
             {

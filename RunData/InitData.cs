@@ -5,13 +5,19 @@ namespace RunData
 {
     public class InitData
     {
-        [DataVisitorProperty("name")]
-        public string name;
+        [DataVisitorProperty("init")]
+        public Common common;
 
-        [DataVisitorProperty("age")]
-        public int age;
+        public class Common
+        {
+            [DataVisitorProperty("name")]
+            public string name;
 
-        [DataVisitorProperty("background")]
-        public string background;
+            [DataVisitorProperty("age")]
+            public int age;
+
+            [DataVisitorProperty("background")]
+            public string background;
+        }
     }
 }

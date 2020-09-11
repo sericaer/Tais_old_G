@@ -87,7 +87,7 @@ namespace RunData
         {
             inst = this;
 
-            taishou = new Taishou(initData.name, initData.age, initData.background);
+            taishou = new Taishou(initData.common.name, initData.common.age, initData.common.background);
 
             date = Date.Init();
 

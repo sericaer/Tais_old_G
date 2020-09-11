@@ -15,16 +15,16 @@ namespace RunData
         [DataVisitorProperty("is_revoke")]
         public bool isRevoke;
 
-        [DataVisitorProperty("name")]
+        [DataVisitorProperty("name"), JsonProperty]
         public string name;
 
-        [DataVisitorProperty("age")]
+        [DataVisitorProperty("age"), JsonProperty]
         public int age;
 
-        [DataVisitorProperty("background")]
+        [DataVisitorProperty("background"), JsonProperty]
         public string background;
 
-        public Taishou(string name, int age, string background)
+        public Taishou(string name, int age, string background) : this()
         {
             this.name = name;
             this.age = age;

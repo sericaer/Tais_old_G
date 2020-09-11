@@ -41,6 +41,7 @@
     <Compile Include="Modder\Warn\TestWarnCommon.cs" />
     <Compile Include="Modder\Warn\TestWarnDepart.cs" />
     <Compile Include="Modder\InitSelect\TestInitSelect.cs" />
+    <Compile Include="RunData\TestInitData.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
