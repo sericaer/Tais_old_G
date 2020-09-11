@@ -78,7 +78,12 @@ namespace TaisGodot.Scripts
 		private void _on_Button_Start_button_up()
 		{
 
-			Root.Init();
+			var initData = new InitData()
+			{
+
+			};
+
+			Root.Init(initData);
 
 			ModDataVisit.InitVisitData(Root.inst);
 

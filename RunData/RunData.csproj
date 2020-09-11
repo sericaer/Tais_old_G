@@ -72,6 +72,7 @@
     <Compile Include="Observable.cs" />
     <Compile Include="Define.cs" />
     <Compile Include="Taishou.cs" />
+    <Compile Include="InitData.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

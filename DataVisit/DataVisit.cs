@@ -17,28 +17,28 @@ namespace DataVisit
 
         public static object Get(string raw)
         {
-            int intRslt;
-            if (int.TryParse(raw, out intRslt))
-            {
-                return intRslt;
-            }
+            //int intRslt;
+            //if (int.TryParse(raw, out intRslt))
+            //{
+            //    return intRslt;
+            //}
 
-            double doubleRslt;
-            if (double.TryParse(raw, out doubleRslt))
-            {
-                return doubleRslt;
-            }
+            //double doubleRslt;
+            //if (double.TryParse(raw, out doubleRslt))
+            //{
+            //    return doubleRslt;
+            //}
 
             if (!raw.Contains("."))
             {
                 return raw;
             }
 
-            var splits = raw.Split('.');
-            if (splits.Length < 2)
-            {
-                throw new Exception("error value " + raw);
-            }
+            //var splits = raw.Split('.');
+            //if (splits.Length < 2)
+            //{
+            //    throw new Exception("error value " + raw);
+            //}
 
             return VisitGet(raw);
         }

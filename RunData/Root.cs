@@ -22,9 +22,9 @@ namespace RunData
             Root.def = def;
         }
 
-        public static void Init()
+        public static void Init(InitData initData)
         {
-            inst = new Root("");
+            inst = new Root(initData);
         }
 
         public static void Exit()
@@ -83,11 +83,11 @@ namespace RunData
             }
         }
 
-        public Root(string name)
+        public Root(InitData initData)
         {
             inst = this;
 
-            taishou = new Taishou();
+            taishou = new Taishou(initData.name, initData.age, initData.background);
 
             date = Date.Init();
 

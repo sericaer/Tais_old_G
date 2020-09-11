@@ -10,11 +10,11 @@ namespace UnitTest.RunData
     [TestFixture()]
     public class TestRunData
     {
-        public Define def;
+        public InitData init;
 
         public TestRunData()
         {
-            def = new Define()
+            Root.def = new Define()
             {
                 departs = new Dictionary<string, Define.DepartDef>()
                 {
@@ -50,13 +50,18 @@ namespace UnitTest.RunData
                 }
             };
 
-            Root.def = def;
+            init = new InitData()
+            {
+                name = "TEST1",
+                age = 34,
+                background = "BACKGROUND1"
+            };
         }
 
         [Test()]
         public void TestInitData()
         {
-            Root.Init();
+            Root.Init(init);
 
             ModDataVisit.InitVisitData(Root.inst);
 
@@ -69,12 +74,16 @@ namespace UnitTest.RunData
 
             Assert.AreEqual(456, Visitor.Get("economy.value"));
 
+            Assert.AreEqual(init.name, Visitor.Get("taishou.name"));
+            Assert.AreEqual(init.age, Visitor.Get("taishou.age"));
+            Assert.AreEqual(init.background, Visitor.Get("taishou.background"));
+
             foreach (var income in Root.inst.economy.EnumerateInCome())
             {
                 switch (income.name)
                 {
                     case "STATIC_POP_TAX":
-                        Assert.AreEqual(def.economy.pop_tax_percent, income.percent.Value);
+                        Assert.AreEqual(Root.def.economy.pop_tax_percent, income.percent.Value);
                         Assert.AreEqual(Pop.all.Sum(x => x.expectTax.Value), income.maxValue.Value);
                         Assert.AreEqual(income.maxValue.Value * income.percent.Value / 100, income.currValue.Value);
                         break;
@@ -90,7 +99,7 @@ namespace UnitTest.RunData
                 switch (output.name)
                 {
                     case "STATIC_REPORT_CHAOTING_TAX":
-                        Assert.AreEqual(def.economy.report_tax_percent, output.percent.Value);
+                        Assert.AreEqual(Root.def.economy.report_tax_percent, output.percent.Value);
                         Assert.AreEqual(Chaoting.inst.currMonthTax.Value * output.percent.Value / 100, output.currValue.Value);
                         break;
                     default:
@@ -100,14 +109,14 @@ namespace UnitTest.RunData
                 }
             }
 
-            foreach (var departName in def.departs.Keys)
+            foreach (var departName in Root.def.departs.Keys)
             {
-                var departDef = def.departs[departName];
+                var departDef = Root.def.departs[departName];
 
                 var depart = Depart.GetByColor(departDef.color.r, departDef.color.g, departDef.color.b);
                 Assert.AreEqual(departName, depart.name);
 
-                Assert.AreEqual(departDef.pop_init.Where(x => def.pops[x.name].is_collect_tax).Sum(x => x.num), depart.popNum.Value);
+                Assert.AreEqual(departDef.pop_init.Where(x => Root.def.pops[x.name].is_collect_tax).Sum(x => x.num), depart.popNum.Value);
 
                 foreach (var init in departDef.pop_init)
                 {
@@ -119,12 +128,12 @@ namespace UnitTest.RunData
             Visitor.Pos pos = null;
             while (Visitor.EnumerateVisit("depart", ref pos))
             {
-                def.departs.ContainsKey(Visitor.Get("depart.name") as string);
+                Root.def.departs.ContainsKey(Visitor.Get("depart.name") as string);
             }
 
-            Assert.AreEqual((int)(Depart.all.Sum(x => x.popNum.Value) * def.chaoting.reportPopPercent / 100), Chaoting.inst.reportPopNum.Value);
-            Assert.AreEqual(def.chaoting.taxPercent, Chaoting.inst.taxPercent.Value);
-            Assert.AreEqual(Chaoting.inst.reportPopNum.Value * 0.01 * def.chaoting.taxPercent / 100, Chaoting.inst.currMonthTax.Value);
+            Assert.AreEqual((int)(Depart.all.Sum(x => x.popNum.Value) * Root.def.chaoting.reportPopPercent / 100), Chaoting.inst.reportPopNum.Value);
+            Assert.AreEqual(Root.def.chaoting.taxPercent, Chaoting.inst.taxPercent.Value);
+            Assert.AreEqual(Chaoting.inst.reportPopNum.Value * 0.01 * Root.def.chaoting.taxPercent / 100, Chaoting.inst.currMonthTax.Value);
         }
 
         [SetUp()]
@@ -136,7 +145,7 @@ namespace UnitTest.RunData
         [Test()]
         public void TestSetGetEconomyData()
         {
-            Root.Init();
+            Root.Init(init);
 
             ModDataVisit.InitVisitData(Root.inst);
 
@@ -166,7 +175,7 @@ namespace UnitTest.RunData
         [Test()]
         public void TestDateInc()
         {
-            Root.Init();
+            Root.Init(init);
 
             ModDataVisit.InitVisitData(Root.inst);
 
@@ -208,7 +217,7 @@ namespace UnitTest.RunData
         [Test()]
         public void TestChaotingDaysInc()
         {
-            Root.Init();
+            Root.Init(init);
 
             ModDataVisit.InitVisitData(Root.inst);
 
@@ -250,7 +259,7 @@ namespace UnitTest.RunData
         [Test()]
         public void TestDepartDaysInc()
         {
-            Root.Init();
+            Root.Init(init);
 
             ModDataVisit.InitVisitData(Root.inst);
 
@@ -265,9 +274,9 @@ namespace UnitTest.RunData
                 {
                     for (int d = 1; d <= 30; d++)
                     {
-                        if (Date.inst >= def.crop.growStartDay && Date.inst <= def.crop.harvestDay)
+                        if (Date.inst >= Root.def.crop.growStartDay && Date.inst <= Root.def.crop.harvestDay)
                         {
-                            cropGrown += def.crop.growSpeed;
+                            cropGrown += Root.def.crop.growSpeed;
                         }
                         else
                         {
@@ -296,7 +305,7 @@ namespace UnitTest.RunData
         [Test()]
         public void TestTaishou()
         {
-            Root.Init();
+            Root.Init(init);
 
             ModDataVisit.InitVisitData(Root.inst);
 
@@ -314,7 +323,7 @@ namespace UnitTest.RunData
         [Test()]
         public void TestSerialize()
         {
-            Root.Init();
+            Root.Init(init);
 
             ModDataVisit.InitVisitData(Root.inst);
 
@@ -336,7 +345,7 @@ namespace UnitTest.RunData
                 switch (income.name)
                 {
                     case "STATIC_POP_TAX":
-                        Assert.AreEqual(def.economy.pop_tax_percent, income.percent.Value);
+                        Assert.AreEqual(Root.def.economy.pop_tax_percent, income.percent.Value);
                         Assert.AreEqual(Pop.all.Sum(x => x.expectTax.Value), income.maxValue.Value);
                         Assert.AreEqual(income.maxValue.Value * income.percent.Value / 100, income.currValue.Value);
                         break;
@@ -352,7 +361,7 @@ namespace UnitTest.RunData
                 switch (output.name)
                 {
                     case "STATIC_REPORT_CHAOTING_TAX":
-                        Assert.AreEqual(def.economy.report_tax_percent, output.percent.Value);
+                        Assert.AreEqual(Root.def.economy.report_tax_percent, output.percent.Value);
                         Assert.AreEqual(Chaoting.inst.currMonthTax.Value * output.percent.Value / 100, output.currValue.Value);
                         break;
                     default:
@@ -362,14 +371,14 @@ namespace UnitTest.RunData
                 }
             }
 
-            foreach (var departName in def.departs.Keys)
+            foreach (var departName in Root.def.departs.Keys)
             {
-                var departDef = def.departs[departName];
+                var departDef = Root.def.departs[departName];
 
                 var depart = Depart.GetByColor(departDef.color.r, departDef.color.g, departDef.color.b);
                 Assert.AreEqual(departName, depart.name);
 
-                Assert.AreEqual(departDef.pop_init.Where(x => def.pops[x.name].is_collect_tax).Sum(x => x.num), depart.popNum.Value);
+                Assert.AreEqual(departDef.pop_init.Where(x => Root.def.pops[x.name].is_collect_tax).Sum(x => x.num), depart.popNum.Value);
 
                 foreach (var init in departDef.pop_init)
                 {
@@ -378,9 +387,9 @@ namespace UnitTest.RunData
                 }
             }
 
-            Assert.AreEqual((int)(Depart.all.Sum(x => x.popNum.Value) * def.chaoting.reportPopPercent / 100), Chaoting.inst.reportPopNum.Value);
-            Assert.AreEqual(def.chaoting.taxPercent, Chaoting.inst.taxPercent.Value);
-            Assert.AreEqual(Chaoting.inst.reportPopNum.Value * 0.01 * def.chaoting.taxPercent / 100, Chaoting.inst.currMonthTax.Value);
+            Assert.AreEqual((int)(Depart.all.Sum(x => x.popNum.Value) * Root.def.chaoting.reportPopPercent / 100), Chaoting.inst.reportPopNum.Value);
+            Assert.AreEqual(Root.def.chaoting.taxPercent, Chaoting.inst.taxPercent.Value);
+            Assert.AreEqual(Chaoting.inst.reportPopNum.Value * 0.01 * Root.def.chaoting.taxPercent / 100, Chaoting.inst.currMonthTax.Value);
         }
     }
 }
