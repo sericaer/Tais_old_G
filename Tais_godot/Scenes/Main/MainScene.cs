@@ -23,7 +23,7 @@ namespace TaisGodot.Scripts
 				GetTree().ChangeScene("res://Scenes/End/EndScene.tscn");
 			}
 
-			//GetNode<WarnContainer>("").Refresh(Modder.Mod.WarnProcess());
+			GetNode<WarnContainer>("VBoxContainer/WinContainer/ImpContainer/WarnContainer").Refresh(Modder.Mod.WarnProcess());
 		}
 
 		private Node ShowDialog(Modder.GEvent eventobj)

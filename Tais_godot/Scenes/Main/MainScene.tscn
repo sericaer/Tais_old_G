@@ -1,10 +1,11 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Scenes/Main/MainScene.cs" type="Script" id=1]
 [ext_resource path="res://Scenes/Main/Map/MapRect.cs" type="Script" id=2]
 [ext_resource path="res://Scenes/Main/Top/Date.cs" type="Script" id=3]
 [ext_resource path="res://Global/ReactiveLabel.cs" type="Script" id=4]
 [ext_resource path="res://Scenes/Main/Top/SpeedContrl.cs" type="Script" id=5]
+[ext_resource path="res://Scenes/Main/Warn/WarnContainer.cs" type="Script" id=6]
 [ext_resource path="res://Scenes/Main/Top/Economy.cs" type="Script" id=7]
 
 [sub_resource type="StyleBoxTexture" id=1]
@@ -207,12 +208,7 @@ rect_min_size = Vector2( 0, 70 )
 size_flags_horizontal = 3
 size_flags_vertical = 0
 alignment = 1
-
-[node name="Button" type="Button" parent="VBoxContainer/WinContainer/ImpContainer/WarnContainer"]
-margin_left = 569.0
-margin_right = 629.0
-margin_bottom = 70.0
-rect_min_size = Vector2( 60, 70 )
+script = ExtResource( 6 )
 [connection signal="pressed" from="VBoxContainer/TopContainer/HBoxContainer/Economy" to="." method="_on_Button_Economy_pressed"]
 [connection signal="DaysInc" from="VBoxContainer/TopContainer/HBoxContainer/Control" to="." method="_on_DaysInc"]
 [connection signal="pressed" from="VBoxContainer/TopContainer/HBoxContainer/Control/Button_Inc" to="VBoxContainer/TopContainer/HBoxContainer/Control" method="_on_Button_Inc_pressed"]

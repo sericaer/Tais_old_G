@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -13,24 +13,24 @@ namespace TaisGodot.Scripts
 	{
 		public override void _Ready()
 		{
-            GetNode<Label>("Label").Text = Name + "_TITLE";
+			GetNode<Label>("Label").Text = "WARN" + Name + "_TITLE";
 		}
 
-        internal void Refresh(List<string> datas)
-        {
-            var strItem = datas.Select(x =>
-            {
-                var split = x.Split("|");
-                return string.Format(TranslateServerEx.Translate(Name + "_ITEM"), split);
-            });
+		internal void Refresh(List<string> datas)
+		{
+			var strItem = datas.Select(x =>
+			{
+				var split = x.Split("|");
+				return string.Format(TranslateServerEx.Translate("WARN_" + Name + "_ITEM"), split);
+			});
 
-            var strInfo = TranslateServerEx.Translate(Name + "_DESC")
-                          + "\n\n-----------------\n\n"
-                          + string.Join("\n", strItem);
+			var strInfo = TranslateServerEx.Translate("WARN_" + Name + "_DESC")
+						  + "\n\n-----------------\n\n"
+						  + string.Join("\n", strItem);
 
-            this.HintTooltip = strInfo;
-        }
-    }
+			this.HintTooltip = strInfo;
+		}
+	}
 }
 
 

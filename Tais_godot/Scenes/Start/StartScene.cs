@@ -80,7 +80,12 @@ namespace TaisGodot.Scripts
 
 			var initData = new InitData()
 			{
-
+				common = new InitData.Common()
+				{
+					name = "TEST1",
+					age = 34,
+					background = "BACKGROUND1"
+				}
 			};
 
 			Root.Init(initData);
