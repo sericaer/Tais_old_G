@@ -60,7 +60,9 @@
     <Compile Include="Global\ButtonEx.cs" />
     <Compile Include="Global\ClickFreeMask.cs" />
     <Compile Include="Global\SaveLoadPanel\SaveLoadPanel.cs" />
+    <Compile Include="Scenes\Main\Dynamic\ChaotingDetail\ChaotingDetail.cs" />
     <Compile Include="Scenes\Main\Dynamic\EconomyDetail\EconomyDetailPanel.cs" />
+    <Compile Include="Scenes\Main\Imp\ImpContainer.cs" />
     <Compile Include="Scenes\Main\Top\SpeedContrl.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Scenes\Main\SysPanel\SysPanel.cs" />

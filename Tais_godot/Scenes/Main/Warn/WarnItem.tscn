@@ -22,3 +22,18 @@ anchor_bottom = 0.5
 margin_top = -10.5
 margin_bottom = 10.5
 clip_text = true
+
+[node name="Label2" type="Label" parent="."]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -23.0
+margin_top = -21.0
+margin_right = -1.0
+text = "12"
+align = 1
+clip_text = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
