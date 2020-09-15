@@ -17,13 +17,20 @@ namespace TaisGodot.Scripts
 				await ToSignal(dialog, "tree_exited");
 			}
 
+			foreach (var spevent in SpecialEventDialog.Process())
+            {
+				var dialog = ShowSpecialDialog(spevent);
+
+				await ToSignal(dialog, "tree_exited");
+			}
+
 			if(Root.inst.isEnd)
 			{
 				Root.Exit();
 				GetTree().ChangeScene("res://Scenes/End/EndScene.tscn");
 			}
 
-			GetNode<WarnContainer>("VBoxContainer/WinContainer/ImpContainer/WarnContainer").Refresh(Modder.Mod.WarnProcess());
+			GetNode<WarnContainer>("VBoxContainer/WinContainer/ImpContainer/WarnContainer").Refresh(RunData.Root.GenerateWarns());
 		}
 
 		private Node ShowDialog(Modder.GEvent eventobj)
@@ -40,6 +47,14 @@ namespace TaisGodot.Scripts
 
 			AddChild(dialogNode);
 
+			return dialogNode;
+		}
+
+		private Node ShowSpecialDialog(SpecialEventDialog spEvent)
+        {
+			var dialogNode = (SpecialEventDialog)ResourceLoader.Load<PackedScene>("res://Scenes/Main/Dynamic/DialogPanel/SpecialDialog/" + spEvent.name + ".tscn").Instance();
+
+			AddChild(dialogNode);
 			return dialogNode;
 		}
 

@@ -54,6 +54,12 @@ namespace RunData
 
             Date.Inc();
         }
+
+        public static IEnumerable<Warn> GenerateWarns()
+        {
+            return Warn.All.Where(x => x.IsValid());
+        }
+
         public static Define def;
         public static Root inst;
 
@@ -104,6 +110,46 @@ namespace RunData
         private Root()
         {
             inst = this;
+        }
+    }
+
+    public abstract class Warn
+    {
+        public static List<Warn> All = new List<Warn>();
+
+        static Warn()
+        {
+            Warn.All.Add(new CHAOTING_TAX_NOT_FULL());
+        }
+
+        public string name
+        {
+            get
+            {
+                return GetType().Name;
+            }
+        }
+
+        public List<string> datas = new List<string>();
+
+        internal abstract bool IsValid();
+    }
+
+    internal class CHAOTING_TAX_NOT_FULL : Warn
+    {
+        internal override bool IsValid()
+        {
+            var lack = Chaoting.inst.expectYearTax.Value - Chaoting.inst.realYearTax.Value;
+            if (lack > 0)
+            {
+                datas.Add((lack).ToString());
+                return true;
+            }
+            else
+            {
+                datas.Clear();
+                return false;
+            }
         }
     }
 }

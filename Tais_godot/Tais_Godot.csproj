@@ -92,6 +92,8 @@
     <Compile Include="Global\Table\TitleContainer.cs" />
     <Compile Include="Global\Table\Table.cs" />
     <Compile Include="Global\Table\DataElement.cs" />
+    <Compile Include="Scenes\Main\Dynamic\DialogPanel\SpecialDialogPanel\SpecialEventDialog.cs" />
+    <Compile Include="Scenes\Main\Dynamic\DialogPanel\SpecialDialogPanel\ReportPopNumDialog.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Modder\Modder.csproj">
@@ -110,6 +112,7 @@
   <ItemGroup />
   <ItemGroup>
     <Folder Include="Global\Table\" />
+    <Folder Include="Scenes\Main\Dynamic\DialogPanel\SpecialDialogPanel\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

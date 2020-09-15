@@ -16,29 +16,29 @@ namespace TaisGodot.Scripts
 
 		}
 
-        internal void Refresh(IEnumerable<(string key, List<string> datas)> freshItems)
+        internal void Refresh(IEnumerable<RunData.Warn> warns)
         {
 			var warnItems = this.GetChildren<WarnItem>().ToList();
 
-			var needRemoves = warnItems.FindAll(x => !freshItems.Any(y=>y.key == x.Name));
+			var needRemoves = warnItems.FindAll(x => !warns.Any(y=>y.name == x.Name));
 			needRemoves.ForEach(x =>
 			{
 				warnItems.Remove(x);
 				x.QueueFree();
 			});
 
-			foreach(var freshItem in freshItems)
+			foreach(var warn in warns)
             {
-				var warnItem = warnItems.SingleOrDefault(x => x.Name == freshItem.key);
+				var warnItem = warnItems.SingleOrDefault(x => x.Name == warn.name);
 				if (warnItem == null)
                 {
 					warnItem = (WarnItem)ResourceLoader.Load<PackedScene>("res://Scenes/Main/Warn/WarnItem.tscn").Instance();
-					warnItem.Name = freshItem.key;
+					warnItem.Name = warn.name;
 
 					AddChild(warnItem);
 				}
 
-				warnItem.Refresh(freshItem.datas);
+				warnItem.Refresh(warn);
 			}
 			
         }

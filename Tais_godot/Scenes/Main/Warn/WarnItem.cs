@@ -16,9 +16,9 @@ namespace TaisGodot.Scripts
 			GetNode<Label>("Label").Text = "WARN" + Name + "_TITLE";
 		}
 
-		internal void Refresh(List<string> datas)
+		internal void Refresh(Warn warn)
 		{
-			var strItem = datas.Select(x =>
+			var strItem = warn.datas.Select(x =>
 			{
 				var split = x.Split("|");
 				return string.Format(TranslateServerEx.Translate("WARN_" + Name + "_ITEM"), split);

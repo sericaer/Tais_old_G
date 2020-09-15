@@ -58,10 +58,10 @@ namespace Modder
             }
         }
 
-        public static (string key, List<string> datas)[] WarnProcess()
-        {
-            return WarnGroup.Process();
-        }
+        //public static (string key, List<string> datas)[] WarnProcess()
+        //{
+        //    return WarnGroup.Process();
+        //}
 
         internal Mod(string modname, string path)
         {
@@ -70,7 +70,7 @@ namespace Modder
 
             this.languages = Language.Load(path + "/languages");
             this.eventGroup = EventGroup.Load(modname, path + "/events");
-            this.warnGroup = WarnGroup.Load(modname, path + "/warns");
+            //this.warnGroup = WarnGroup.Load(modname, path + "/warns");
             this.initSelects = InitSelect.Load(modname, path + "/init_selects");
         }
 
