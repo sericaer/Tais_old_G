@@ -18,7 +18,7 @@ namespace TaisGodot.Scripts
 			}
 
 			foreach (var spevent in SpecialEventDialog.Process())
-            {
+			{
 				var dialog = ShowSpecialDialog(spevent);
 
 				await ToSignal(dialog, "tree_exited");
@@ -51,8 +51,8 @@ namespace TaisGodot.Scripts
 		}
 
 		private Node ShowSpecialDialog(SpecialEventDialog spEvent)
-        {
-			var dialogNode = (SpecialEventDialog)ResourceLoader.Load<PackedScene>("res://Scenes/Main/Dynamic/DialogPanel/SpecialDialog/" + spEvent.name + ".tscn").Instance();
+		{
+			var dialogNode = (SpecialEventDialog)ResourceLoader.Load<PackedScene>("res://Scenes/Main/Dynamic/DialogPanel/SpecialDialogPanel/" + spEvent.name + ".tscn").Instance();
 
 			AddChild(dialogNode);
 			return dialogNode;
