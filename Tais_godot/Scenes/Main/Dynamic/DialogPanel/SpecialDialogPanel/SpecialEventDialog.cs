@@ -10,8 +10,11 @@ namespace TaisGodot.Scripts
 
         static SpecialEventDialog()
         {
-            all = new List<SpecialEventDialog>();
-            all.Add(new ReportPopNumDialog());
+            all = new List<SpecialEventDialog>()
+            {
+                new SelectCollectTaxLevel(),
+                new ReportPopNumDialog()
+            };
         }
 
         internal string name

@@ -119,7 +119,7 @@ namespace RunData
 
         static Warn()
         {
-            Warn.All.Add(new CHAOTING_TAX_NOT_FULL());
+            //Warn.All.Add(new CHAOTING_TAX_NOT_FULL());
         }
 
         public string name
@@ -135,21 +135,21 @@ namespace RunData
         internal abstract bool IsValid();
     }
 
-    internal class CHAOTING_TAX_NOT_FULL : Warn
-    {
-        internal override bool IsValid()
-        {
-            var lack = Chaoting.inst.expectYearTax.Value - Chaoting.inst.realYearTax.Value;
-            if (lack > 0)
-            {
-                datas.Add((lack).ToString());
-                return true;
-            }
-            else
-            {
-                datas.Clear();
-                return false;
-            }
-        }
-    }
+    //internal class CHAOTING_TAX_NOT_FULL : Warn
+    //{
+    //    internal override bool IsValid()
+    //    {
+    //        var lack = Chaoting.inst.expectYearTax.Value - Chaoting.inst.realYearTax.Value;
+    //        if (lack > 0)
+    //        {
+    //            datas.Add((lack).ToString());
+    //            return true;
+    //        }
+    //        else
+    //        {
+    //            datas.Clear();
+    //            return false;
+    //        }
+    //    }
+    //}
 }

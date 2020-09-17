@@ -59,10 +59,10 @@ namespace TaisGodot.Scripts
 
 		private void _onButtonFullFillCountryTax()
 		{
-			var need = RunData.Chaoting.inst.expectYearTax.Value- RunData.Chaoting.inst.realYearTax.Value;
+			//var need = RunData.Chaoting.inst.expectYearTax.Value- RunData.Chaoting.inst.realYearTax.Value;
 
-			RunData.Chaoting.inst.expectYearTax.Value = RunData.Chaoting.inst.realYearTax.Value;
-			RunData.Economy.inst.curr.Value -= need;
+			//RunData.Chaoting.inst.expectYearTax.Value = RunData.Chaoting.inst.realYearTax.Value;
+			//RunData.Economy.inst.curr.Value -= need;
 		}
 
 		private void UpDateTempOutputStatus()
