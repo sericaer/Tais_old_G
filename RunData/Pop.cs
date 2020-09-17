@@ -28,6 +28,12 @@ namespace RunData
         [JsonProperty]
         public SubjectValue<double> num;
 
+        [JsonProperty, DataVisitorProperty("is_tax_collecting")]
+        public bool taxCollecting;
+
+        [JsonProperty, DataVisitorProperty("curr_tax_level")]
+        public int currTaxLevel;
+
         public ObservableValue<double> expectTax;
 
         [DataVisitorProperty("depart")]
@@ -77,6 +83,7 @@ namespace RunData
             all.ForEach(pop =>
             {
                 pop.num.Value++;
+                pop.taxCollecting = false;
             });
         }
 
@@ -90,6 +97,29 @@ namespace RunData
             InitObservableData(new StreamingContext());
         }
 
+        internal double CalcTax(int level)
+        {
+            if (!def.is_collect_tax)
+            {
+                return 0;
+            }
+
+            return num.Value * PopTax.getTaxUnit(level);
+        }
+
+        internal double CollectTax(int level)
+        {
+            if (!def.is_collect_tax)
+            {
+                return 0;
+            }
+
+            taxCollecting = true;
+            currTaxLevel = level;
+
+            return CalcTax(level);
+        }
+
         [JsonConstructor]
         private Pop()
         {
@@ -101,5 +131,7 @@ namespace RunData
         {
             this.expectTax = this.num.obs.Select(x => def.is_collect_tax ? x * 0.01 : 0).ToOBSValue();
         }
+
+
     }
 }

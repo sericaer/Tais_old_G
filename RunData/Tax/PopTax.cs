@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Linq;
+
 namespace RunData
 {
     public class PopTax
@@ -7,7 +9,12 @@ namespace RunData
 
         public static double CalcTax(int level)
         {
-            switch(level)
+            return Depart.all.Sum(x => x.pops.Sum(y=> y.CalcTax(level)));
+        }
+
+        public static double getTaxUnit(int level)
+        {
+            switch (level)
             {
                 case 1:
                     return 0.001;
@@ -22,6 +29,14 @@ namespace RunData
                 default:
                     throw new Exception($"not supoort level {level}");
             }
+        }
+
+        public static void CollectTax(int level)
+        {
+            Depart.all.ForEach(x =>
+            {
+                Economy.inst.curr.Value += x.pops.Sum(y=>y.CollectTax(level));
+            });
         }
     }
 }
