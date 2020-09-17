@@ -94,6 +94,7 @@
     <Compile Include="Global\Table\DataElement.cs" />
     <Compile Include="Scenes\Main\Dynamic\DialogPanel\SpecialDialogPanel\SpecialEventDialog.cs" />
     <Compile Include="Scenes\Main\Dynamic\DialogPanel\SpecialDialogPanel\ReportPopNumDialog.cs" />
+    <Compile Include="Scenes\Main\Dynamic\DialogPanel\SpecialDialogPanel\SelectCollectTaxLevel.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Modder\Modder.csproj">

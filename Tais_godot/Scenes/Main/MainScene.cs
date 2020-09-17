@@ -10,16 +10,16 @@ namespace TaisGodot.Scripts
 		{
 			RunData.Root.DaysInc();
 
-			foreach (var eventobj in Modder.Mod.EventProcess(RunData.Date.Value))
+			foreach (var spevent in SpecialEventDialog.Process())
 			{
-				var dialog = ShowDialog(eventobj);
+				var dialog = ShowSpecialDialog(spevent);
 
 				await ToSignal(dialog, "tree_exited");
 			}
 
-			foreach (var spevent in SpecialEventDialog.Process())
+			foreach (var eventobj in Modder.Mod.EventProcess(RunData.Date.Value))
 			{
-				var dialog = ShowSpecialDialog(spevent);
+				var dialog = ShowDialog(eventobj);
 
 				await ToSignal(dialog, "tree_exited");
 			}

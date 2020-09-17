@@ -73,6 +73,7 @@
     <Compile Include="Define.cs" />
     <Compile Include="Taishou.cs" />
     <Compile Include="InitData.cs" />
+    <Compile Include="Tax\PopTax.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -82,6 +83,9 @@
       <Project>{60624f37-78f3-44eb-ad31-76e1893f5ea9}</Project>
       <Name>DataVisit</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Tax\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
