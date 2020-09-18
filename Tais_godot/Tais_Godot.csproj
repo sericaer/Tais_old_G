@@ -95,6 +95,8 @@
     <Compile Include="Scenes\Main\Dynamic\DialogPanel\SpecialDialogPanel\SpecialEventDialog.cs" />
     <Compile Include="Scenes\Main\Dynamic\DialogPanel\SpecialDialogPanel\ReportPopNumDialog.cs" />
     <Compile Include="Scenes\Main\Dynamic\DialogPanel\SpecialDialogPanel\SelectCollectTaxLevel.cs" />
+    <Compile Include="Scenes\Main\Dynamic\DialogPanel\SpecialDialogPanel\ReportTaxDialog.cs" />
+    <Compile Include="Global\LimitSlider\LimitSlider.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Modder\Modder.csproj">
@@ -114,6 +116,7 @@
   <ItemGroup>
     <Folder Include="Global\Table\" />
     <Folder Include="Scenes\Main\Dynamic\DialogPanel\SpecialDialogPanel\" />
+    <Folder Include="Global\LimitSlider\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
