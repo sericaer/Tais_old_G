@@ -18,29 +18,38 @@ namespace TaisGodot.Scripts
 
 		public override bool IsVaild()
 		{
-			return RunData.Date.inst == (null, 9, 1);
+			return RunData.Date.inst == (null, 1, 15);
 		}
 
 		public override void _Ready()
 		{
-			labelExpect = GetNode<Label>("CenterContainer/PanelContainer/VBoxContainer/PanelContainer/VBoxContainer/CurrLastReport/Value");
+			labelExpect = GetNode<Label>("CenterContainer/PanelContainer/VBoxContainer/ReportExpect/Value");
+			labelReal = GetNode<Label>("CenterContainer/PanelContainer/VBoxContainer/ReportReal/Value");
 
-			slider = GetNode<LimitSlider>("CenterContainer/PanelContainer/VBoxContainer/PanelContainer/VBoxContainer/LastReport/HSlider");
-
-			labelExpect.Text = RunData.Chaoting.inst.expectYearTax.Value.ToString();
+			slider = GetNode<LimitSlider>("CenterContainer/PanelContainer/VBoxContainer/LimitSlider");
 
 			slider.MinValue = 0;
-			slider.MaxValue = RunData.Economy.inst.curr.Value;
+			slider.MaxValue = (float)RunData.Economy.inst.curr.Value;
 
-			if(RunData.Chaoting.inst.expectYearTax.Value < RunData.Economy.inst.curr.Value)
-            {
-				slider.LimitMinValue = RunData.Chaoting.inst.expectYearTax.Value;
+			if (RunData.Chaoting.inst.expectYearTax.Value < RunData.Economy.inst.curr.Value)
+			{
+				slider.LimitMinValue = (float)RunData.Chaoting.inst.expectYearTax.Value;
 			}
+			else
+			{
+				slider.LimitMinValue = slider.MaxValue;
+			}
+
+			slider.Value = slider.LimitMinValue;
+
+			labelExpect.Text = RunData.Chaoting.inst.expectYearTax.Value.ToString();
+			labelReal.Text = slider.Value.ToString();
+
 		}
 
-		private void _on_SliderReportCurr_ValueChanged(double value)
+		private void _on_SliderReportCurr_ValueChanged(float value)
 		{
-			labelReal.Text = slider.Value.ToString();
+			labelReal.Text = value.ToString();
 		}
 
 		private void _on_ButtonConfrim_Pressed()
