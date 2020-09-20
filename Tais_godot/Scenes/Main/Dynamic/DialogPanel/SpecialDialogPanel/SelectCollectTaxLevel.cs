@@ -15,7 +15,7 @@ namespace TaisGodot.Scripts
 
 		public override bool IsVaild()
 		{
-			return RunData.Date.inst == (null, 1, 10);
+			return RunData.Date.inst == (null, 9, 1);
 		}
 
 		public override void _Ready()

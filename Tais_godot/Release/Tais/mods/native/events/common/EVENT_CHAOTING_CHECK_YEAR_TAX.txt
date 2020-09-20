@@ -3,7 +3,7 @@ trigger =
     less = {chaoting.real_year_tax, chaoting.expect_year_tax}
 }
 
-date = {day=30}
+date = {month = 12, day=30}
 
 occur = 1
 
