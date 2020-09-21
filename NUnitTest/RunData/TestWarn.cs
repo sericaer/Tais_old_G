@@ -33,7 +33,7 @@ namespace UnitTest.RunData
                 {
                     curr = 456,
                     pop_tax_percent = 30,
-                    report_tax_percent = 100,
+                    expend_depart_admin = 100,
                 },
 
                 chaoting = new Define.ChaotingDef()

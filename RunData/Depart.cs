@@ -22,6 +22,8 @@ namespace RunData
 
         public ObservableValue<int> popNum;
 
+        public ObservableValue<double> adminExpendBase;
+
         public IEnumerable<Pop> pops
         {
             get
@@ -85,10 +87,13 @@ namespace RunData
         }
 
         [OnDeserialized]
-        private void InitObservableData(StreamingContext context)
+        internal void InitObservableData(StreamingContext context)
         {
             popNum = Observable.CombineLatest(pops.Where(x => x.def.is_collect_tax).Select(x => x.num.obs),
                                   (IList<double> nums) => nums.Sum(y => (int)y)).ToOBSValue();
+
+            adminExpendBase = Observable.CombineLatest(pops.Select(x=>x.adminExpend.obs),
+                                   (IList<double> nums) => nums.Sum()).ToOBSValue();
         }
 
         private bool SameColor((int r, int g, int b) p)

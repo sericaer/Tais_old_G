@@ -35,6 +35,7 @@ namespace RunData
         public int currTaxLevel;
 
         public ObservableValue<double> expectTax;
+        public ObservableValue<double> adminExpend;
 
         [DataVisitorProperty("depart")]
         public Depart depart
@@ -72,9 +73,11 @@ namespace RunData
                 pops.Add(new Pop(depart.name, pop_init.name, pop_init.num));
             }
 
+
             depart.popNum = Observable.CombineLatest(pops.Where(x => x.def.is_collect_tax).Select(x => x.num.obs),
                                               (IList<double> nums) => nums.Sum(y => (int)y)).ToOBSValue();
-
+            depart.adminExpendBase = Observable.CombineLatest(pops.Select(x => x.adminExpend.obs),
+                       (IList<double> nums) => nums.Sum()).ToOBSValue();
             return pops;
         }
 
@@ -130,6 +133,7 @@ namespace RunData
         private void InitObservableData(StreamingContext context)
         {
             this.expectTax = this.num.obs.Select(x => def.is_collect_tax ? x * 0.01 : 0).ToOBSValue();
+            this.adminExpend = this.num.obs.Select(x => def.is_collect_tax ? x * 0.0001 : 0).ToOBSValue();
         }
 
 

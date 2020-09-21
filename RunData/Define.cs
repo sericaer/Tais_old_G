@@ -32,7 +32,7 @@ namespace RunData
         {
             public double curr;
             public double pop_tax_percent;
-            public double report_tax_percent;
+            public double expend_depart_admin;
         }
 
         public class ChaotingDef

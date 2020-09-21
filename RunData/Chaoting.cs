@@ -19,7 +19,7 @@ namespace RunData
         [JsonProperty]
         public SubjectValue<double> taxPercent;
 
-        [JsonProperty, DataVisitorProperty("expect_year_tax")]
+        [DataVisitorProperty("expect_year_tax")]
         public ObservableValue<double> expectYearTax;
 
         [JsonProperty, DataVisitorProperty("real_year_tax")]
