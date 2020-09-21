@@ -81,36 +81,36 @@ namespace UnitTest.RunData
             Assert.AreEqual(init.common.age, Visitor.Get("taishou.age"));
             Assert.AreEqual(init.common.background, Visitor.Get("taishou.background"));
 
-            foreach (var income in Root.inst.economy.EnumerateInCome())
-            {
-                switch (income.name)
-                {
-                    case "STATIC_POP_TAX":
-                        Assert.AreEqual(Root.def.economy.pop_tax_percent, income.percent.Value);
-                        Assert.AreEqual(Pop.all.Sum(x => x.expectTax.Value), income.maxValue.Value);
-                        Assert.AreEqual(income.maxValue.Value * income.percent.Value / 100, income.currValue.Value);
-                        break;
-                    default:
-                        Assert.Fail();
-                        break;
+            //foreach (var income in Root.inst.economy.EnumerateInCome())
+            //{
+            //    switch (income.name)
+            //    {
+            //        case "STATIC_POP_TAX":
+            //            Assert.AreEqual(Root.def.economy.pop_tax_percent, income.percent.Value);
+            //            Assert.AreEqual(Pop.all.Sum(x => x.expectTax.Value), income.maxValue.Value);
+            //            Assert.AreEqual(income.maxValue.Value * income.percent.Value / 100, income.currValue.Value);
+            //            break;
+            //        default:
+            //            Assert.Fail();
+            //            break;
 
-                }
-            }
+            //    }
+            //}
 
-            foreach (var output in Root.inst.economy.EnumerateOutput())
-            {
-                switch (output.name)
-                {
-                    case "STATIC_REPORT_CHAOTING_TAX":
-                        Assert.AreEqual(Root.def.economy.report_tax_percent, output.percent.Value);
-                        Assert.AreEqual(Chaoting.inst.currMonthTax.Value * output.percent.Value / 100, output.currValue.Value);
-                        break;
-                    default:
-                        Assert.Fail();
-                        break;
+            //foreach (var output in Root.inst.economy.EnumerateOutput())
+            //{
+            //    switch (output.name)
+            //    {
+            //        case "STATIC_REPORT_CHAOTING_TAX":
+            //            Assert.AreEqual(Root.def.economy.report_tax_percent, output.percent.Value);
+            //            Assert.AreEqual(Chaoting.inst.currMonthTax.Value * output.percent.Value / 100, output.currValue.Value);
+            //            break;
+            //        default:
+            //            Assert.Fail();
+            //            break;
 
-                }
-            }
+            //    }
+            //}
 
             foreach (var departName in Root.def.departs.Keys)
             {
@@ -136,7 +136,7 @@ namespace UnitTest.RunData
 
             Assert.AreEqual((int)(Depart.all.Sum(x => x.popNum.Value) * Root.def.chaoting.reportPopPercent / 100), Chaoting.inst.reportPopNum.Value);
             Assert.AreEqual(Root.def.chaoting.taxPercent, Chaoting.inst.taxPercent.Value);
-            Assert.AreEqual(Chaoting.inst.reportPopNum.Value * 0.01 * Root.def.chaoting.taxPercent / 100, Chaoting.inst.currMonthTax.Value);
+            //Assert.AreEqual(Chaoting.inst.reportPopNum.Value * 0.01 * Root.def.chaoting.taxPercent / 100, Chaoting.inst.currMonthTax.Value);
         }
 
         [SetUp()]
@@ -161,11 +161,11 @@ namespace UnitTest.RunData
 
             var reportTaxPercent = 50.0;
 
-            Visitor.Set("economy.report_chaoting_tax_percent", reportTaxPercent);
-            Assert.AreEqual(reportTaxPercent, Visitor.Get("economy.report_chaoting_tax_percent"));
+            //Visitor.Set("economy.report_chaoting_tax_percent", reportTaxPercent);
+            //Assert.AreEqual(reportTaxPercent, Visitor.Get("economy.report_chaoting_tax_percent"));
 
-            var reportChaotingTax = Root.inst.economy.EnumerateOutput().Single(x => x.name == "STATIC_REPORT_CHAOTING_TAX");
-            Assert.AreEqual(reportChaotingTax.maxValue.Value * reportTaxPercent / 100, reportChaotingTax.currValue.Value);
+            //var reportChaotingTax = Root.inst.economy.EnumerateOutput().Single(x => x.name == "STATIC_REPORT_CHAOTING_TAX");
+            //Assert.AreEqual(reportChaotingTax.maxValue.Value * reportTaxPercent / 100, reportChaotingTax.currValue.Value);
 
             //var incomes = Root.inst.economy.EnumerateInCome();
             //var popTax = incomes.Single(x => x.name == "STATIC_POP_TAX");
@@ -217,47 +217,47 @@ namespace UnitTest.RunData
 
         }
 
-        [Test()]
-        public void TestChaotingDaysInc()
-        {
-            Root.Init(init);
+        //[Test()]
+        //public void TestChaotingDaysInc()
+        //{
+        //    Root.Init(init);
 
-            ModDataVisit.InitVisitData(Root.inst);
+        //    ModDataVisit.InitVisitData(Root.inst);
 
-            Visitor.InitVisitMap(typeof(Root));
-            Visitor.SetVisitData(Root.inst);
+        //    Visitor.InitVisitMap(typeof(Root));
+        //    Visitor.SetVisitData(Root.inst);
 
-            double yearExpertTax = 0;
-            double realYearTax = 0;
+        //    double yearExpertTax = 0;
+        //    double realYearTax = 0;
 
-            for (int y = 1; y <= 10; y++)
-            {
-                yearExpertTax = 0;
-                realYearTax = 0;
+        //    for (int y = 1; y <= 10; y++)
+        //    {
+        //        yearExpertTax = 0;
+        //        realYearTax = 0;
 
-                for (int m = 1; m <= 12; m++)
-                {
-                    for (int d = 1; d <= 30; d++)
-                    {
-                        Chaoting.DaysInc();
+        //        for (int m = 1; m <= 12; m++)
+        //        {
+        //            for (int d = 1; d <= 30; d++)
+        //            {
+        //                Chaoting.DaysInc();
 
-                        if (d == 30)
-                        {
-                            yearExpertTax += Chaoting.inst.currMonthTax.Value;
-                            realYearTax += Economy.inst.outputs.Single(x => x.name == "STATIC_REPORT_CHAOTING_TAX").currValue.Value;
-                        }
+        //                if (d == 30)
+        //                {
+        //                    yearExpertTax += Chaoting.inst.currMonthTax.Value;
+        //                    realYearTax += Economy.inst.outputs.Single(x => x.name == "STATIC_REPORT_CHAOTING_TAX").currValue.Value;
+        //                }
 
-                        Assert.AreEqual(yearExpertTax, Chaoting.inst.expectYearTax.Value);
-                        Assert.AreEqual(realYearTax, Chaoting.inst.realYearTax.Value);
+        //                Assert.AreEqual(yearExpertTax, Chaoting.inst.expectYearTax.Value);
+        //                Assert.AreEqual(realYearTax, Chaoting.inst.realYearTax.Value);
 
-                        Assert.AreEqual(Chaoting.inst.expectYearTax.Value, Visitor.Get("chaoting.expect_year_tax"));
-                        Assert.AreEqual(Chaoting.inst.realYearTax.Value, Visitor.Get("chaoting.real_year_tax"));
+        //                Assert.AreEqual(Chaoting.inst.expectYearTax.Value, Visitor.Get("chaoting.expect_year_tax"));
+        //                Assert.AreEqual(Chaoting.inst.realYearTax.Value, Visitor.Get("chaoting.real_year_tax"));
 
-                        Date.Inc();
-                    }
-                }
-            }
-        }
+        //                Date.Inc();
+        //            }
+        //        }
+        //    }
+        //}
 
         [Test()]
         public void TestDepartDaysInc()
@@ -343,36 +343,36 @@ namespace UnitTest.RunData
 
             Assert.AreEqual(456, Visitor.Get("economy.value"));
 
-            foreach (var income in Root.inst.economy.EnumerateInCome())
-            {
-                switch (income.name)
-                {
-                    case "STATIC_POP_TAX":
-                        Assert.AreEqual(Root.def.economy.pop_tax_percent, income.percent.Value);
-                        Assert.AreEqual(Pop.all.Sum(x => x.expectTax.Value), income.maxValue.Value);
-                        Assert.AreEqual(income.maxValue.Value * income.percent.Value / 100, income.currValue.Value);
-                        break;
-                    default:
-                        Assert.Fail();
-                        break;
+            //foreach (var income in Root.inst.economy.EnumerateInCome())
+            //{
+            //    switch (income.name)
+            //    {
+            //        case "STATIC_POP_TAX":
+            //            Assert.AreEqual(Root.def.economy.pop_tax_percent, income.percent.Value);
+            //            Assert.AreEqual(Pop.all.Sum(x => x.expectTax.Value), income.maxValue.Value);
+            //            Assert.AreEqual(income.maxValue.Value * income.percent.Value / 100, income.currValue.Value);
+            //            break;
+            //        default:
+            //            Assert.Fail();
+            //            break;
 
-                }
-            }
+            //    }
+            //}
 
-            foreach (var output in Root.inst.economy.EnumerateOutput())
-            {
-                switch (output.name)
-                {
-                    case "STATIC_REPORT_CHAOTING_TAX":
-                        Assert.AreEqual(Root.def.economy.report_tax_percent, output.percent.Value);
-                        Assert.AreEqual(Chaoting.inst.currMonthTax.Value * output.percent.Value / 100, output.currValue.Value);
-                        break;
-                    default:
-                        Assert.Fail();
-                        break;
+            //foreach (var output in Root.inst.economy.EnumerateOutput())
+            //{
+            //    switch (output.name)
+            //    {
+            //        case "STATIC_REPORT_CHAOTING_TAX":
+            //            Assert.AreEqual(Root.def.economy.report_tax_percent, output.percent.Value);
+            //            Assert.AreEqual(Chaoting.inst.currMonthTax.Value * output.percent.Value / 100, output.currValue.Value);
+            //            break;
+            //        default:
+            //            Assert.Fail();
+            //            break;
 
-                }
-            }
+            //    }
+            //}
 
             foreach (var departName in Root.def.departs.Keys)
             {
@@ -392,7 +392,7 @@ namespace UnitTest.RunData
 
             Assert.AreEqual((int)(Depart.all.Sum(x => x.popNum.Value) * Root.def.chaoting.reportPopPercent / 100), Chaoting.inst.reportPopNum.Value);
             Assert.AreEqual(Root.def.chaoting.taxPercent, Chaoting.inst.taxPercent.Value);
-            Assert.AreEqual(Chaoting.inst.reportPopNum.Value * 0.01 * Root.def.chaoting.taxPercent / 100, Chaoting.inst.currMonthTax.Value);
+            //Assert.AreEqual(Chaoting.inst.reportPopNum.Value * 0.01 * Root.def.chaoting.taxPercent / 100, Chaoting.inst.currMonthTax.Value);
         }
     }
 }

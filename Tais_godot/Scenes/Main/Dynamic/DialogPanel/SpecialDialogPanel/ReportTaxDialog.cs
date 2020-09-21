@@ -9,7 +9,7 @@ namespace TaisGodot.Scripts
 		Label labelExpect;
 		Label labelReal;
 
-		LimitSlider slider;
+		LimitSlider sliderReal;
 
 
 		public ReportTaxDialog()
@@ -26,24 +26,24 @@ namespace TaisGodot.Scripts
 			labelExpect = GetNode<Label>("CenterContainer/PanelContainer/VBoxContainer/ReportExpect/Value");
 			labelReal = GetNode<Label>("CenterContainer/PanelContainer/VBoxContainer/ReportReal/Value");
 
-			slider = GetNode<LimitSlider>("CenterContainer/PanelContainer/VBoxContainer/LimitSlider");
+			sliderReal = GetNode<LimitSlider>("CenterContainer/PanelContainer/VBoxContainer/LimitSlider");
 
-			slider.MinValue = 0;
-			slider.MaxValue = (float)RunData.Economy.inst.curr.Value;
+			sliderReal.MinValue = 0;
+			sliderReal.MaxValue = (float)RunData.Economy.inst.curr.Value;
 
 			if (RunData.Chaoting.inst.expectYearTax.Value < RunData.Economy.inst.curr.Value)
 			{
-				slider.LimitMinValue = (float)RunData.Chaoting.inst.expectYearTax.Value;
+				sliderReal.LimitMinValue = (float)RunData.Chaoting.inst.expectYearTax.Value;
 			}
 			else
 			{
-				slider.LimitMinValue = slider.MaxValue;
+				sliderReal.LimitMinValue = sliderReal.MaxValue;
 			}
 
-			slider.Value = slider.LimitMinValue;
+			sliderReal.Value = sliderReal.LimitMinValue;
 
 			labelExpect.Text = RunData.Chaoting.inst.expectYearTax.Value.ToString();
-			labelReal.Text = slider.Value.ToString();
+			labelReal.Text = sliderReal.Value.ToString();
 
 		}
 
@@ -54,8 +54,8 @@ namespace TaisGodot.Scripts
 
 		private void _on_ButtonConfrim_Pressed()
 		{
-			RunData.Chaoting.inst.realYearTax.Value = slider.Value;
-			RunData.Economy.inst.curr.Value -= slider.Value;
+			RunData.Chaoting.inst.realYearTax.Value = sliderReal.Value;
+			RunData.Economy.inst.curr.Value -= sliderReal.Value;
 			QueueFree();
 		}
 	}

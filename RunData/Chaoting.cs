@@ -11,7 +11,7 @@ namespace RunData
     [JsonObject(MemberSerialization.OptIn)]
     public class Chaoting
     {
-        public ObservableValue<double> currMonthTax;
+        //public ObservableValue<double> currMonthTax;
 
         [JsonProperty]
         public SubjectValue<int> reportPopNum;
@@ -59,7 +59,7 @@ namespace RunData
         [OnDeserialized]
         private void InitObservableData(StreamingContext context)
         {
-            currMonthTax = Observable.CombineLatest(reportPopNum.obs, taxPercent.obs, (n, p) => n * 0.01 * p / 100).ToOBSValue();
+            //currMonthTax = Observable.CombineLatest(reportPopNum.obs, taxPercent.obs, (n, p) => n * 0.01 * p / 100).ToOBSValue();
             expectYearTax = Observable.Select(reportPopNum.obs, (x) => x * 0.001).ToOBSValue();
         }
     }
