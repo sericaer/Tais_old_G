@@ -129,9 +129,16 @@ namespace TaisGodot.Scripts
 			var startPercent = (LimitMinValue - MinValue) / (MaxValue - MinValue);
 
 			var newLen = this.RectSize.x * lenPercent;
+			slider.RectSize = new Vector2(newLen, slider.RectSize.y);
+
 			var newStart = this.RectSize.x * startPercent;
 
-			slider.RectSize = new Vector2(newLen, slider.RectSize.y);
+			if (newStart + slider.RectSize.x > this.RectSize.x)
+			{
+				newStart = this.RectSize.x - slider.RectSize.x;
+			}
+
+			
 			slider.RectPosition = new Vector2(newStart, slider.RectPosition.y);
 		}
 		

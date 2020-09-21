@@ -20,7 +20,15 @@ namespace TaisGodot.Scripts
 
 		public override void _Ready()
 		{
-			speed = 2;
+			if (!OS.HasFeature("ReleaseApp"))
+			{
+				MAX_SPEED = 20;
+				speed = MAX_SPEED;
+			}
+			else
+			{
+				speed = 2;
+			}
 		}
 
 		private void _on_CheckBox_toggled(bool button_pressed)

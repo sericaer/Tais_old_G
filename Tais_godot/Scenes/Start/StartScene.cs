@@ -42,7 +42,7 @@ namespace TaisGodot.Scripts
 
 				economy = new Define.EconomyDef()
 				{
-					curr = 456,
+					curr = 100,
 					pop_tax_percent = 30,
 					expend_depart_admin = 100,
 				},

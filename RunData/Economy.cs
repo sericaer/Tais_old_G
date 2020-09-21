@@ -13,11 +13,11 @@ namespace RunData
     [JsonObject(MemberSerialization.OptIn)]
     public class Economy
     {
-        //public class Memento
-        //{
-        //    internal Dictionary<string, double> incomes;
-        //    internal Dictionary<string, double> outputs;
-        //}
+        public class Memento
+        {
+            internal Dictionary<string, double> incomes;
+            internal Dictionary<string, double> outputs;
+        }
 
         public static Economy inst
         {
@@ -68,43 +68,44 @@ namespace RunData
         //    }
         //}
 
-        //public IEnumerable<Output> EnumerateOutput()
-        //{
-        //    foreach (var elem in outputs)
-        //    {
-        //        yield return elem;
-        //    }
-        //}
+        public IEnumerable<Output> EnumerateOutput()
+        {
+            foreach (var elem in outputs)
+            {
+                yield return elem;
+            }
+        }
 
-        //public Memento CreateMemento()
-        //{
-        //    var rslt = new Memento();
-        //    rslt.incomes = this.inComes.ToDictionary(x => x.name, y => y.percent.Value);
-        //    rslt.outputs = this.outputs.ToDictionary(x => x.name, y => y.percent.Value);
+        public Memento CreateMemento()
+        {
+            var rslt = new Memento();
+            //rslt.incomes = this.inComes.ToDictionary(x => x.name, y => y.percent.Value);
+            rslt.outputs = this.outputs.ToDictionary(x => x.name, y => y.percent.Value);
 
-        //    return rslt;
-        //}
+            return rslt;
+        }
 
         internal static void DaysInc()
         {
-            //if(Date.inst == (null, null, 30))
-            //{
-            //    inst.curr.Value += inst.monthSurplus.Value;
-            //}
+            if (Date.inst == (null, null, 30))
+            {
+                var newValue = inst.curr.Value - inst.OuputTotal.Value;
+                inst.curr.Value = newValue > 0 ? newValue : 0;
+            }
         }
 
-        //public void LoadMemento(Memento memento)
-        //{
-        //    foreach(var pair in memento.incomes)
-        //    {
-        //        inComes.Find(x => x.name == pair.Key).percent.Value = pair.Value;
-        //    }
+        public void LoadMemento(Memento memento)
+        {
+            //foreach (var pair in memento.incomes)
+            //{
+            //    inComes.Find(x => x.name == pair.Key).percent.Value = pair.Value;
+            //}
 
-        //    foreach (var pair in memento.outputs)
-        //    {
-        //        outputs.Find(x => x.name == pair.Key).percent.Value = pair.Value;
-        //    }
-        //}
+            foreach (var pair in memento.outputs)
+            {
+                outputs.Find(x => x.name == pair.Key).percent.Value = pair.Value;
+            }
+        }
 
         private Economy(Define.EconomyDef def)
         {

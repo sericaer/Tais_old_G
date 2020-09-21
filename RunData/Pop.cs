@@ -133,7 +133,7 @@ namespace RunData
         private void InitObservableData(StreamingContext context)
         {
             this.expectTax = this.num.obs.Select(x => def.is_collect_tax ? x * 0.01 : 0).ToOBSValue();
-            this.adminExpend = this.num.obs.Select(x => def.is_collect_tax ? x * 0.0001 : 0).ToOBSValue();
+            this.adminExpend = this.num.obs.Select(x => def.is_collect_tax ? x * 0.0003 : 0).ToOBSValue();
         }
 
 
