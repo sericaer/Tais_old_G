@@ -200,7 +200,7 @@ namespace RunData
         private void InitObservableData(StreamingContext context)
         {
             desc = Observable.CombineLatest(year.obs, month.obs, day.obs, (y, m, d) => $"{y}-{m}-{d}").ToOBSValue();
-            total_days = Observable.CombineLatest(year.obs, month.obs, day.obs, (y, m, d) => d + (m - 1) * 12 + (y - 1) * 360).ToOBSValue();
+            total_days = Observable.CombineLatest(year.obs, month.obs, day.obs, (y, m, d) => d + (m - 1) * 30 + (y - 1) * 360).ToOBSValue();
         }
     }
 

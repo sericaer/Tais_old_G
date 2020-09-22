@@ -74,6 +74,8 @@
     <Compile Include="Taishou.cs" />
     <Compile Include="InitData.cs" />
     <Compile Include="Tax\PopTax.cs" />
+    <Compile Include="Process\CollectPopTax.cs" />
+    <Compile Include="Process\Process.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -86,6 +88,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Tax\" />
+    <Folder Include="Process\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

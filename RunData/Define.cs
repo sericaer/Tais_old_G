@@ -10,6 +10,7 @@ namespace RunData
         public EconomyDef economy;
         public ChaotingDef chaoting;
         public CropDef crop;
+        public List<TaxEffect> pop_tax;
 
         public Define()
         {
@@ -26,6 +27,7 @@ namespace RunData
         {
             public string name;
             public bool is_collect_tax;
+            public double? consume;
         }
 
         public class EconomyDef
@@ -46,6 +48,13 @@ namespace RunData
             public double growSpeed;
             public (int?, int?, int?) growStartDay;
             public (int?, int?, int?) harvestDay;
+        }
+
+        public class TaxEffect
+        {
+            public string name;
+            public double per_tax;
+            public double consume_effect;
         }
     }
 }

@@ -53,6 +53,8 @@ namespace RunData
             Chaoting.DaysInc();
 
             Date.Inc();
+
+            Process.DaysInc();
         }
 
         public static IEnumerable<Warn> GenerateWarns()
@@ -81,6 +83,8 @@ namespace RunData
         [JsonProperty, DataVisitorProperty("economy")]
         public Economy economy;
 
+        public List<Process> processes;
+
         public bool isEnd
         {
             get
@@ -104,6 +108,8 @@ namespace RunData
             chaoting = Chaoting.Init(def.chaoting);
 
             economy = Economy.Init(def.economy);
+
+            processes = Process.Init();
         }
 
         [JsonConstructor]

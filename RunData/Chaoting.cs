@@ -16,14 +16,16 @@ namespace RunData
         [JsonProperty]
         public SubjectValue<int> reportPopNum;
 
-        [JsonProperty]
-        public SubjectValue<double> taxPercent;
+        //[JsonProperty]
+        //public SubjectValue<double> taxPercent;
 
-        [DataVisitorProperty("expect_year_tax")]
-        public ObservableValue<double> expectYearTax;
+        //[DataVisitorProperty("expect_year_tax")]
+        //public ObservableValue<double> expectYearTax;
 
-        [JsonProperty, DataVisitorProperty("real_year_tax")]
-        public SubjectValue<double> realYearTax;
+        //[JsonProperty, DataVisitorProperty("real_year_tax")]
+        //public SubjectValue<double> realYearTax;
+
+        public double extraTax;
 
         public static Chaoting inst
         {
@@ -40,13 +42,14 @@ namespace RunData
 
         internal static void DaysInc()
         {
+
         }
 
         internal Chaoting(Define.ChaotingDef def)
         {
-            taxPercent = new SubjectValue<double>(def.taxPercent);
+            //taxPercent = new SubjectValue<double>(def.taxPercent);
             reportPopNum = new SubjectValue<int>((int)(Depart.all.Sum(x => x.popNum.Value) * def.reportPopPercent / 100));
-            realYearTax = new SubjectValue<double>(0);
+            //realYearTax = new SubjectValue<double>(0);
 
             InitObservableData(new StreamingContext());
         }
@@ -60,7 +63,7 @@ namespace RunData
         private void InitObservableData(StreamingContext context)
         {
             //currMonthTax = Observable.CombineLatest(reportPopNum.obs, taxPercent.obs, (n, p) => n * 0.01 * p / 100).ToOBSValue();
-            expectYearTax = Observable.Select(reportPopNum.obs, (x) => x * 0.001).ToOBSValue();
+            //expectYearTax = Observable.Select(reportPopNum.obs, (x) => x * 0.001).ToOBSValue();
         }
     }
 }

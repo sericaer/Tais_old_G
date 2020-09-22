@@ -36,7 +36,7 @@ namespace TaisGodot.Scripts
 				pops = new Dictionary<string, Define.PopDef>()
 				{
 					{ "haoqiang", new Define.PopDef() { is_collect_tax = true } },
-					{ "minhu", new Define.PopDef() { is_collect_tax = true } },
+					{ "minhu", new Define.PopDef() { is_collect_tax = true, consume = 100} },
 					{ "yinhu", new Define.PopDef() { is_collect_tax = false } },
 				},
 
@@ -58,6 +58,15 @@ namespace TaisGodot.Scripts
 					growSpeed = 0.4,
 					growStartDay = (null, 2, 1),
 					harvestDay = (null, 9, 1),
+				},
+
+				pop_tax = new List<Define.TaxEffect>()
+                {
+					new Define.TaxEffect(){name = "level1", per_tax = 0.001},
+					new Define.TaxEffect(){name = "level2", per_tax = 0.002},
+					new Define.TaxEffect(){name = "level3", per_tax = 0.003},
+					new Define.TaxEffect(){name = "level4", per_tax = 0.0035},
+					new Define.TaxEffect(){name = "level5", per_tax = 0.004}
 				}
 			};
 

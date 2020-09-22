@@ -43,6 +43,7 @@
     <Compile Include="Modder\InitSelect\TestInitSelect.cs" />
     <Compile Include="RunData\TestInitData.cs" />
     <Compile Include="RunData\TestWarn.cs" />
+    <Compile Include="RunData\TestProcess.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

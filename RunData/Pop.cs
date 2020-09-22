@@ -5,6 +5,7 @@ using DataVisit;
 using System.Reactive.Linq;
 using Newtonsoft.Json;
 using System.Runtime.Serialization;
+using System.Collections.ObjectModel;
 
 namespace RunData
 {
@@ -28,14 +29,12 @@ namespace RunData
         [JsonProperty]
         public SubjectValue<double> num;
 
-        [JsonProperty, DataVisitorProperty("is_tax_collecting")]
-        public bool taxCollecting;
-
-        [JsonProperty, DataVisitorProperty("curr_tax_level")]
-        public int currTaxLevel;
-
         public ObservableValue<double> expectTax;
         public ObservableValue<double> adminExpend;
+
+        public SubjectValue<double> consume;
+
+        public ObservableCollection<(string name, double value, int endDays)> consumeDetail;
 
         [DataVisitorProperty("depart")]
         public Depart depart
@@ -86,7 +85,6 @@ namespace RunData
             all.ForEach(pop =>
             {
                 pop.num.Value++;
-                pop.taxCollecting = false;
             });
         }
 
@@ -96,6 +94,15 @@ namespace RunData
             this.depart_name = depart_name;
 
             this.num = new SubjectValue<double>(num);
+
+            if(def.consume != null)
+            {
+                this.consume = new SubjectValue<double>(def.consume.Value);
+                this.consumeDetail = new ObservableCollection<(string name, double value, int endDays)>()
+                {
+                    ("BASE_VALUE", def.consume.Value, -1)
+                };
+            }
 
             InitObservableData(new StreamingContext());
         }
@@ -107,7 +114,7 @@ namespace RunData
                 return 0;
             }
 
-            return num.Value * PopTax.getTaxUnit(level);
+            return num.Value * Root.def.pop_tax.Single(x=>x.name == $"level{level}").per_tax;
         }
 
         internal double CollectTax(int level)
@@ -117,8 +124,10 @@ namespace RunData
                 return 0;
             }
 
-            taxCollecting = true;
-            currTaxLevel = level;
+            if(def.consume != null)
+            {
+                consumeDetail.Add(("COLLECT_TAX", Root.def.pop_tax.Single(x => x.name == $"level{level}").consume_effect, Date.inst.total_days.Value + 360));
+            }
 
             return CalcTax(level);
         }
@@ -134,8 +143,14 @@ namespace RunData
         {
             this.expectTax = this.num.obs.Select(x => def.is_collect_tax ? x * 0.01 : 0).ToOBSValue();
             this.adminExpend = this.num.obs.Select(x => def.is_collect_tax ? x * 0.0003 : 0).ToOBSValue();
+
+            if (def.consume != null)
+            {
+                this.consumeDetail.CollectionChanged += (a, r) =>
+                {
+                    consume.Value = this.consumeDetail.Sum(x => x.value);
+                };
+            }
         }
-
-
     }
 }

@@ -18,32 +18,32 @@ namespace TaisGodot.Scripts
 			btnFullFill.Connect("pressed", this, nameof(_onButtonFullFillCountryTax));
 
 
-			UpdateFullFillCountryTax();
+			//UpdateFullFillCountryTax();
 		}
 
-		private void UpdateFullFillCountryTax()
-		{
-			var lackCountryTax = RunData.Chaoting.inst.expectYearTax.Value - RunData.Chaoting.inst.realYearTax.Value;
-			if (lackCountryTax == 0)
-			{
-				btnFullFill.Disabled = true;
-				btnFullFill.HintTooltip = TranslateServerEx.Translate("STATIC_COUNTRY_TAX_NOT_LACK");
-			}
-			else if (RunData.Economy.inst.curr.Value < lackCountryTax)
-			{
-				btnFullFill.Disabled = true;
-				btnFullFill.HintTooltip = TranslateServerEx.Translate("STATIC_COUNTRY_TAX_LACK_AND_ECONOMY_NOT_SUFFICENT",
-					lackCountryTax.ToString(),
-					RunData.Economy.inst.curr.Value.ToString());
-			}
-			else
-			{
-				btnFullFill.Disabled = false;
-				btnFullFill.HintTooltip = TranslateServerEx.Translate("STATIC_COUNTRY_TAX_LACK_AND_ECONOMY_SUFFICENT",
-					lackCountryTax.ToString(),
-					RunData.Economy.inst.curr.Value.ToString());
-			}
-		}
+		//private void UpdateFullFillCountryTax()
+		//{
+		//	var lackCountryTax = RunData.Chaoting.inst.expectYearTax.Value - RunData.Chaoting.inst.realYearTax.Value;
+		//	if (lackCountryTax == 0)
+		//	{
+		//		btnFullFill.Disabled = true;
+		//		btnFullFill.HintTooltip = TranslateServerEx.Translate("STATIC_COUNTRY_TAX_NOT_LACK");
+		//	}
+		//	else if (RunData.Economy.inst.curr.Value < lackCountryTax)
+		//	{
+		//		btnFullFill.Disabled = true;
+		//		btnFullFill.HintTooltip = TranslateServerEx.Translate("STATIC_COUNTRY_TAX_LACK_AND_ECONOMY_NOT_SUFFICENT",
+		//			lackCountryTax.ToString(),
+		//			RunData.Economy.inst.curr.Value.ToString());
+		//	}
+		//	else
+		//	{
+		//		btnFullFill.Disabled = false;
+		//		btnFullFill.HintTooltip = TranslateServerEx.Translate("STATIC_COUNTRY_TAX_LACK_AND_ECONOMY_SUFFICENT",
+		//			lackCountryTax.ToString(),
+		//			RunData.Economy.inst.curr.Value.ToString());
+		//	}
+		//}
 
 		private void _onButtonFullFillCountryTax()
 		{
