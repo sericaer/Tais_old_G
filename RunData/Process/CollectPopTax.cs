@@ -3,13 +3,13 @@ using System.Linq;
 
 namespace RunData
 {
-    public class CollectPopTax : Process
+    public class COLLECT_POP_TAX : Process
     {
-        public static CollectPopTax inst
+        public static COLLECT_POP_TAX inst
         {
             get
             {
-                return Root.inst.processes.SingleOrDefault(x => x is CollectPopTax) as CollectPopTax;
+                return Root.inst.processes.SingleOrDefault(x => x is COLLECT_POP_TAX) as COLLECT_POP_TAX;
             }
         }
 
@@ -39,7 +39,7 @@ namespace RunData
 
         public static void Start()
         {
-            Root.inst.processes.Add(new CollectPopTax());
+            Root.inst.processes.Add(new COLLECT_POP_TAX());
         }
 
         public double CalcTax(int level)
@@ -58,7 +58,7 @@ namespace RunData
             collectedTax = Depart.all.Sum(x => x.pops.Sum(y => y.CollectTax(selectedLevel.Value)));
         }
 
-        private CollectPopTax() : base(30)
+        private COLLECT_POP_TAX() : base(30)
         {
             expectTax = Chaoting.inst.reportPopNum.Value * 0.001;
         }

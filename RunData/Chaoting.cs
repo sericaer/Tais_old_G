@@ -25,6 +25,7 @@ namespace RunData
         //[JsonProperty, DataVisitorProperty("real_year_tax")]
         //public SubjectValue<double> realYearTax;
 
+        [JsonProperty, DataVisitorProperty("extra_tax")]
         public double extraTax;
 
         public static Chaoting inst

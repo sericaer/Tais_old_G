@@ -24,13 +24,14 @@ namespace TaisGodot.Scripts
 				await ToSignal(dialog, "tree_exited");
 			}
 
-			if(Root.inst.isEnd)
+			GetNode<WarnContainer>("VBoxContainer/WinContainer/ImpContainer/WarnContainer").Refresh(RunData.Root.GenerateWarns());
+			GetNode<TaskContainer>("VBoxContainer/WinContainer/TaskContainer").Refresh(RunData.Root.GetTask());
+
+			if (Root.inst.isEnd)
 			{
 				Root.Exit();
 				GetTree().ChangeScene("res://Scenes/End/EndScene.tscn");
 			}
-
-			GetNode<WarnContainer>("VBoxContainer/WinContainer/ImpContainer/WarnContainer").Refresh(RunData.Root.GenerateWarns());
 		}
 
 		private Node ShowDialog(Modder.GEvent eventobj)

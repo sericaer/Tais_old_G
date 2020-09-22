@@ -1,6 +1,6 @@
 trigger = 
 {
-    less = {chaoting.real_year_tax, chaoting.expect_year_tax}
+    less = {chaoting.extra_tax, 0}
 }
 
 date = {month = 12, day=30}

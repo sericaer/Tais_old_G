@@ -1,1 +1,1 @@
-﻿CHAOTING_TAX_NOT_FULL_ITEM:朝廷期望上缴税收{0}，实际上缴税收{1}
+﻿CHAOTING_TAX_NOT_FULL_ITEM:欠缴国税{0}

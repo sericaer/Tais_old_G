@@ -32,6 +32,11 @@ namespace RunData
             inst = null;
         }
 
+        public static IEnumerable<Process> GetTask()
+        {
+            return inst.processes;
+        }
+
         public static string Serialize()
         {
             return JsonConvert.SerializeObject(inst, Formatting.Indented);
@@ -125,7 +130,7 @@ namespace RunData
 
         static Warn()
         {
-            //Warn.All.Add(new CHAOTING_TAX_NOT_FULL());
+            Warn.All.Add(new CHAOTING_TAX_NOT_FULL());
         }
 
         public string name
@@ -141,21 +146,21 @@ namespace RunData
         internal abstract bool IsValid();
     }
 
-    //internal class CHAOTING_TAX_NOT_FULL : Warn
-    //{
-    //    internal override bool IsValid()
-    //    {
-    //        var lack = Chaoting.inst.expectYearTax.Value - Chaoting.inst.realYearTax.Value;
-    //        if (lack > 0)
-    //        {
-    //            datas.Add((lack).ToString());
-    //            return true;
-    //        }
-    //        else
-    //        {
-    //            datas.Clear();
-    //            return false;
-    //        }
-    //    }
-    //}
+    internal class CHAOTING_TAX_NOT_FULL : Warn
+    {
+        internal override bool IsValid()
+        {
+            if (Chaoting.inst.extraTax < 0)
+            {
+                datas.Clear();
+                datas.Add((Math.Abs(Chaoting.inst.extraTax)).ToString());
+                return true;
+            }
+            else
+            {
+                datas.Clear();
+                return false;
+            }
+        }
+    }
 }

@@ -61,7 +61,7 @@ namespace TaisGodot.Scripts
 				},
 
 				pop_tax = new List<Define.TaxEffect>()
-                {
+				{
 					new Define.TaxEffect(){name = "level1", per_tax = 0.001},
 					new Define.TaxEffect(){name = "level2", per_tax = 0.002},
 					new Define.TaxEffect(){name = "level3", per_tax = 0.003},

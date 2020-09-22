@@ -21,7 +21,7 @@ namespace TaisGodot.Scripts
 
 		public override void _Ready()
 		{
-			CollectPopTax.Start();
+			COLLECT_POP_TAX.Start();
 
 			labelDesc = GetNode<RichTextLabel>("CenterContainer/PanelContainer/VBoxContainer/Desc");
 			labelEffect = GetNode<RichTextLabel>("CenterContainer/PanelContainer/VBoxContainer/PanelContainer/VBoxContainer/Effect");
@@ -30,9 +30,9 @@ namespace TaisGodot.Scripts
 
 			btnLevel1 = GetNode<Button>("CenterContainer/PanelContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/1");
 
-			labelDesc.Text = TranslateServerEx.Translate("EVENT_SELECT_COLLECT_TAX_LEVEL_DESC", CollectPopTax.inst.expectTax.ToString());
+			labelDesc.Text = TranslateServerEx.Translate("EVENT_SELECT_COLLECT_TAX_LEVEL_DESC", COLLECT_POP_TAX.inst.expectTax.ToString());
 
-			AddToggleButtons(CollectPopTax.inst.maxTaxLevel);
+			AddToggleButtons(COLLECT_POP_TAX.inst.maxTaxLevel);
 
 			btnConfirm.Disabled = true;
 		}
@@ -53,14 +53,14 @@ namespace TaisGodot.Scripts
 		{
 			int level = int.Parse(btnLevel1.Group.GetPressedButton().Name);
 			labelEffect.Text = TranslateServerEx.Translate("EVENT_SELECT_COLLECT_TAX_LEVEL_EFFECT_DESC",
-									CollectPopTax.inst.CalcTax(level).ToString());
+									COLLECT_POP_TAX.inst.CalcTax(level).ToString());
 			btnConfirm.Disabled = false;
 		}
 
 		private void _on_ButtonConfrim_Pressed()
 		{
 			int level = int.Parse(btnLevel1.Group.GetPressedButton().Name);
-			CollectPopTax.inst.SetLevel(level);
+			COLLECT_POP_TAX.inst.SetLevel(level);
 
 			QueueFree();
 		}

@@ -19,12 +19,12 @@ namespace TaisGodot.Scripts
 
 		public override bool IsVaild()
 		{
-			return CollectPopTax.isFinishedDay();
+			return COLLECT_POP_TAX.isFinishedDay();
 		}
 
 		public override void _Ready()
 		{
-			RunData.Economy.inst.curr.Value += CollectPopTax.inst.collectedTax.Value;
+			RunData.Economy.inst.curr.Value += COLLECT_POP_TAX.inst.collectedTax.Value;
 
 			labelExpect = GetNode<Label>("CenterContainer/PanelContainer/VBoxContainer/ReportExpect/Value");
 			labelReal = GetNode<Label>("CenterContainer/PanelContainer/VBoxContainer/ReportReal/Value");
@@ -34,9 +34,9 @@ namespace TaisGodot.Scripts
 			sliderReal.MinValue = 0;
 			sliderReal.MaxValue = (float)RunData.Economy.inst.curr.Value;
 
-			if (CollectPopTax.inst.expectTax < RunData.Economy.inst.curr.Value)
+			if (COLLECT_POP_TAX.inst.expectTax < RunData.Economy.inst.curr.Value)
 			{
-				sliderReal.LimitMinValue = (float)CollectPopTax.inst.expectTax;
+				sliderReal.LimitMinValue = (float)COLLECT_POP_TAX.inst.expectTax;
 			}
 			else
 			{
@@ -45,7 +45,7 @@ namespace TaisGodot.Scripts
 
 			sliderReal.Value = sliderReal.LimitMinValue;
 
-			labelExpect.Text = CollectPopTax.inst.expectTax.ToString();
+			labelExpect.Text = COLLECT_POP_TAX.inst.expectTax.ToString();
 			labelReal.Text = sliderReal.Value.ToString();
 
 		}
@@ -57,7 +57,7 @@ namespace TaisGodot.Scripts
 
 		private void _on_ButtonConfrim_Pressed()
 		{
-			RunData.Chaoting.inst.extraTax += sliderReal.Value - CollectPopTax.inst.expectTax;
+			RunData.Chaoting.inst.extraTax += sliderReal.Value - COLLECT_POP_TAX.inst.expectTax;
 			RunData.Economy.inst.curr.Value -= sliderReal.Value;
 			QueueFree();
 		}

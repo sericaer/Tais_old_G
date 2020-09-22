@@ -7,10 +7,9 @@
 [ext_resource path="res://Scenes/Main/Top/SpeedContrl.cs" type="Script" id=5]
 [ext_resource path="res://Scenes/Main/Warn/WarnContainer.cs" type="Script" id=6]
 [ext_resource path="res://Scenes/Main/Top/Economy.cs" type="Script" id=7]
+[ext_resource path="res://Scenes/Main/Task/TaskContainer.cs" type="Script" id=9]
 
 [sub_resource type="StyleBoxTexture" id=1]
-
-[sub_resource type="StyleBoxTexture" id=2]
 
 [node name="Panel" type="Panel"]
 anchor_right = 1.0
@@ -154,20 +153,23 @@ text = "SYS"
 [node name="Timer" type="Timer" parent="VBoxContainer/TopContainer/HBoxContainer/Control"]
 autostart = true
 
-[node name="WinContainer" type="PanelContainer" parent="VBoxContainer"]
+[node name="WinContainer" type="Panel" parent="VBoxContainer"]
 margin_top = 41.0
 margin_right = 1440.0
 margin_bottom = 900.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_styles/panel = SubResource( 2 )
 
 [node name="MapContainer" type="CenterContainer" parent="VBoxContainer/WinContainer"]
-margin_right = 1440.0
+margin_left = 1.12244
+margin_right = 1441.12
 margin_bottom = 859.0
 rect_min_size = Vector2( 0, 200 )
 size_flags_horizontal = 3
 size_flags_vertical = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="MapRect" type="TextureRect" parent="VBoxContainer/WinContainer/MapContainer"]
 margin_left = 720.0
@@ -209,6 +211,21 @@ size_flags_horizontal = 3
 size_flags_vertical = 0
 alignment = 1
 script = ExtResource( 6 )
+
+[node name="TaskContainer" type="VBoxContainer" parent="VBoxContainer/WinContainer"]
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = -150.0
+margin_top = -429.5
+margin_bottom = 429.5
+rect_min_size = Vector2( 150, 0 )
+alignment = 1
+script = ExtResource( 9 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 [connection signal="pressed" from="VBoxContainer/TopContainer/HBoxContainer/Economy" to="." method="_on_Button_Economy_pressed"]
 [connection signal="DaysInc" from="VBoxContainer/TopContainer/HBoxContainer/Control" to="." method="_on_DaysInc"]
 [connection signal="pressed" from="VBoxContainer/TopContainer/HBoxContainer/Control/Button_Inc" to="VBoxContainer/TopContainer/HBoxContainer/Control" method="_on_Button_Inc_pressed"]

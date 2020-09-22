@@ -13,6 +13,14 @@ namespace RunData
 
         private bool isFinished;
 
+        public string name
+        {
+            get
+            {
+                return GetType().Name;
+            }
+        }
+
         internal Process(int costDays)
         {
             this.costDays = costDays;

@@ -79,26 +79,26 @@ namespace UnitTest.RunData
             ModDataVisit.InitVisitData(Root.inst);
 
 
-            CollectPopTax.Start();
-            Assert.AreEqual(Chaoting.inst.reportPopNum.Value * 0.001, CollectPopTax.inst.expectTax);
+            COLLECT_POP_TAX.Start();
+            Assert.AreEqual(Chaoting.inst.reportPopNum.Value * 0.001, COLLECT_POP_TAX.inst.expectTax);
 
             int selected = 1;
             
-            CollectPopTax.inst.SetLevel(selected);
+            COLLECT_POP_TAX.inst.SetLevel(selected);
             for (int i=0; i<30; i++)
             {
-                Assert.IsFalse(CollectPopTax.isFinishedDay());
+                Assert.IsFalse(COLLECT_POP_TAX.isFinishedDay());
                 Assert.AreEqual(1, Root.inst.processes.Count);
 
                 Date.Inc();
                 Process.DaysInc();
             }
 
-            Assert.IsTrue(CollectPopTax.isFinishedDay());
+            Assert.IsTrue(COLLECT_POP_TAX.isFinishedDay());
 
             var currPopTax = Root.def.pop_tax.Single(x => x.name == $"level{selected}");
             var expectCollectedTax = Pop.all.Where(x => x.def.is_collect_tax).Sum(x => x.num.Value) * currPopTax.per_tax;
-            Assert.AreEqual(expectCollectedTax, CollectPopTax.inst.collectedTax);
+            Assert.AreEqual(expectCollectedTax, COLLECT_POP_TAX.inst.collectedTax);
 
             Pop.all.ForEach(pop =>
             {
