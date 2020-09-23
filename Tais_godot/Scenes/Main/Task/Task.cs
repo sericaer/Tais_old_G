@@ -8,8 +8,8 @@ namespace TaisGodot.Scripts
 	{
 		internal Process gmObj;
 
-        public override void _Ready()
-        {
+		public override void _Ready()
+		{
 			GetNode<Label>("VBoxContainer/Label").Text = gmObj.name;
 			GetNode<ReactiveProgressBar>("VBoxContainer/ProgressBar").Assoc(gmObj.percent);
 		}
