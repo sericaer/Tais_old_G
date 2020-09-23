@@ -6,11 +6,12 @@ namespace TaisGodot.Scripts
 {
 	class Task : PanelContainer
 	{
-		internal void Refresh(Process process)
-		{
-			GetNode<Label>("VBoxContainer/Label").Text = process.name;
-			GetNode<ProgressBar>("VBoxContainer/ProgressBar").Value = process.percent.Value;
+		internal Process gmObj;
 
+        public override void _Ready()
+        {
+			GetNode<Label>("VBoxContainer/Label").Text = gmObj.name;
+			GetNode<ReactiveProgressBar>("VBoxContainer/ProgressBar").Assoc(gmObj.percent);
 		}
 	}
 }

@@ -99,6 +99,7 @@
     <Compile Include="Scenes\Main\Dynamic\DialogPanel\SpecialDialogPanel\SelectCollectTaxLevel.cs" />
     <Compile Include="Scenes\Main\Dynamic\DialogPanel\SpecialDialogPanel\ReportTaxDialog.cs" />
     <Compile Include="Global\LimitSlider\LimitSlider.cs" />
+    <Compile Include="Global\ReactiveProgressBar.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Modder\Modder.csproj">

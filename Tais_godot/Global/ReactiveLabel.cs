@@ -8,20 +8,18 @@ using System.Threading.Tasks;
 
 namespace TaisGodot.Scripts
 {
-	public class ReactiveLabel : Label
+	public class ReactiveProgressBar : ProgressBar
 	{
 		private IDisposable reactiveDispose;
 
-		internal void Assoc<T>(ObservableValue<T> data, Func<string, string> adpt = null)
+		internal void Assoc(ObservableValue<double> data)
 		{
-			this.adpt = adpt;
-			reactiveDispose = data.Subscribe(this.SetValue);
+			reactiveDispose = data.Subscribe(this.SetProgressValue);
 		}
 
-		internal void Assoc<T>(SubjectValue<T> data, Func<string, string> adpt = null)
+		internal void Assoc(SubjectValue<double> data)
 		{
-			this.adpt = adpt;
-			reactiveDispose = data.Subscribe(this.SetValue);
+			reactiveDispose = data.Subscribe(this.SetProgressValue);
 		}
 
 		protected override void Dispose(bool disposing)
@@ -30,11 +28,10 @@ namespace TaisGodot.Scripts
 			reactiveDispose?.Dispose();
 		}
 
-		private Func<string, string> adpt;
 
-		private void SetValue<T>(T value)
-		{ 
-			Text = adpt!=null ? adpt(value.ToString()) : value.ToString();
+		private void SetProgressValue(double value)
+		{
+			Value = value;
 		}
 	}
 }

@@ -12,26 +12,21 @@ namespace TaisGodot.Scripts
         {
             var taskItems = this.GetChildren<Task>().ToList();
 
-            var needRemoves = taskItems.FindAll(x => !processes.Any(y => y.name == x.Name));
+            var needRemoves = taskItems.FindAll(x => !processes.Contains(x.gmObj));
             needRemoves.ForEach(x =>
             {
                 taskItems.Remove(x);
                 x.QueueFree();
             });
 
-            foreach (var process in processes)
+            var needAdds = processes.Where(x => taskItems.Any(y => y.gmObj == x)).ToList();
+            needAdds.ForEach(x =>
             {
-                var taskItem = taskItems.SingleOrDefault(x => x.Name == process.name);
-                if (taskItem == null)
-                {
-                    taskItem = (Task)ResourceLoader.Load<PackedScene>("res://Scenes/Main/Task/Task.tscn").Instance();
-                    taskItem.Name = process.name;
+                var taskItem = (Task)ResourceLoader.Load<PackedScene>("res://Scenes/Main/Task/Task.tscn").Instance();
+                taskItem.gmObj = x;
 
-                    AddChild(taskItem);
-                }
-
-                taskItem.Refresh(process);
-            }
+                AddChild(taskItem);
+            });
         }
     }
 }
