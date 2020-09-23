@@ -135,7 +135,7 @@ namespace RunData
         [JsonConstructor]
         private Pop()
         {
-
+            this.consumeDetail = new ObservableCollection<(string name, double value, int endDays)>();
         }
 
         [OnDeserialized]
@@ -146,11 +146,20 @@ namespace RunData
 
             if (def.consume != null)
             {
+                this.consume = new SubjectValue<double>(def.consume.Value);
+
                 this.consumeDetail.CollectionChanged += (a, r) =>
                 {
-                    consume.Value = this.consumeDetail.Sum(x => x.value);
+                    UpdateConsume();
                 };
+
+                UpdateConsume();
             }
+        }
+
+        private void UpdateConsume()
+        {
+            consume.Value = this.consumeDetail.Sum(x => x.value);
         }
     }
 }

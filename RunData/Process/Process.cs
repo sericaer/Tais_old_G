@@ -1,23 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace RunData
 {
+    [JsonObject(MemberSerialization.OptIn), JsonConverter(typeof(ProcessConverter))]
     public class Process
     {
+        [JsonProperty]
+        public string name;
+
+        [JsonProperty]
         public int costDays;
 
+        [JsonProperty]
         public int startDays;
 
+        [JsonProperty]
         public SubjectValue<double> percent;
 
-        private bool isFinished;
-
-        public string name
+        private bool isFinished
         {
             get
             {
-                return GetType().Name;
+                return percent.Value == 100.0;
             }
         }
 
@@ -25,9 +32,10 @@ namespace RunData
         {
             this.costDays = costDays;
             this.startDays = Date.inst.total_days.Value;
+            this.name = GetType().Name;
 
-            this.isFinished = false;
             this.percent = new SubjectValue<double>(0.0);
+
         }
 
         internal static List<Process> Init()
@@ -48,18 +56,49 @@ namespace RunData
             if (isFinishedDay())
             {
                 DoFinished();
-                isFinished = true;
             }
         }
 
         internal bool isFinishedDay()
         {
-            return Date.inst.total_days.Value >= startDays + costDays;
+            return isFinished;
         }
 
         internal virtual void DoFinished()
         {
 
         }
+    }
+
+    public class ProcessConverter : JsonConverter
+    {
+        public override bool CanWrite { get { return false; } }
+
+        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+        {
+
+            JObject jObject = JObject.Load(reader);
+
+            var name = jObject.Value<string>("name");
+
+            Type type = Type.GetType($"RunData.{name}");
+
+            var obj = Activator.CreateInstance(type);
+            serializer.Populate(jObject.CreateReader(), obj);
+
+            return obj;
+        }
+
+        public override bool CanConvert(Type objectType)
+        {
+            return objectType == typeof(Process);
+        }
+
+
     }
 }

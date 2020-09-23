@@ -88,7 +88,10 @@ namespace RunData
         [JsonProperty, DataVisitorProperty("economy")]
         public Economy economy;
 
+        [JsonProperty]
         public List<Process> processes;
+
+        //public List<Party> parties;
 
         public bool isEnd
         {
@@ -115,6 +118,8 @@ namespace RunData
             economy = Economy.Init(def.economy);
 
             processes = Process.Init();
+
+            //parties = Party.Init();
         }
 
         [JsonConstructor]

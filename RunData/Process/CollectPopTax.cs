@@ -1,10 +1,18 @@
 ﻿using System;
 using System.Linq;
+using Newtonsoft.Json;
 
 namespace RunData
 {
+    [JsonObject(MemberSerialization.OptIn)]
     public class COLLECT_POP_TAX : Process
     {
+        [JsonProperty]
+        public int? selectedLevel;
+
+        [JsonProperty]
+        public double? collectedTax;
+
         public static COLLECT_POP_TAX inst
         {
             get
@@ -13,17 +21,19 @@ namespace RunData
             }
         }
 
-        public readonly double expectTax;
-
-        public int? selectedLevel;
-
-        public double? collectedTax;
-
         public int maxTaxLevel
         {
             get
             {
                 return Root.def.pop_tax.Count();
+            }
+        }
+
+        public double expectTax
+        {
+            get
+            {
+                return Chaoting.inst.reportPopNum.Value * 0.001;
             }
         }
 
@@ -58,9 +68,9 @@ namespace RunData
             collectedTax = Depart.all.Sum(x => x.pops.Sum(y => y.CollectTax(selectedLevel.Value)));
         }
 
-        private COLLECT_POP_TAX() : base(30)
+        public COLLECT_POP_TAX() : base(30)
         {
-            expectTax = Chaoting.inst.reportPopNum.Value * 0.001;
+
         }
     }
 }
