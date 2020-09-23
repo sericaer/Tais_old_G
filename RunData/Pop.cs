@@ -34,6 +34,7 @@ namespace RunData
 
         public SubjectValue<double> consume;
 
+        [JsonProperty]
         public ObservableCollection<(string name, double value, int endDays)> consumeDetail;
 
         [DataVisitorProperty("depart")]
