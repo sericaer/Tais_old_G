@@ -1,6 +1,6 @@
 trigger = 
 {
-    less = {chaoting.extra_tax, 0}
+    greater = {chaoting.owe_tax, 0}
 }
 
 date = {month = 12, day=30}
@@ -9,8 +9,48 @@ occur = 1
 
 option =
 {
-	select = 
-	{
-	    assign = {taishou.is_revoke, true}
-	}
+    select = 
+    {
+        assign = {taishou.is_revoke, true}
+    }
+    
+    next = 
+    {
+        EVENT_TAISHOU_IS_REVOKED = 
+        {
+            or = 
+            {
+                greater = { chaoting.owe_tax, 150}
+                and = 
+                {
+                    not = 
+                    {
+                        equal = { chaoting.party.name, taishou.party.name }
+                    }
+                    
+                    greater = { chaoting.owe_tax, 50}
+                }
+            }
+        }
+        
+        EVENT_TAISHOU_PROTECTE_BY_POWER_PARTY = 
+        {
+            and = 
+            {
+                equal = { chaoting.party.name, taishou.party.name }
+                less = { chaoting.owe_tax, 50}
+            }
+        }
+    }
+    
+    next_random = 
+    {
+        EVENT_TAISHOU_BIRBE_TO_VOID_REVOKE = 
+        {
+            modifier = 
+            {
+                value = 100
+            }
+        }
+    }
 }

@@ -7,7 +7,7 @@ using Parser.Syntax;
 
 namespace Parser.Semantic
 {
-    public class ConditionEqual : Condition
+    public class ConditionEqual : ConditionTuple
     {
         public ConditionEqual(SyntaxItem item) : base(item)
         {
