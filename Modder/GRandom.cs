@@ -7,6 +7,8 @@ namespace Tools
 {
     public class GRandom
     {
+        private static System.Random ra = new System.Random(GetRandomSeed());
+
         public static bool isOccur(double prob)
         {
             if (Math.Abs(prob) < Double.Epsilon)
@@ -26,7 +28,6 @@ namespace Tools
 
             int prb = (int)(prob * 100);
 
-            System.Random ra = new System.Random(GetRandomSeed());
             int result = ra.Next(1, 10000);
             if (result <= prb)
             {
@@ -34,6 +35,29 @@ namespace Tools
             }
 
             return false;
+        }
+
+        internal static string CalcGroup(IEnumerable<(string name, double prob)> groups)
+        {
+            var sum = groups.Sum(x => x.prob);
+
+            var range = groups.Select(x => (name: x.name, Value: x.prob * 100 / sum)).ToArray();
+
+            int raValue = ra.Next(1, 100);
+
+            double start = 0;
+            for(int i=0; i<range.Count(); i++)
+            {
+                double end = start + range[i].Value;
+                if (raValue >= start && raValue < end)
+                {
+                    return range[i].name;
+                }
+
+                start = end;
+            }
+
+            throw new Exception();
         }
 
         //public static string RandomGroup((string name, double prob)[] groups)

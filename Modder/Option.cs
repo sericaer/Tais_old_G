@@ -29,7 +29,15 @@ namespace Modder
         {
             get
             {
-                return semantic.next == null ? "" : semantic.next;
+                string rslt = semantic.next?.Rslt();
+                if (rslt == null)
+                {
+                    var randomGroup = semantic.nextRandom?.Calc().Where(x=>x.value > 0);
+
+                    rslt = Tools.GRandom.CalcGroup(randomGroup);
+                }
+
+                return rslt == null ? "" : rslt;
             }
         }
 

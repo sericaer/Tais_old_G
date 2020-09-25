@@ -141,7 +141,7 @@ namespace Parser.Semantic
                 var ParseMethod = currType.GetMethod("Parse", BindingFlags.Static | BindingFlags.Public);
                 if (ParseMethod == null)
                 {
-                    throw new Exception($"can not support item '{currType}'");
+                    throw new Exception($"num '{currType}'");
                 }
 
                 return ParseMethod.Invoke(null, new object[] { item });
