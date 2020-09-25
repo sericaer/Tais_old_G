@@ -111,7 +111,7 @@ namespace RunData
 
             partys = Party.Init(def.partys.Values.ToList());
 
-            taishou = new Taishou(initData.common.name, initData.common.age, initData.common.background);
+            taishou = new Taishou(initData.common.name, initData.common.age, initData.common.party);
 
             date = Date.Init();
 

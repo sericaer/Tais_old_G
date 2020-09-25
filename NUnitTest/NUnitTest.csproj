@@ -37,7 +37,7 @@
     <Compile Include="Modder\Mock\Demon.cs" />
     <Compile Include="Modder\Mock\ModFileSystem.cs" />
     <Compile Include="DataVisit\TestDataVisit.cs" />
-    <Compile Include="RunData\TestRunData.cs" />
+    <Compile Include="RunData\TestRoot.cs" />
     <Compile Include="Modder\Warn\TestWarnCommon.cs" />
     <Compile Include="Modder\Warn\TestWarnDepart.cs" />
     <Compile Include="Modder\InitSelect\TestInitSelect.cs" />
@@ -46,6 +46,8 @@
     <Compile Include="RunData\TestProcess.cs" />
     <Compile Include="Parser\Semantic\TestCondition.cs" />
     <Compile Include="RunData\TestChaoting.cs" />
+    <Compile Include="RunData\TestTaishou.cs" />
+    <Compile Include="RunData\TestRunData.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

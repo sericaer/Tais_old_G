@@ -21,9 +21,6 @@ namespace RunData
         [DataVisitorProperty("age"), JsonProperty]
         public int age;
 
-        [DataVisitorProperty("background"), JsonProperty]
-        public string background;
-
         [DataVisitorProperty("party")]
         public Party party
         { 
@@ -36,11 +33,11 @@ namespace RunData
         [JsonProperty]
         internal string partyName;
 
-        public Taishou(string name, int age, string background) : this()
+        public Taishou(string name, int age, string partyName) : this()
         {
             this.name = name;
             this.age = age;
-            this.background = background;
+            this.partyName = partyName;
         }
 
         [JsonConstructor]

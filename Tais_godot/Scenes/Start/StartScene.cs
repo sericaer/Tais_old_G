@@ -93,7 +93,7 @@ namespace TaisGodot.Scripts
 				{
 					name = "TEST1",
 					age = 34,
-					background = "BACKGROUND1"
+					party = "BACKGROUND1"
 				}
 			};
 

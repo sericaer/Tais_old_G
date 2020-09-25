@@ -19,7 +19,7 @@ namespace UnitTest.RunData
                 {
                     name = "TEST1",
                     age = 34,
-                    background = "BACKGROUND1"
+                    party = "BACKGROUND1"
                 }
             };
 
@@ -28,7 +28,7 @@ namespace UnitTest.RunData
 
             Assert.AreEqual(init.common.name, Visitor.Get("init.name"));
             Assert.AreEqual(init.common.age, Visitor.Get("init.age"));
-            Assert.AreEqual(init.common.background, Visitor.Get("init.background"));
+            Assert.AreEqual(init.common.party, Visitor.Get("init.party"));
 
         }
     }

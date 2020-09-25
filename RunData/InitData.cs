@@ -16,9 +16,6 @@ namespace RunData
             [DataVisitorProperty("age")]
             public int age;
 
-            [DataVisitorProperty("background")]
-            public string background;
-
             [DataVisitorProperty("party")]
             public string party;
         }
