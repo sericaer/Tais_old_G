@@ -191,18 +191,20 @@ rect_min_size = Vector2( 0, 150 )
 size_flags_vertical = 0
 custom_constants/separation = 1
 
-[node name="ButtonChaoting" type="Button" parent="VBoxContainer/WinContainer/ImpContainer"]
+[node name="ButtonTaishou" type="Button" parent="VBoxContainer/WinContainer/ImpContainer"]
 margin_right = 120.0
 margin_bottom = 150.0
 rect_min_size = Vector2( 120, 150 )
-text = "STATIC_CHAOTING"
+text = "STATIC_TAISHOU"
 clip_text = true
 
-[node name="Button2" type="Button" parent="VBoxContainer/WinContainer/ImpContainer"]
+[node name="ButtonChaoting" type="Button" parent="VBoxContainer/WinContainer/ImpContainer"]
 margin_left = 121.0
 margin_right = 241.0
 margin_bottom = 150.0
 rect_min_size = Vector2( 120, 150 )
+text = "STATIC_CHAOTING"
+clip_text = true
 
 [node name="WarnContainer" type="HBoxContainer" parent="VBoxContainer/WinContainer/ImpContainer"]
 margin_left = 242.0
