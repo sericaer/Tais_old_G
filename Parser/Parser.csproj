@@ -63,6 +63,8 @@
     <Compile Include="Semantic\ConditionGreater.cs" />
     <Compile Include="Semantic\ConditionNot.cs" />
     <Compile Include="Semantic\ConditionTuple.cs" />
+    <Compile Include="Semantic\ConditionAnd.cs" />
+    <Compile Include="Semantic\ConditionOr.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

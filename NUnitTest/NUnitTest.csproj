@@ -44,6 +44,7 @@
     <Compile Include="RunData\TestInitData.cs" />
     <Compile Include="RunData\TestWarn.cs" />
     <Compile Include="RunData\TestProcess.cs" />
+    <Compile Include="Parser\Semantic\TestCondition.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -61,6 +62,10 @@
       <Project>{638A0033-8E91-475D-80C2-1888B2576151}</Project>
       <Name>RunData</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Parser\Parser.csproj">
+      <Project>{6889D115-E394-4412-A83C-26900889634E}</Project>
+      <Name>Parser</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Modder\" />
@@ -70,6 +75,8 @@
     <Folder Include="RunData\" />
     <Folder Include="Modder\Warn\" />
     <Folder Include="Modder\InitSelect\" />
+    <Folder Include="Parser\" />
+    <Folder Include="Parser\Semantic\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

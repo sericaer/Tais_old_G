@@ -19,40 +19,45 @@ namespace Parser.Semantic
                 }
 
                 var bValue = item.values[0] as BoolValue;
-                if(bValue != null)
+                if (bValue != null)
                 {
                     return new ConditionDefault(bValue.data);
                 }
 
-                var value = item.values[0] as SyntaxItem;
-                if (value == null)
+                var subItem = item.values[0] as SyntaxItem;
+                if (subItem == null)
                 {
                     throw new Exception($"not support value type");
                 }
 
-                switch (value.key)
-                {
-                    case "equal":
-                        return new ConditionEqual(value);
-                    case "less":
-                        return new ConditionLess(value);
-                    case "greater":
-                        return new ConditionGreater(value);
-                    //case "or":
-                    //    return new ConditionOr(value);
-                    //case "and":
-                    //    return new ConditionAnd(value);
-                    //case "not":
-                    //    return new ConditionNot(value);
-                    default:
-                        throw new Exception($"not support value {value.key}");
-                }
+                return ParseItem(subItem);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 throw new Exception($"Parse conditon faild! key:{item.key}", e);
             }
 
+        }
+
+        internal static Condition ParseItem(SyntaxItem item)
+        {
+            switch (item.key)
+            {
+                case "equal":
+                    return new ConditionEqual(item);
+                case "less":
+                    return new ConditionLess(item);
+                case "greater":
+                    return new ConditionGreater(item);
+                case "or":
+                    return new ConditionOr(item);
+                case "and":
+                    return new ConditionAnd(item);
+                case "not":
+                    return new ConditionNot(item);
+                default:
+                    throw new Exception($"not support item '{item.key}'");
+            }
         }
 
         public abstract bool Rslt();
