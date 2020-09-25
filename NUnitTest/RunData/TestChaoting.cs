@@ -8,11 +8,11 @@ using System.Linq;
 namespace UnitTest.RunData
 {
     [TestFixture()]
-    public class TestProcess
+    public class TestChaoting
     {
         public InitData init;
 
-        public TestProcess()
+        public TestChaoting()
         {
             Root.def = new Define()
             {
@@ -79,94 +79,36 @@ namespace UnitTest.RunData
         }
 
         [Test()]
-        public void Test_CollectPopTax_DayInc()
+        public void Test_ChaotingExtraTax()
         {
             ModDataVisit.InitVisitMap(typeof(Root));
 
             Root.Init(init);
             ModDataVisit.InitVisitData(Root.inst);
 
+            Assert.AreEqual(0, Visitor.Get("chaoting.extra_tax"));
+            Assert.AreEqual(0, Visitor.Get("chaoting.owe_tax"));
 
-            COLLECT_POP_TAX.Start();
-            Assert.AreEqual(Chaoting.inst.reportPopNum.Value * 0.001, COLLECT_POP_TAX.inst.expectTax);
+            Chaoting.inst._extraTax = 100;
 
-            int selected = 1;
+            Assert.AreEqual(100, Visitor.Get("chaoting.extra_tax"));
+            Assert.AreEqual(0, Visitor.Get("chaoting.owe_tax"));
 
-            COLLECT_POP_TAX.inst.SetLevel(selected);
-            for (int i = 0; i < 30; i++)
-            {
-                Assert.IsFalse(COLLECT_POP_TAX.isFinishedDay());
-                Assert.AreEqual(1, Root.inst.processes.Count);
+            Chaoting.inst._extraTax = -100;
 
-                Date.Inc();
-                Process.DaysInc();
-            }
-
-            Assert.IsTrue(COLLECT_POP_TAX.isFinishedDay());
-
-            var currPopTax = Root.def.pop_tax.Single(x => x.name == $"level{selected}");
-            var expectCollectedTax = Pop.all.Where(x => x.def.is_collect_tax).Sum(x => x.num.Value) * currPopTax.per_tax;
-            Assert.AreEqual(expectCollectedTax, COLLECT_POP_TAX.inst.collectedTax);
-
-            Pop.all.ForEach(pop =>
-            {
-                if (pop.def.consume != null)
-                {
-                    Assert.AreEqual(pop.def.consume.Value + currPopTax.consume_effect, pop.consume.Value);
-                }
-            });
-
-            Date.Inc();
-            Process.DaysInc();
-            Assert.AreEqual(0, Root.inst.processes.Count);
+            Assert.AreEqual(0, Visitor.Get("chaoting.extra_tax"));
+            Assert.AreEqual(100, Visitor.Get("chaoting.owe_tax"));
         }
 
         [Test()]
-        public void Test_CollectPopTax_Serialize()
+        public void Test_ChaotingPowerParty()
         {
             ModDataVisit.InitVisitMap(typeof(Root));
 
             Root.Init(init);
             ModDataVisit.InitVisitData(Root.inst);
 
-
-            COLLECT_POP_TAX.Start();
-
-            int selected = 1;
-
-            COLLECT_POP_TAX.inst.SetLevel(selected);
-            for (int i = 0; i < 30; i++)
-            {
-                Assert.IsFalse(COLLECT_POP_TAX.isFinishedDay());
-                Assert.AreEqual(1, Root.inst.processes.Count);
-
-                Date.Inc();
-                Process.DaysInc();
-            }
-
-            var json = Root.Serialize();
-            Root.Deserialize(json);
-
-            Assert.AreEqual(1, COLLECT_POP_TAX.inst.selectedLevel);
-            Assert.AreEqual(100, COLLECT_POP_TAX.inst.percent.Value);
-
-            var currPopTax = Root.def.pop_tax.Single(x => x.name == $"level{selected}");
-            var expectCollectedTax = Pop.all.Where(x => x.def.is_collect_tax).Sum(x => x.num.Value) * currPopTax.per_tax;
-
-            Assert.AreEqual(expectCollectedTax, COLLECT_POP_TAX.inst.collectedTax);
-
-            Pop.all.ForEach(pop =>
-            {
-                if (pop.def.consume != null)
-                {
-                    Assert.AreEqual(pop.def.consume.Value + currPopTax.consume_effect, pop.consume.Value);
-                }
-            });
-
-            Date.Inc();
-            Process.DaysInc();
-            Assert.AreEqual(0, Root.inst.processes.Count);
-
+            Assert.AreEqual(Root.def.chaoting.powerParty, Visitor.Get("chaoting.power_party.type"));
         }
     }
 }

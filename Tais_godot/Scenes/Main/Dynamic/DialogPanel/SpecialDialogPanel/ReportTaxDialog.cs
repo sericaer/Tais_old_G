@@ -57,7 +57,7 @@ namespace TaisGodot.Scripts
 
 		private void _on_ButtonConfrim_Pressed()
 		{
-			RunData.Chaoting.inst.extraTax += sliderReal.Value - COLLECT_POP_TAX.inst.expectTax;
+			RunData.Chaoting.inst._extraTax += sliderReal.Value - COLLECT_POP_TAX.inst.expectTax;
 			RunData.Economy.inst.curr.Value -= sliderReal.Value;
 			QueueFree();
 		}

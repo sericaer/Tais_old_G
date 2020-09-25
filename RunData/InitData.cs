@@ -18,6 +18,9 @@ namespace RunData
 
             [DataVisitorProperty("background")]
             public string background;
+
+            [DataVisitorProperty("party")]
+            public string party;
         }
     }
 }

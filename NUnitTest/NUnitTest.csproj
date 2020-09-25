@@ -45,6 +45,7 @@
     <Compile Include="RunData\TestWarn.cs" />
     <Compile Include="RunData\TestProcess.cs" />
     <Compile Include="Parser\Semantic\TestCondition.cs" />
+    <Compile Include="RunData\TestChaoting.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

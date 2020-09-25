@@ -25,7 +25,7 @@ option =
                 {
                     not = 
                     {
-                        equal = { chaoting.party.name, taishou.party.name }
+                        equal = { chaoting.party.type, taishou.party.type }
                     }
                     
                     greater = { chaoting.owe_tax, 50}
@@ -37,7 +37,7 @@ option =
         {
             and = 
             {
-                equal = { chaoting.party.name, taishou.party.name }
+                equal = { chaoting.power_party.type, taishou.party.type }
                 less = { chaoting.owe_tax, 50}
             }
         }

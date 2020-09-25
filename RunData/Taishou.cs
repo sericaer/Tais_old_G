@@ -24,6 +24,18 @@ namespace RunData
         [DataVisitorProperty("background"), JsonProperty]
         public string background;
 
+        [DataVisitorProperty("party")]
+        public Party party
+        { 
+            get
+            {
+                return Root.inst.partys.Find(x => x.name == partyName);
+            }
+        }
+
+        [JsonProperty]
+        internal string partyName;
+
         public Taishou(string name, int age, string background) : this()
         {
             this.name = name;

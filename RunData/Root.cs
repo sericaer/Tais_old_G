@@ -91,6 +91,9 @@ namespace RunData
         [JsonProperty]
         public List<Process> processes;
 
+        [JsonProperty]
+        public List<Party> partys;
+
         //public List<Party> parties;
 
         public bool isEnd
@@ -105,6 +108,9 @@ namespace RunData
         {
             inst = this;
 
+
+            partys = Party.Init(def.partys.Values.ToList());
+
             taishou = new Taishou(initData.common.name, initData.common.age, initData.common.background);
 
             date = Date.Init();
@@ -118,7 +124,6 @@ namespace RunData
             economy = Economy.Init(def.economy);
 
             processes = Process.Init();
-
             //parties = Party.Init();
         }
 
@@ -155,10 +160,10 @@ namespace RunData
     {
         internal override bool IsValid()
         {
-            if (Chaoting.inst.extraTax < 0)
+            if (Chaoting.inst.oweTax > 0)
             {
                 datas.Clear();
-                datas.Add((Math.Abs(Chaoting.inst.extraTax)).ToString());
+                datas.Add(Chaoting.inst.oweTax.ToString());
                 return true;
             }
             else

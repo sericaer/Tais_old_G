@@ -7,6 +7,8 @@ namespace RunData
     {
         public Dictionary<string, DepartDef> departs;
         public Dictionary<string, PopDef> pops;
+        public Dictionary<string, PartyDef> partys;
+
         public EconomyDef economy;
         public ChaotingDef chaoting;
         public CropDef crop;
@@ -41,6 +43,7 @@ namespace RunData
         {
             public double reportPopPercent;
             public double taxPercent;
+            public string powerParty;
         }
 
         public class CropDef
@@ -55,6 +58,11 @@ namespace RunData
             public string name;
             public double per_tax;
             public double consume_effect;
+        }
+
+        public class PartyDef
+        {
+            public string name;
         }
     }
 }

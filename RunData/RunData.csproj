@@ -76,6 +76,7 @@
     <Compile Include="Tax\PopTax.cs" />
     <Compile Include="Process\CollectPopTax.cs" />
     <Compile Include="Process\Process.cs" />
+    <Compile Include="Party.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

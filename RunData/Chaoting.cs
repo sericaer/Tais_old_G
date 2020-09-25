@@ -14,12 +14,39 @@ namespace RunData
         [JsonProperty]
         public SubjectValue<int> reportPopNum;
 
-        [JsonProperty, DataVisitorProperty("extra_tax")]
-        public double extraTax;
+        [DataVisitorProperty("extra_tax")]
+        public double extraTax
+        {
+            get
+            {
+                return _extraTax > 0 ? _extraTax : 0;
+            }
+        }
 
-        //[DataVisitorProperty("power_party")]
-        //public Party powerParty;
-        
+        [DataVisitorProperty("owe_tax")]
+        public double oweTax
+        {
+            get
+            {
+                return _extraTax < 0 ? _extraTax*-1 : 0;
+            }
+        }
+
+        [JsonProperty]
+        public double _extraTax;
+
+        [DataVisitorProperty("power_party")]
+        public Party powerParty
+        {
+            get
+            {
+                return Root.inst.partys.Find(x => x.name == powerPartyName);
+            }
+        }
+
+        [JsonProperty]
+        internal string powerPartyName;
+
         public static Chaoting inst
         {
             get
@@ -40,6 +67,12 @@ namespace RunData
 
         internal Chaoting(Define.ChaotingDef def)
         {
+            powerPartyName = def.powerParty;
+            if(powerParty == null)
+            {
+                throw new Exception($"can not find chaoting power party ${powerPartyName}");
+            }
+
             reportPopNum = new SubjectValue<int>((int)(Depart.all.Sum(x => x.popNum.Value) * def.reportPopPercent / 100));
 
             InitObservableData(new StreamingContext());
