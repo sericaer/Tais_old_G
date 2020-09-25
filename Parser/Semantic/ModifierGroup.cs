@@ -7,7 +7,7 @@ namespace Parser.Semantic
 {
     internal class ModifierGroup
     {
-        internal static ModifierGroup ParseItem(SyntaxItem item)
+        public static ModifierGroup Parse(SyntaxItem item)
         {
             return SemanticParser.DoParser<ModifierGroup>(item);
         }
@@ -34,7 +34,7 @@ namespace Parser.Semantic
 
     internal class Modifier
     {
-        internal static Modifier ParseItem(SyntaxItem item)
+        public static Modifier Parse(SyntaxItem item)
         {
             return SemanticParser.DoParser<Modifier>(item);
         }

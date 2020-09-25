@@ -231,6 +231,49 @@ namespace UnitTest.Modder.Event
                 }
             }");
 
+        private (string file, string content) EVENT_TEST_NEXT_RANDOM = ("EVENT_TEST_CONDITION_LESS.txt",
+        @"
+
+            date = every_day
+
+            trigger =
+            {
+	            equal = {1, 1}
+            }
+
+            occur = 1
+
+            option =
+            {
+
+            }
+
+            option =
+            {
+                next =
+                {
+                    EVENT_TEST_CONDITION_LESS =
+                    {
+                        equal = {item1.data1, 1}
+                    }
+                    EVENT_TEST_DATE_WITH_TRIGGER =
+                    {
+                        equal = {item1.data1, 2}
+                    }
+                }
+
+                next_random = 
+                {
+                    EVENT_TEST_DATE_WITH_TRIGGER = 
+                    {
+                        modifier = 
+                        {
+                            value = 100
+                        }
+                    }
+                }
+            }");
+
         public TestEventCommon()
         {
             ModDataVisit.InitVisitMap(typeof(Demon));
@@ -434,6 +477,24 @@ namespace UnitTest.Modder.Event
         public void TestEventOptionNext()
         {
             LoadEvent(EVENT_TEST_NEXT);
+
+            var eventobjs = Mod.EventProcess((1, 1, 1)).ToArray();
+
+            Assert.AreEqual(1, eventobjs.Count());
+
+            var eventobj = eventobjs[0];
+
+            Demon.inst.item1.data1 = 1;
+            Assert.AreEqual("EVENT_TEST_CONDITION_LESS", eventobj.options[1].Next);
+
+            Demon.inst.item1.data1 = 2;
+            Assert.AreEqual("EVENT_TEST_DATE_WITH_TRIGGER", eventobj.options[1].Next);
+        }
+
+        [Test()]
+        public void TestEventOptionNextRandom()
+        {
+            LoadEvent(EVENT_TEST_NEXT_RANDOM);
 
             var eventobjs = Mod.EventProcess((1, 1, 1)).ToArray();
 

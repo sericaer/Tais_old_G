@@ -40,9 +40,15 @@ namespace TaisGodot.Scripts
 					{ "yinhu", new Define.PopDef() { is_collect_tax = false } },
 				},
 
+				partys = new Dictionary<string, Define.PartyDef>()
+				{
+					{ "shizu", new Define.PartyDef() { name = "shizu"} },
+					{ "huanguan", new Define.PartyDef() { name = "huanguan"} }
+				},
+
 				economy = new Define.EconomyDef()
 				{
-					curr = 100,
+					curr = 456,
 					pop_tax_percent = 30,
 					expend_depart_admin = 100,
 				},
@@ -50,7 +56,8 @@ namespace TaisGodot.Scripts
 				chaoting = new Define.ChaotingDef()
 				{
 					reportPopPercent = 130,
-					taxPercent = 20
+					taxPercent = 20,
+					powerParty = "huanguan"
 				},
 
 				crop = new Define.CropDef()
@@ -62,11 +69,11 @@ namespace TaisGodot.Scripts
 
 				pop_tax = new List<Define.TaxEffect>()
 				{
-					new Define.TaxEffect(){name = "level1", per_tax = 0.001},
-					new Define.TaxEffect(){name = "level2", per_tax = 0.002},
-					new Define.TaxEffect(){name = "level3", per_tax = 0.003},
-					new Define.TaxEffect(){name = "level4", per_tax = 0.0035},
-					new Define.TaxEffect(){name = "level5", per_tax = 0.004}
+					new Define.TaxEffect(){name = "level1", per_tax = 0.001, consume_effect = -10},
+					new Define.TaxEffect(){name = "level2", per_tax = 0.002, consume_effect = -20},
+					new Define.TaxEffect(){name = "level3", per_tax = 0.003, consume_effect = -30 },
+					new Define.TaxEffect(){name = "level4", per_tax = 0.0035, consume_effect = -40 },
+					new Define.TaxEffect(){name = "level5", per_tax = 0.004, consume_effect = -50 }
 				}
 			};
 
@@ -93,7 +100,7 @@ namespace TaisGodot.Scripts
 				{
 					name = "TEST1",
 					age = 34,
-					party = "BACKGROUND1"
+					party = "shizu"
 				}
 			};
 

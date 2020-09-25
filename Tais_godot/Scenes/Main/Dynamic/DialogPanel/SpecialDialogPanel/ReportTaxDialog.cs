@@ -59,6 +59,10 @@ namespace TaisGodot.Scripts
 		{
 			RunData.Chaoting.inst._extraTax += sliderReal.Value - COLLECT_POP_TAX.inst.expectTax;
 			RunData.Economy.inst.curr.Value -= sliderReal.Value;
+
+			GD.Print(RunData.Chaoting.inst._extraTax);
+			GD.Print(RunData.Chaoting.inst.oweTax);
+
 			QueueFree();
 		}
 	}

@@ -14,7 +14,7 @@ namespace Modder
     {
         internal class Trigger
         {
-            private Condition raw;
+            internal Condition raw;
 
             public Trigger(Condition raw)
             {

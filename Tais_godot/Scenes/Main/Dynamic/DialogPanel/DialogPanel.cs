@@ -39,6 +39,9 @@ namespace TaisGodot.Scripts
 			GD.Print(index.ToString());
 			gEventObj.options[index].Selected();
 
+			var nextEventName = gEventObj.options[index].Next;
+			GD.Print(nextEventName);
+
 			QueueFree();
 
 			SpeedContrl.UnPause();

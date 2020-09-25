@@ -9,11 +9,6 @@ occur = 1
 
 option =
 {
-    select = 
-    {
-        assign = {taishou.is_revoke, true}
-    }
-    
     next = 
     {
         EVENT_TAISHOU_IS_REVOKED = 
@@ -21,7 +16,7 @@ option =
             or = 
             {
                 greater = { chaoting.owe_tax, 150}
-                and = 
+                and =
                 {
                     not = 
                     {

@@ -41,6 +41,18 @@ namespace Modder
             this.date = new Date(parse.date);
             this.trigger = new Trigger(parse.trigger);
             this.occur = new Occur(parse.occur);
+
+            if(this.trigger.raw is ConditionDefault && !this.trigger.isTrue())
+            {
+
+            }
+            else
+            {
+                if(this.occur.raw == null)
+                {
+                    throw new Exception("event must have occur when trigger is not default false");
+                }
+            }
         }
     }
 }

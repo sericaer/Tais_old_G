@@ -16,13 +16,9 @@ namespace Modder
         internal Occur(int? raw)
         {
             this.raw = raw;
-            if (raw == null)
-            {
-                throw new Exception("event must have occur");
-            }
         }
 
-        int? raw;
+        internal int? raw;
 
         internal bool isTrue()
         {

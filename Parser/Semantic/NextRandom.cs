@@ -7,9 +7,9 @@ namespace Parser.Semantic
 {
     public class NextRandom
     {
-        internal static Next Parse(SyntaxItem item)
+        public static NextRandom Parse(SyntaxItem item)
         {
-            return new Next(item.values);
+            return new NextRandom(item.values);
         }
 
         public IEnumerable<(string name, double value)> Calc()
@@ -31,7 +31,7 @@ namespace Parser.Semantic
                     throw new Exception($"not support value type");
                 }
 
-                list.Add((subItem.key, ModifierGroup.ParseItem(subItem)));
+                list.Add((subItem.key, ModifierGroup.Parse(subItem)));
             }
         }
     }
