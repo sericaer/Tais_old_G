@@ -199,7 +199,7 @@ namespace UnitTest.Modder.Event
                 }
             }");
 
-        private (string file, string content) EVENT_TEST_NEXT = ("EVENT_TEST_CONDITION_LESS.txt",
+        private (string file, string content) EVENT_TEST_NEXT = ("EVENT_TEST_NEXT.txt",
         @"
 
             date = every_day
@@ -231,7 +231,7 @@ namespace UnitTest.Modder.Event
                 }
             }");
 
-        private (string file, string content) EVENT_TEST_NEXT_RANDOM = ("EVENT_TEST_CONDITION_LESS.txt",
+        private (string file, string content) EVENT_TEST_NEXT_RANDOM = ("EVENT_TEST_NEXT_RANDOM.txt",
         @"
 
             date = every_day
@@ -501,6 +501,9 @@ namespace UnitTest.Modder.Event
             Assert.AreEqual(1, eventobjs.Count());
 
             var eventobj = eventobjs[0];
+
+            eventobj.options[0].Selected();
+            Assert.AreEqual("", eventobj.options[0].Next);
 
             Demon.inst.item1.data1 = 1;
             Assert.AreEqual("EVENT_TEST_CONDITION_LESS", eventobj.options[1].Next);

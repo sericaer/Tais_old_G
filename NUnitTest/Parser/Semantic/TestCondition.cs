@@ -3,7 +3,7 @@ using NUnit.Framework;
 using Parser.Semantic;
 using Parser.Syntax;
 
-namespace NUnitTest.Parser.Semantic
+namespace NUnitTest.ParserT.SemanticT
 {
     [TestFixture()]
     public class TestCondition

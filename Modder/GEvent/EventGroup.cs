@@ -39,9 +39,44 @@ namespace Modder
         {
             return new EventGroup()
             {
-                _common = LoadSub(path + "/common"),
-                _depart = LoadSub(path + "/depart"),
-                _pop = LoadSub(path + "/pop")
+                _common = LoadSub(path + "/common", (key)=>
+                {
+                    foreach(var elem in common)
+                    {
+                        return elem.events.SingleOrDefault(x => x.key == key);
+                    }
+
+                    return null;
+                }),
+                
+                _depart = LoadSub(path + "/depart", (key) =>
+                {
+                    foreach (var elem in depart)
+                    {
+                        return elem.events.SingleOrDefault(x => x.key == key);
+                    }
+
+                    foreach (var elem in common)
+                    {
+                        return elem.events.SingleOrDefault(x => x.key == key);
+                    }
+
+                    return null;
+                }),
+                _pop = LoadSub(path + "/pop", (key) =>
+                {
+                    foreach (var elem in pop)
+                    {
+                        return elem.events.SingleOrDefault(x => x.key == key);
+                    }
+
+                    foreach (var elem in common)
+                    {
+                        return elem.events.SingleOrDefault(x => x.key == key);
+                    }
+
+                    return null;
+                }),
             };
         }
 
@@ -67,7 +102,7 @@ namespace Modder
             }
         }
 
-        private static List<GEvent> LoadSub(string path)
+        private static List<GEvent> LoadSub(string path, Func<string, GEvent> getNext)
         {
             List<GEvent> rslt = new List<GEvent>();
 
@@ -79,6 +114,7 @@ namespace Modder
             foreach (var file in Directory.EnumerateFiles(path, "*.txt"))
             {
                 var eventobj = new GEvent(file);
+                eventobj.GetNext = getNext;
                 rslt.Add(eventobj);
             }
 

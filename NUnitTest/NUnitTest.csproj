@@ -48,6 +48,8 @@
     <Compile Include="RunData\TestChaoting.cs" />
     <Compile Include="RunData\TestTaishou.cs" />
     <Compile Include="RunData\TestRunData.cs" />
+    <Compile Include="Parser\Semantic\TestModifier.cs" />
+    <Compile Include="Tools\TestRandom.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -80,6 +82,7 @@
     <Folder Include="Modder\InitSelect\" />
     <Folder Include="Parser\" />
     <Folder Include="Parser\Semantic\" />
+    <Folder Include="Tools\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

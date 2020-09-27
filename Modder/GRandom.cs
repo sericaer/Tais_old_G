@@ -37,7 +37,7 @@ namespace Tools
             return false;
         }
 
-        internal static string CalcGroup(IEnumerable<(string name, double prob)> groups)
+        public static string CalcGroup(IEnumerable<(string name, double prob)> groups)
         {
             var sum = groups.Sum(x => x.prob);
 
