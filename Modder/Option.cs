@@ -22,7 +22,7 @@ namespace Modder
 
         public void Selected()
         {
-            semantic.set.Do();
+            semantic.set?.Do();
         }
 
         public string Next

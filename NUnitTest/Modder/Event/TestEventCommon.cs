@@ -502,6 +502,9 @@ namespace UnitTest.Modder.Event
 
             var eventobj = eventobjs[0];
 
+            eventobj.options[0].Selected();
+            Assert.AreEqual("", eventobj.options[0].Next);
+
             Demon.inst.item1.data1 = 1;
             Assert.AreEqual("EVENT_TEST_CONDITION_LESS", eventobj.options[1].Next);
 
