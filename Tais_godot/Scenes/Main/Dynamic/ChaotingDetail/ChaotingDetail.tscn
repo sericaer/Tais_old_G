@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Scenes/Main/Dynamic/ChaotingDetail/ChaotingDetail.cs" type="Script" id=1]
+[ext_resource path="res://Scenes/Main/Dynamic/ChaotingDetail/PartyContainer.cs" type="Script" id=2]
 [ext_resource path="res://Global/ClickFreeMask.cs" type="Script" id=3]
 
 [sub_resource type="StyleBoxFlat" id=1]
@@ -96,6 +97,7 @@ size_flags_vertical = 0
 margin_top = 179.0
 margin_right = 402.0
 margin_bottom = 359.0
+script = ExtResource( 2 )
 
 [node name="Panel" type="Panel" parent="CenterContainer/PanelContainer/HBoxContainer/RightContainer/MarginContainer/VBoxContainer/PartyContainer"]
 margin_right = 150.0

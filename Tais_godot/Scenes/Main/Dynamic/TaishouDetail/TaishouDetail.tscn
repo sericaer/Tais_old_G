@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://Scenes/Main/Dynamic/ChaotingDetail/ChaotingDetail.cs" type="Script" id=1]
+[ext_resource path="res://Scenes/Main/Dynamic/TaishouDetail/TaishouDetail.cs" type="Script" id=1]
+[ext_resource path="res://Global/ReactiveLabel.cs" type="Script" id=2]
 [ext_resource path="res://Global/ClickFreeMask.cs" type="Script" id=3]
 
 [sub_resource type="StyleBoxFlat" id=1]
@@ -40,9 +41,9 @@ __meta__ = {
 }
 
 [node name="PanelContainer" type="PanelContainer" parent="CenterContainer"]
-margin_left = 488.0
+margin_left = 427.0
 margin_top = 307.0
-margin_right = 952.0
+margin_right = 1013.0
 margin_bottom = 593.0
 __meta__ = {
 "_edit_use_anchors_": false
@@ -51,21 +52,21 @@ __meta__ = {
 [node name="HBoxContainer" type="HBoxContainer" parent="CenterContainer/PanelContainer"]
 margin_left = 7.0
 margin_top = 7.0
-margin_right = 457.0
+margin_right = 579.0
 margin_bottom = 279.0
 
 [node name="RightContainer" type="PanelContainer" parent="CenterContainer/PanelContainer/HBoxContainer"]
-margin_right = 232.0
+margin_right = 288.0
 margin_bottom = 272.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/PanelContainer/HBoxContainer/RightContainer"]
 margin_left = 7.0
 margin_top = 7.0
-margin_right = 225.0
+margin_right = 281.0
 margin_bottom = 265.0
 
 [node name="HBoxContainer" type="HBoxContainer" parent="CenterContainer/PanelContainer/HBoxContainer/RightContainer/VBoxContainer"]
-margin_right = 218.0
+margin_right = 274.0
 margin_bottom = 150.0
 
 [node name="Panel" type="Panel" parent="CenterContainer/PanelContainer/HBoxContainer/RightContainer/VBoxContainer/HBoxContainer"]
@@ -74,79 +75,94 @@ margin_bottom = 150.0
 rect_min_size = Vector2( 120, 150 )
 size_flags_vertical = 0
 
+[node name="Label" type="Label" parent="CenterContainer/PanelContainer/HBoxContainer/RightContainer/VBoxContainer/HBoxContainer/Panel"]
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_top = -10.5
+margin_right = 7.62939e-06
+margin_bottom = 10.5
+rect_min_size = Vector2( 120, 0 )
+text = "STATIC_TAISHOU"
+clip_text = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/PanelContainer/HBoxContainer/RightContainer/VBoxContainer/HBoxContainer"]
 margin_left = 124.0
-margin_right = 218.0
+margin_right = 274.0
 margin_bottom = 150.0
+rect_min_size = Vector2( 150, 0 )
 
-[node name="HBoxContainer" type="HBoxContainer" parent="CenterContainer/PanelContainer/HBoxContainer/RightContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
-margin_right = 94.0
+[node name="Name" type="HBoxContainer" parent="CenterContainer/PanelContainer/HBoxContainer/RightContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
+margin_right = 150.0
 margin_bottom = 21.0
 
-[node name="Label" type="Label" parent="CenterContainer/PanelContainer/HBoxContainer/RightContainer/VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer"]
-margin_right = 50.0
+[node name="Label" type="Label" parent="CenterContainer/PanelContainer/HBoxContainer/RightContainer/VBoxContainer/HBoxContainer/VBoxContainer/Name"]
+margin_right = 73.0
 margin_bottom = 21.0
-text = "LABEL"
+size_flags_horizontal = 3
+text = "STATIC_NAME"
+clip_text = true
 
-[node name="Value" type="Label" parent="CenterContainer/PanelContainer/HBoxContainer/RightContainer/VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer"]
-margin_left = 54.0
-margin_right = 94.0
+[node name="Value" type="Label" parent="CenterContainer/PanelContainer/HBoxContainer/RightContainer/VBoxContainer/HBoxContainer/VBoxContainer/Name"]
+margin_left = 77.0
+margin_right = 150.0
 margin_bottom = 21.0
-text = "1111"
+size_flags_horizontal = 3
+text = "--"
+align = 1
+valign = 1
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="CenterContainer/PanelContainer/HBoxContainer/RightContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
+[node name="Age" type="HBoxContainer" parent="CenterContainer/PanelContainer/HBoxContainer/RightContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
 margin_top = 25.0
-margin_right = 94.0
+margin_right = 150.0
 margin_bottom = 46.0
 
-[node name="Label" type="Label" parent="CenterContainer/PanelContainer/HBoxContainer/RightContainer/VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer2"]
-margin_right = 50.0
+[node name="Label" type="Label" parent="CenterContainer/PanelContainer/HBoxContainer/RightContainer/VBoxContainer/HBoxContainer/VBoxContainer/Age"]
+margin_right = 73.0
 margin_bottom = 21.0
-text = "LABEL"
+size_flags_horizontal = 3
+text = "STATIC_AGE"
+clip_text = true
 
-[node name="Value" type="Label" parent="CenterContainer/PanelContainer/HBoxContainer/RightContainer/VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer2"]
-margin_left = 54.0
-margin_right = 94.0
+[node name="Value" type="Label" parent="CenterContainer/PanelContainer/HBoxContainer/RightContainer/VBoxContainer/HBoxContainer/VBoxContainer/Age"]
+margin_left = 77.0
+margin_right = 150.0
 margin_bottom = 21.0
-text = "1111"
+size_flags_horizontal = 3
+text = "--"
+align = 1
+valign = 1
+script = ExtResource( 2 )
 
-[node name="HBoxContainer3" type="HBoxContainer" parent="CenterContainer/PanelContainer/HBoxContainer/RightContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
+[node name="Party" type="HBoxContainer" parent="CenterContainer/PanelContainer/HBoxContainer/RightContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
 margin_top = 50.0
-margin_right = 94.0
+margin_right = 150.0
 margin_bottom = 71.0
 
-[node name="Label" type="Label" parent="CenterContainer/PanelContainer/HBoxContainer/RightContainer/VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer3"]
-margin_right = 50.0
+[node name="Label" type="Label" parent="CenterContainer/PanelContainer/HBoxContainer/RightContainer/VBoxContainer/HBoxContainer/VBoxContainer/Party"]
+margin_right = 73.0
 margin_bottom = 21.0
-text = "LABEL"
+size_flags_horizontal = 3
+text = "STATIC_PARTY"
+clip_text = true
 
-[node name="Value" type="Label" parent="CenterContainer/PanelContainer/HBoxContainer/RightContainer/VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer3"]
-margin_left = 54.0
-margin_right = 94.0
+[node name="Value" type="Label" parent="CenterContainer/PanelContainer/HBoxContainer/RightContainer/VBoxContainer/HBoxContainer/VBoxContainer/Party"]
+margin_left = 77.0
+margin_right = 150.0
 margin_bottom = 21.0
-text = "1111"
-
-[node name="HBoxContainer4" type="HBoxContainer" parent="CenterContainer/PanelContainer/HBoxContainer/RightContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
-margin_top = 75.0
-margin_right = 94.0
-margin_bottom = 96.0
-
-[node name="Label" type="Label" parent="CenterContainer/PanelContainer/HBoxContainer/RightContainer/VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer4"]
-margin_right = 50.0
-margin_bottom = 21.0
-text = "LABEL"
-
-[node name="Value" type="Label" parent="CenterContainer/PanelContainer/HBoxContainer/RightContainer/VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer4"]
-margin_left = 54.0
-margin_right = 94.0
-margin_bottom = 21.0
-text = "1111"
+size_flags_horizontal = 3
+text = "--"
+align = 1
+valign = 1
 
 [node name="GridContainer" type="GridContainer" parent="CenterContainer/PanelContainer/HBoxContainer/RightContainer/VBoxContainer"]
 margin_top = 154.0
-margin_right = 218.0
+margin_right = 274.0
 margin_bottom = 258.0
-columns = 4
+columns = 5
 
 [node name="Panel" type="Panel" parent="CenterContainer/PanelContainer/HBoxContainer/RightContainer/VBoxContainer/GridContainer"]
 margin_right = 50.0
@@ -172,53 +188,53 @@ margin_bottom = 50.0
 rect_min_size = Vector2( 50, 50 )
 
 [node name="Panel5" type="Panel" parent="CenterContainer/PanelContainer/HBoxContainer/RightContainer/VBoxContainer/GridContainer"]
+margin_left = 216.0
+margin_right = 266.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 50, 50 )
+
+[node name="Panel6" type="Panel" parent="CenterContainer/PanelContainer/HBoxContainer/RightContainer/VBoxContainer/GridContainer"]
 margin_top = 54.0
 margin_right = 50.0
 margin_bottom = 104.0
 rect_min_size = Vector2( 50, 50 )
 
-[node name="Panel6" type="Panel" parent="CenterContainer/PanelContainer/HBoxContainer/RightContainer/VBoxContainer/GridContainer"]
+[node name="Panel7" type="Panel" parent="CenterContainer/PanelContainer/HBoxContainer/RightContainer/VBoxContainer/GridContainer"]
 margin_left = 54.0
 margin_top = 54.0
 margin_right = 104.0
 margin_bottom = 104.0
 rect_min_size = Vector2( 50, 50 )
 
-[node name="Panel7" type="Panel" parent="CenterContainer/PanelContainer/HBoxContainer/RightContainer/VBoxContainer/GridContainer"]
+[node name="Panel8" type="Panel" parent="CenterContainer/PanelContainer/HBoxContainer/RightContainer/VBoxContainer/GridContainer"]
 margin_left = 108.0
 margin_top = 54.0
 margin_right = 158.0
 margin_bottom = 104.0
 rect_min_size = Vector2( 50, 50 )
 
-[node name="Panel8" type="Panel" parent="CenterContainer/PanelContainer/HBoxContainer/RightContainer/VBoxContainer/GridContainer"]
-margin_left = 162.0
-margin_top = 54.0
-margin_right = 212.0
-margin_bottom = 104.0
-rect_min_size = Vector2( 50, 50 )
-
 [node name="LeftContainer" type="PanelContainer" parent="CenterContainer/PanelContainer/HBoxContainer"]
-margin_left = 236.0
-margin_right = 450.0
+margin_left = 292.0
+margin_right = 572.0
 margin_bottom = 272.0
+rect_min_size = Vector2( 280, 0 )
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/PanelContainer/HBoxContainer/LeftContainer"]
 margin_left = 7.0
 margin_top = 7.0
-margin_right = 207.0
+margin_right = 273.0
 margin_bottom = 265.0
 
 [node name="Label" type="Label" parent="CenterContainer/PanelContainer/HBoxContainer/LeftContainer/VBoxContainer"]
-margin_right = 200.0
+margin_right = 266.0
 margin_bottom = 21.0
 rect_min_size = Vector2( 200, 0 )
-text = "STATIC_INFO"
+text = "STATIC_HISTORY"
 align = 1
 
 [node name="ScrollContainer" type="ScrollContainer" parent="CenterContainer/PanelContainer/HBoxContainer/LeftContainer/VBoxContainer"]
 margin_top = 25.0
-margin_right = 200.0
+margin_right = 266.0
 margin_bottom = 258.0
 size_flags_vertical = 3
 scroll_horizontal_enabled = false

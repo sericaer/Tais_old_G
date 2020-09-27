@@ -239,4 +239,5 @@ __meta__ = {
 [connection signal="timeout" from="VBoxContainer/TopContainer/HBoxContainer/Control/Timer" to="VBoxContainer/TopContainer/HBoxContainer/Control" method="_on_Timer_timeout"]
 [connection signal="MapClickSignal" from="VBoxContainer/WinContainer/MapContainer/MapRect" to="." method="_on_MapRect_MapClickSignal"]
 [connection signal="gui_input" from="VBoxContainer/WinContainer/MapContainer/MapRect" to="VBoxContainer/WinContainer/MapContainer/MapRect" method="_on_TextureRect_gui_input"]
+[connection signal="pressed" from="VBoxContainer/WinContainer/ImpContainer/ButtonTaishou" to="." method="_on_ButtonTaishou_pressed"]
 [connection signal="pressed" from="VBoxContainer/WinContainer/ImpContainer/ButtonChaoting" to="." method="_on_ButtonChaoting_pressed"]

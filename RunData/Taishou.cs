@@ -12,6 +12,14 @@ namespace RunData
     [JsonObject(MemberSerialization.OptIn)]
     public class Taishou
     {
+        public static Taishou inst
+        {
+            get
+            {
+                return Root.inst.taishou;
+            }
+        }
+
         [DataVisitorProperty("is_revoke")]
         public bool isRevoke;
 
@@ -19,7 +27,7 @@ namespace RunData
         public string name;
 
         [DataVisitorProperty("age"), JsonProperty]
-        public int age;
+        public SubjectValue<int> age;
 
         [DataVisitorProperty("party")]
         public Party party
@@ -30,13 +38,14 @@ namespace RunData
             }
         }
 
+
         [JsonProperty]
         internal string partyName;
 
         public Taishou(string name, int age, string partyName) : this()
         {
             this.name = name;
-            this.age = age;
+            this.age = new SubjectValue<int>(age);
             this.partyName = partyName;
         }
 

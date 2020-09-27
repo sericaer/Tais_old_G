@@ -105,6 +105,13 @@ namespace TaisGodot.Scripts
 			var ChaotingDetail = ResourceLoader.Load<PackedScene>("res://Scenes/Main/Dynamic/ChaotingDetail/ChaotingDetail.tscn").Instance();
 			AddChild(ChaotingDetail);
 		}
+		
+		private void _on_ButtonTaishou_pressed()
+		{
+			var TaishouDetail = ResourceLoader.Load<PackedScene>("res://Scenes/Main/Dynamic/TaishouDetail/TaishouDetail.tscn").Instance();
+			AddChild(TaishouDetail);
+		}
+
 		//  // Called every frame. 'delta' is the elapsed time since the previous frame.
 		//  public override void _Process(float delta)
 		//  {
