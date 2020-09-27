@@ -12,6 +12,7 @@ namespace Modder
 {
     public partial class GEvent
     {
+        public string key;
         public Title title;
         public Desc desc;
         public Option[] options;
@@ -32,11 +33,12 @@ namespace Modder
         public GEvent(string file)
         {
             this.file = file;
-
             this.parse = ModElementLoader.Load<GEventParse>(file, File.ReadAllText(file));
 
-            this.title = new Title(parse.title, Path.GetFileNameWithoutExtension(file)); 
-            this.desc = new Desc(parse.desc, Path.GetFileNameWithoutExtension(file));  
+            this.key = Path.GetFileNameWithoutExtension(file);
+
+            this.title = new Title(parse.title, key); 
+            this.desc = new Desc(parse.desc, key);  
             this.options = parse.options.Select((v, i) => new Option { semantic = v, index = i + 1, ownerName = Path.GetFileNameWithoutExtension(file) }).ToArray();
             this.date = new Date(parse.date);
             this.trigger = new Trigger(parse.trigger);
@@ -54,5 +56,7 @@ namespace Modder
                 }
             }
         }
+
+        public Func<string, GEvent> GetNext;
     }
 }

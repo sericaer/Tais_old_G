@@ -34,19 +34,44 @@ namespace TaisGodot.Scripts
 			}
 
 		}
+
 		private void _on_Button_pressed(int index)
 		{
 			GD.Print(index.ToString());
 			gEventObj.options[index].Selected();
 
-			var nextEventName = gEventObj.options[index].Next;
-			GD.Print(nextEventName);
+			var nextEventKey = gEventObj.options[index].Next;
+			GD.Print(nextEventKey);
 
+			if(nextEventKey != "")
+            {
+				this.Visible = false;
+
+				GEvent nextEvent = gEventObj.GetNext(nextEventKey);
+				if (nextEvent != null)
+				{
+					nextEventDialog = MainScene.ShowDialog(nextEvent);
+					nextEventDialog.Connect("tree_exited", this, nameof(Exit));
+					return;
+				}
+				SpecialEventDialog spEvent = SpecialEventDialog.GetEvent(nextEventKey);
+				if (spEvent != null)
+				{
+					nextEventDialog = MainScene.ShowSpecialDialog(spEvent);
+					nextEventDialog.Connect("tree_exited", this, nameof(Exit));
+					return;
+				}
+			}
+
+			Exit();
+		}
+
+		private void Exit()
+        {
 			QueueFree();
 
 			SpeedContrl.UnPause();
 		}
-
 
 		private Button[] GetChildButton()
 		{
@@ -66,5 +91,7 @@ namespace TaisGodot.Scripts
 		}
 
 		internal GEvent gEventObj;
+
+		internal Node nextEventDialog;
 	}
 }

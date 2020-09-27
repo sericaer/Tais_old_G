@@ -5,14 +5,14 @@ using Parser.Syntax;
 
 namespace Parser.Semantic
 {
-    internal class ModifierGroup
+    public class ModifierGroup
     {
         public static ModifierGroup Parse(SyntaxItem item)
         {
             return SemanticParser.DoParser<ModifierGroup>(item);
         }
 
-        internal double CalcValue()
+        public double CalcValue()
         {
             double modifierValue = 0.0;
             if(modifiers != null)

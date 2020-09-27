@@ -1,6 +1,7 @@
 ﻿using Godot;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace TaisGodot.Scripts
 {
@@ -47,6 +48,11 @@ namespace TaisGodot.Scripts
                     yield return dialog;
                 }
             }
+        }
+
+        internal static SpecialEventDialog GetEvent(string nextEventKey)
+        {
+            return all.SingleOrDefault(x => x.name == nextEventKey);
         }
     }
 }

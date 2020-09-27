@@ -6,6 +6,14 @@ namespace TaisGodot.Scripts
 {
 	public class MainScene : Panel
 	{
+
+		internal static MainScene inst;
+
+		public MainScene()
+        {
+			inst = this;
+        }
+
 		private async void _on_DaysInc()
 		{
 			RunData.Root.DaysInc();
@@ -34,7 +42,7 @@ namespace TaisGodot.Scripts
 			}
 		}
 
-		private Node ShowDialog(Modder.GEvent eventobj)
+		internal static Node ShowDialog(Modder.GEvent eventobj)
 		{
 			GD.Print(eventobj.title.Format);
 			GD.Print(eventobj.desc.Format);
@@ -46,16 +54,16 @@ namespace TaisGodot.Scripts
 			var dialogNode = (DialogPanel)ResourceLoader.Load<PackedScene>("res://Scenes/Main/Dynamic/DialogPanel/DialogPanel.tscn").Instance();
 			dialogNode.gEventObj = eventobj;
 
-			AddChild(dialogNode);
+			inst.AddChild(dialogNode);
 
 			return dialogNode;
 		}
 
-		private Node ShowSpecialDialog(SpecialEventDialog spEvent)
+		internal static Node ShowSpecialDialog(SpecialEventDialog spEvent)
 		{
 			var dialogNode = (SpecialEventDialog)ResourceLoader.Load<PackedScene>("res://Scenes/Main/Dynamic/DialogPanel/SpecialDialogPanel/" + spEvent.name + ".tscn").Instance();
 
-			AddChild(dialogNode);
+			inst.AddChild(dialogNode);
 			return dialogNode;
 		}
 

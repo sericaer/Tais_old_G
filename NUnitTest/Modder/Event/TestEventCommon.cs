@@ -199,7 +199,7 @@ namespace UnitTest.Modder.Event
                 }
             }");
 
-        private (string file, string content) EVENT_TEST_NEXT = ("EVENT_TEST_CONDITION_LESS.txt",
+        private (string file, string content) EVENT_TEST_NEXT = ("EVENT_TEST_NEXT.txt",
         @"
 
             date = every_day
@@ -231,7 +231,7 @@ namespace UnitTest.Modder.Event
                 }
             }");
 
-        private (string file, string content) EVENT_TEST_NEXT_RANDOM = ("EVENT_TEST_CONDITION_LESS.txt",
+        private (string file, string content) EVENT_TEST_NEXT_RANDOM = ("EVENT_TEST_NEXT_RANDOM.txt",
         @"
 
             date = every_day
