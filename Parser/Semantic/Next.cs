@@ -32,10 +32,17 @@ namespace Parser.Semantic
 
             foreach (var value in values)
             {
+                var strItem = value as StringValue;
+                if(strItem != null)
+                {
+                    list.Add((strItem.data, new ConditionDefault(true)));
+                    return;
+                }
+
                 var subItem = value as SyntaxItem;
                 if (subItem == null)
                 {
-                    throw new Exception($"not support value type");
+                    throw new Exception($"next only support string value type or item type");
                 }
 
                 list.Add((subItem.key, Condition.Parse(subItem)));

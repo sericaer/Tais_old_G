@@ -33,8 +33,10 @@ namespace Modder
                 if (rslt == null)
                 {
                     var randomGroup = semantic.nextRandom?.Calc().Where(x=>x.value > 0);
-
-                    rslt = Tools.GRandom.CalcGroup(randomGroup);
+                    if(randomGroup != null)
+                    {
+                        rslt = Tools.GRandom.CalcGroup(randomGroup);
+                    }
                 }
 
                 return rslt == null ? "" : rslt;
