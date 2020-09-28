@@ -30,6 +30,8 @@ namespace Parser.Semantic
         {
             list = new List<(string name, Condition cond)>();
 
+            string defaultKey = null;
+
             foreach (var value in values)
             {
                 var strItem = value as StringValue;
@@ -45,7 +47,29 @@ namespace Parser.Semantic
                     throw new Exception($"next only support string value type or item type");
                 }
 
+                if (subItem.key == "default")
+                {
+                    if(subItem.values.Count != 1)
+                    {
+                        throw new Exception($"next default only support string value");
+                    }
+
+                    var defaultValue = subItem.values[0] as StringValue;
+                    if (defaultValue == null)
+                    {
+                        throw new Exception($"next default only support string value");
+                    }
+
+                    defaultKey = defaultValue.data;
+                    continue;
+                }
+
                 list.Add((subItem.key, Condition.Parse(subItem)));
+            }
+
+            if(defaultKey != null)
+            {
+                list.Add((defaultKey, new ConditionDefault(true)));
             }
         }
     }

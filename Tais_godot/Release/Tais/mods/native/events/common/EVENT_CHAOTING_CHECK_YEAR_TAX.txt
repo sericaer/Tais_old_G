@@ -36,16 +36,7 @@ option =
                 less = { chaoting.owe_tax, 50}
             }
         }
-    }
-    
-    next_random = 
-    {
-        EVENT_TAISHOU_BIRBE_TO_VOID_REVOKE = 
-        {
-            modifier = 
-            {
-                value = 100
-            }
-        }
+        
+        default = EVENT_TAISHOU_BIRBE_TO_VOID_REVOKE
     }
 }

@@ -228,6 +228,7 @@ namespace UnitTest.Modder.Event
                     {
                         equal = {item1.data1, 2}
                     }
+                    default = EVENT_TEST_NEXT_RANDOM
                 }
             }");
 
@@ -483,12 +484,16 @@ namespace UnitTest.Modder.Event
             Assert.AreEqual(1, eventobjs.Count());
 
             var eventobj = eventobjs[0];
+            Assert.AreEqual("", eventobj.options[0].Next);
 
             Demon.inst.item1.data1 = 1;
             Assert.AreEqual("EVENT_TEST_CONDITION_LESS", eventobj.options[1].Next);
 
             Demon.inst.item1.data1 = 2;
             Assert.AreEqual("EVENT_TEST_DATE_WITH_TRIGGER", eventobj.options[1].Next);
+
+            Demon.inst.item1.data1 = 10;
+            Assert.AreEqual("EVENT_TEST_NEXT_RANDOM", eventobj.options[1].Next);
         }
 
         [Test()]
