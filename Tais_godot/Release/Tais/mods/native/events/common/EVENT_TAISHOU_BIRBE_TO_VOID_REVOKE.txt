@@ -2,4 +2,84 @@ trigger = false
 
 option =
 {
+    desc = {EVENT_TAISHOU_BIRBE_TO_VOID_REVOKE_OPTION_1, 10}
+    selected = 
+    {
+        reduce = {economy.value, 10}
+    }
+    next_random = 
+    {
+        EVENT_TAISHOU_BIRBE_SUCESS = 
+        {
+            base = 30
+            modifier = 
+            {
+                value = 110
+                condition = 
+                {
+                    equal = { chaoting.power_party.type, taishou.party.type }
+                }
+            }
+        }
+        EVENT_TAISHOU_BIRBE_FAILED = 
+        {
+            base = 70
+        }
+    }
+}
+
+option =
+{
+    desc = {EVENT_TAISHOU_BIRBE_TO_VOID_REVOKE_OPTION_1, 20}
+    selected = 
+    {
+        reduce = {economy.value, 20}
+    }
+    next_random = 
+    {
+        EVENT_TAISHOU_BIRBE_SUCESS = 
+        {
+            base = 30
+            modifier = 
+            {
+                value = 110
+                condition = 
+                {
+                    equal = { chaoting.power_party.type, taishou.party.type }
+                }
+            }
+        }
+        EVENT_TAISHOU_BIRBE_FAILED = 
+        {
+            base = 30
+        }
+    }
+}
+
+option =
+{
+    desc = {EVENT_TAISHOU_BIRBE_TO_VOID_REVOKE_OPTION_1, 50}
+    selected = 
+    {
+        reduce = {economy.value, 50}
+    }
+    next_random = 
+    {
+        EVENT_TAISHOU_BIRBE_SUCESS = 
+        {
+            base = 30
+            modifier = 
+            {
+                value = 110
+                condition = 
+                {
+                    equal = { chaoting.power_party.type, taishou.party.type }
+                }
+            }
+        }
+        EVENT_TAISHOU_BIRBE_FAILED = 
+        {
+            base = 10
+        }
+    }
 }
