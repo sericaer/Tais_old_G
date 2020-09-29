@@ -32,8 +32,14 @@ namespace TaisGodot.Scripts
 				await ToSignal(dialog, "tree_exited");
 			}
 
+			var taskContainer = GetNode<TaskContainer>("VBoxContainer/WinContainer/TaskContainer");
 			GetNode<WarnContainer>("VBoxContainer/WinContainer/ImpContainer/WarnContainer").Refresh(RunData.Root.GenerateWarns());
-			GetNode<TaskContainer>("VBoxContainer/WinContainer/TaskContainer").Refresh(RunData.Root.GetTask());
+			foreach (var eventobj in taskContainer.Refresh(RunData.Root.GetTask())
+            {
+				var dialog = ShowDialog(eventobj);
+
+				await ToSignal(dialog, "tree_exited");
+			}
 
 			if (Root.inst.isEnd)
 			{

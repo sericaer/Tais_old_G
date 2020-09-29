@@ -1,0 +1,9 @@
+trigger = false
+
+option =
+{
+    selected = 
+    {
+        task_cancel = TASK_CHAOTING_PREPARE_PUNISH_TAISHU
+    }
+}

@@ -274,7 +274,32 @@ namespace UnitTest.Modder.Event
                     }
                 }
             }");
+        private (string file, string content) EVENT_TEST_PROCESS = ("EVENT_TEST_PROCESS.txt",
+        @"
 
+            date = every_day
+
+            trigger =
+            {
+	            equal = {1, 1}
+            }
+
+            occur = 1
+
+            option =
+            {
+                process_start = PROCESS_1
+            }
+            option =
+            {
+                process_cancel = PROCESS_2
+            }
+            option =
+            {
+                process_start = PROCESS_3
+                process_cancel = PROCESS_4
+            }");
+ 
         public TestEventCommon()
         {
             ModDataVisit.InitVisitMap(typeof(Demon));
@@ -518,6 +543,31 @@ namespace UnitTest.Modder.Event
 
             Demon.inst.item1.data1 = 2;
             Assert.AreEqual("EVENT_TEST_DATE_WITH_TRIGGER", eventobj.options[1].Next);
+        }
+
+        [Test()]
+        public void TestEventProcess()
+        {
+            LoadEvent(EVENT_TEST_PROCESS);
+
+            var eventobjs = Mod.EventProcess((1, 1, 1)).ToArray();
+
+            Assert.AreEqual(1, eventobjs.Count());
+
+            var eventobj = eventobjs[0];
+
+            eventobj.options[0].Selected();
+
+            Assert.AreEqual("PROCESS_1", Demon.inst.processCOM.start);
+
+            eventobj.options[1].Selected();
+
+            Assert.AreEqual("PROCESS_2", Demon.inst.processCOM.cancel);
+
+            eventobj.options[2].Selected();
+
+            Assert.AreEqual("PROCESS_3", Demon.inst.processCOM.start);
+            Assert.AreEqual("PROCESS_4", Demon.inst.processCOM.cancel);
         }
 
         private void LoadEvent(params (string file, string content)[] events)

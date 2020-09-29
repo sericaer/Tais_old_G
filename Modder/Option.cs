@@ -20,7 +20,7 @@ namespace Modder
             }
         }
 
-        public void Selected()
+        public virtual void Selected()
         {
             semantic.set?.Do();
         }

@@ -70,13 +70,14 @@
     <Compile Include="Extensions.cs" />
     <Compile Include="Chaoting.cs" />
     <Compile Include="Observable.cs" />
-    <Compile Include="Define.cs" />
     <Compile Include="Taishou.cs" />
     <Compile Include="InitData.cs" />
     <Compile Include="Tax\PopTax.cs" />
     <Compile Include="Process\CollectPopTax.cs" />
     <Compile Include="Process\Process.cs" />
     <Compile Include="Party.cs" />
+    <Compile Include="Process\ProcessCOM.cs" />
+    <Compile Include="Process\ProcessNew.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -85,6 +86,10 @@
     <ProjectReference Include="..\DataVisit\DataVisit.csproj">
       <Project>{60624f37-78f3-44eb-ad31-76e1893f5ea9}</Project>
       <Name>DataVisit</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RunDefine\RunDefine.csproj">
+      <Project>{65448BAF-2F0C-4861-8BBC-8EA919BB814D}</Project>
+      <Name>RunDefine</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

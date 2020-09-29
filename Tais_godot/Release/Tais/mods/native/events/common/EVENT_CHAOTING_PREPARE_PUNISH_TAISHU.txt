@@ -1,0 +1,6 @@
+trigger = false
+
+option =
+{
+    task_start = TASK_CHAOTING_PREPARE_PUNISH_TAISHU
+}

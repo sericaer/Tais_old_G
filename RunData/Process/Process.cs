@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -16,6 +17,16 @@ namespace RunData
 
         [JsonProperty]
         public int startDays;
+
+        internal static void Cancel(string value)
+        {
+            Root.inst.processes.RemoveAll(x => x.name == value);
+        }
+
+        internal static void Start(string value)
+        {
+            Root.inst.processes.Add(new Process(value));
+        }
 
         [JsonProperty]
         public SubjectValue<double> percent;
@@ -35,7 +46,6 @@ namespace RunData
             this.name = GetType().Name;
 
             this.percent = new SubjectValue<double>(0.0);
-
         }
 
         internal static List<Process> Init()

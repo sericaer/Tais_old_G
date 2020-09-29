@@ -70,6 +70,7 @@
     <Compile Include="InitSelect.cs" />
     <Compile Include="Option.cs" />
     <Compile Include="Text.cs" />
+    <Compile Include="GEvent\EventOption.cs" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.7">
@@ -93,10 +94,15 @@
       <Project>{6889D115-E394-4412-A83C-26900889634E}</Project>
       <Name>Parser</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Tais_godot\RunDefine\RunDefine.csproj">
+      <Project>{65448BAF-2F0C-4861-8BBC-8EA919BB814D}</Project>
+      <Name>RunDefine</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="GEvent\" />
     <Folder Include="Warn\" />
+    <Folder Include="Process\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -116,6 +116,10 @@
       <Project>{60624F37-78F3-44EB-AD31-76E1893F5EA9}</Project>
       <Name>DataVisit</Name>
     </ProjectReference>
+    <ProjectReference Include="..\RunDefine\RunDefine.csproj">
+      <Project>{65448BAF-2F0C-4861-8BBC-8EA919BB814D}</Project>
+      <Name>RunDefine</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <ItemGroup />

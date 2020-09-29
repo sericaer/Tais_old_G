@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using DataVisit;
 using Newtonsoft.Json;
-using System.Collections.ObjectModel;
+using RunDefine;
 
 namespace RunData
 {
@@ -92,7 +92,13 @@ namespace RunData
         public List<Process> processes;
 
         [JsonProperty]
+        public List<ProcessNew> processNews;
+
+        [JsonProperty]
         public List<Party> partys;
+
+        [DataVisitorProperty("process")]
+        public ProcessCOM processCOM;
 
         //public List<Party> parties;
 
@@ -108,6 +114,9 @@ namespace RunData
         {
             inst = this;
 
+            processCOM = new ProcessCOM();
+
+            processNews = new List<ProcessNew>();
 
             partys = Party.Init(def.partys.Values.ToList());
 

@@ -15,7 +15,7 @@ namespace Modder
         public string key;
         public Title title;
         public Desc desc;
-        public Option[] options;
+        public EventOption[] options;
 
         internal string file;
 
@@ -23,7 +23,9 @@ namespace Modder
         internal Trigger trigger;
         internal Occur occur;
 
+        
         internal GEventParse parse;
+
 
         public bool isValid((int y, int m, int d) date)
         {
@@ -38,8 +40,8 @@ namespace Modder
             this.key = Path.GetFileNameWithoutExtension(file);
 
             this.title = new Title(parse.title, key); 
-            this.desc = new Desc(parse.desc, key);  
-            this.options = parse.options.Select((v, i) => new Option { semantic = v, index = i + 1, ownerName = Path.GetFileNameWithoutExtension(file) }).ToArray();
+            this.desc = new Desc(parse.desc, key);
+            this.options = parse.options.Select((v, i) => new EventOption(key, v, i)).ToArray();
             this.date = new Date(parse.date);
             this.trigger = new Trigger(parse.trigger);
             this.occur = new Occur(parse.occur);

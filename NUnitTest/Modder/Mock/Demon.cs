@@ -19,12 +19,17 @@ namespace UnitTest.Modder.Mock
         [DataVisitorPropertyArray("depart")]
         public List<Depart> departs;
 
+        [DataVisitorProperty("process")]
+        public ProcessCOM processCOM;
+
         public Demon()
         {
             item1 = new Item1();
 
             departs = new List<Depart>() { new Depart(),
                                            new Depart()};
+
+            processCOM = new ProcessCOM();
         }
     }
 
@@ -51,5 +56,14 @@ namespace UnitTest.Modder.Mock
 
         [DataVisitorProperty("data2")]
         public double data2;
+    }
+
+    public class ProcessCOM
+    {
+        [DataVisitorProperty("start")]
+        public string start;
+
+        [DataVisitorProperty("cancel")]
+        public string cancel;
     }
 }

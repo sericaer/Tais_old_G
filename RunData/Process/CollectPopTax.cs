@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 namespace RunData
 {
     [JsonObject(MemberSerialization.OptIn)]
-    public class COLLECT_POP_TAX : Process
+    public class COLLECT_POP_TAX : ProcessNew
     {
         [JsonProperty]
         public int? selectedLevel;
@@ -17,7 +17,7 @@ namespace RunData
         {
             get
             {
-                return Root.inst.processes.SingleOrDefault(x => x is COLLECT_POP_TAX) as COLLECT_POP_TAX;
+                return Root.inst.processNews.SingleOrDefault(x => x is COLLECT_POP_TAX) as COLLECT_POP_TAX;
             }
         }
 

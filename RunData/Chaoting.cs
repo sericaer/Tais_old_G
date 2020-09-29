@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Linq;
 using System.Reactive.Linq;
-using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
 using DataVisit;
 using Newtonsoft.Json;
+using RunDefine;
 
 namespace RunData
 {

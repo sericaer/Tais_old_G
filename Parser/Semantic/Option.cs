@@ -21,6 +21,12 @@ namespace Parser.Semantic
         [SemanticProperty("next_random")]
         public NextRandom nextRandom;
 
+        [SemanticProperty("process_start")]
+        public string process_start;
+
+        [SemanticProperty("process_cancel")]
+        public string process_cancel;
+
         public static Option Parse(SyntaxItem item)
         {
             return SemanticParser.DoParser<Option>(item);

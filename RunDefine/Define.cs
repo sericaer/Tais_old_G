@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace RunData
+namespace RunDefine
 {
     public class Define
     {
@@ -13,6 +13,7 @@ namespace RunData
         public ChaotingDef chaoting;
         public CropDef crop;
         public List<TaxEffect> pop_tax;
+        public List<ProcessDef> process;
 
         public Define()
         {
@@ -63,6 +64,15 @@ namespace RunData
         public class PartyDef
         {
             public string name;
+        }
+
+        public class ProcessDef
+        {
+            public string name;
+            public double speed;
+            public string finish_event;
+            public List<(string eventName, List<(string cause, double prob)>)> random_events;
+            public List<Action> opts;
         }
     }
 }

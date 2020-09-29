@@ -1,0 +1,70 @@
+speed = 3
+
+finish = EVENT_CHAOTING_REVOKE_TAISHOU
+
+random = 
+{
+    EVENT_CHAOTING_CANCEL_PUNISH_TAISHOU_BECAUSE_SAME_PARTY = 
+    {
+        modifer = 
+        {
+            value = 2
+            condition = 
+            {
+                equal = {chaoting.power_party.type, taishou.party.type}
+            }
+        }
+    }
+    
+    EVENT_CHAOTING_CANCEL_PUNISH_TAISHOU_BECAUSE_BIRBE = 
+    {
+        modifer = 
+        {
+            value = 1
+            condition = 
+            {
+                equal_greater = {param1.value, 10}
+            }
+        }
+        modifer = 
+        {
+            value = 2
+            condition = 
+            {
+                equal_greater = {param1.value, 20}
+            }
+        }
+        modifer = 
+        {
+            value = 3
+            condition = 
+            {
+                equal_greater = {param1.value, 30}
+            }
+        }
+        modifer = 
+        {
+            value = 4
+            condition = 
+            {
+                equal_greater = {param1.value, 40}
+            }
+        }
+    }
+}
+
+option =
+{
+    desc = TASK_CHAOTING_PREPARE_PUNISH_TAISHU_OPTION_1
+    
+    condition = 
+    {
+        equal_greater = {economy.value, 10}
+    }
+    
+    select = 
+    {
+        reduce = {economy.value, 10}
+        add = {param1.value, 10}
+    }
+}

@@ -6,6 +6,7 @@ using System.Reactive.Linq;
 using Newtonsoft.Json;
 using System.Runtime.Serialization;
 using System.Collections.ObjectModel;
+using RunDefine;
 
 namespace RunData
 {
