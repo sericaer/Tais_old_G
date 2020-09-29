@@ -50,25 +50,29 @@
     <Compile Include="Semantic\SemanticParser.cs" />
     <Compile Include="Semantic\SemanticProperty.cs" />
     <Compile Include="Semantic\SemanticPropertyArray.cs" />
-    <Compile Include="Semantic\Condition.cs" />
-    <Compile Include="Semantic\ConditionEqual.cs" />
     <Compile Include="Semantic\GroupValue.cs" />
-    <Compile Include="Semantic\ConditionDefault.cs" />
     <Compile Include="Semantic\Visitor.cs" />
     <Compile Include="Semantic\Select.cs" />
-    <Compile Include="Semantic\Operation.cs" />
-    <Compile Include="Semantic\OperationAssign.cs" />
-    <Compile Include="Semantic\OperationAdd.cs" />
-    <Compile Include="Semantic\ConditionLess.cs" />
-    <Compile Include="Semantic\ConditionGreater.cs" />
-    <Compile Include="Semantic\ConditionNot.cs" />
-    <Compile Include="Semantic\ConditionTuple.cs" />
-    <Compile Include="Semantic\ConditionAnd.cs" />
-    <Compile Include="Semantic\ConditionOr.cs" />
     <Compile Include="Semantic\Next.cs" />
     <Compile Include="Semantic\NextRandom.cs" />
     <Compile Include="Semantic\ModifierGroup.cs" />
+    <Compile Include="Semantic\Condition\Condition.cs" />
+    <Compile Include="Semantic\Condition\ConditionAnd.cs" />
+    <Compile Include="Semantic\Condition\ConditionDefault.cs" />
+    <Compile Include="Semantic\Condition\ConditionEqual.cs" />
+    <Compile Include="Semantic\Condition\ConditionGreater.cs" />
+    <Compile Include="Semantic\Condition\ConditionLess.cs" />
+    <Compile Include="Semantic\Condition\ConditionNot.cs" />
+    <Compile Include="Semantic\Condition\ConditionOr.cs" />
+    <Compile Include="Semantic\Condition\ConditionTuple.cs" />
+    <Compile Include="Semantic\Operation\Operation.cs" />
+    <Compile Include="Semantic\Operation\OperationAdd.cs" />
+    <Compile Include="Semantic\Operation\OperationAssign.cs" />
   </ItemGroup>
   <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Semantic\Condition\" />
+    <Folder Include="Semantic\Operation\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
