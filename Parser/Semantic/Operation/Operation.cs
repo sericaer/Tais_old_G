@@ -34,7 +34,7 @@ namespace Parser.Semantic
         //}
 
         //public List<(string left, SingleValue right)> list;
-        internal abstract void Do();
+        public abstract void Do();
 
         internal SingleValue left;
         internal SingleValue right;

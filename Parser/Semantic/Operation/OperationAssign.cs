@@ -17,7 +17,7 @@ namespace Parser.Semantic
             return new OperationAssign() { left = subItem.values[0] as SingleValue, right = subItem.values[1] as SingleValue };
         }
 
-        internal override void Do()
+        public override void Do()
         {
             Visitor.SetValue(left.ToString(), right);
         }

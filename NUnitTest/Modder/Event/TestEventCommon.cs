@@ -26,7 +26,7 @@ namespace UnitTest.Modder.Event
 
             option =
             {
-                desc = EVENT_TEST_OPTION_1_DESC
+                desc = { EVENT_TEST_OPTION_1_DESC, 11}
                 select =
                 {
                     assign = {item1.data2, 101}
@@ -331,6 +331,9 @@ namespace UnitTest.Modder.Event
 
             Assert.AreEqual(eventobj.options.Length, 4);
             Assert.AreEqual(eventobj.options[0].desc.Format, "EVENT_TEST_OPTION_1_DESC");
+            Assert.AreEqual(1, eventobj.options[0].desc.Params.Count());
+            Assert.AreEqual("11", eventobj.options[0].desc.Params[0]);
+
             Assert.AreEqual(eventobj.options[1].desc.Format, "EVENT_TEST_OPTION_2_DESC");
             Assert.AreEqual(eventobj.options[2].desc.Format, "EVENT_TEST_OPTION_3_DESC");
 

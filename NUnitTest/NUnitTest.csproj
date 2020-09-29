@@ -50,6 +50,7 @@
     <Compile Include="RunData\TestRunData.cs" />
     <Compile Include="Parser\Semantic\TestModifier.cs" />
     <Compile Include="Tools\TestRandom.cs" />
+    <Compile Include="Parser\Semantic\TestSeleted.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

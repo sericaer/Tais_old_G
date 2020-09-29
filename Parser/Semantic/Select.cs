@@ -22,6 +22,9 @@ namespace Parser.Semantic
                 }
                 switch(subItem.key)
                 {
+                    case "reduce":
+                        rslt.opList.Add(OperationReduce.Parse(subItem));
+                        break;
                     case "add":
                         rslt.opList.Add(OperationAdd.Parse(subItem));
                         break;

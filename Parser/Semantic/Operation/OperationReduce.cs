@@ -3,7 +3,7 @@ using Parser.Syntax;
 
 namespace Parser.Semantic
 {
-    public class OperationAdd : Operation
+    public class OperationReduce : Operation
     {
         internal static Operation Parse(SyntaxItem subItem)
         {
@@ -14,12 +14,12 @@ namespace Parser.Semantic
                 throw new Exception("add sub iteam must be have one SingleValue!");
             }
 
-            return new OperationAdd() { left = subItem.values[0] as SingleValue, right = subItem.values[1] as SingleValue };
+            return new OperationReduce() { left = subItem.values[0] as SingleValue, right = subItem.values[1] as SingleValue };
         }
 
         public override void Do()
         {
-            Visitor.SetValue(left.ToString(), Visitor.GetValue(left) + Visitor.GetValue(right));
+            Visitor.SetValue(left.ToString(), Visitor.GetValue(left) - Visitor.GetValue(right));
         }
     }
 }
