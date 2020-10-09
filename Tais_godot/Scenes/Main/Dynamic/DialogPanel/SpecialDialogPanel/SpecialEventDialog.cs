@@ -13,9 +13,9 @@ namespace TaisGodot.Scripts
         {
             all = new List<SpecialEventDialog>()
             {
-                new SelectCollectTaxLevel(),
+                //new SelectCollectTaxLevel(),
                 new ReportPopNumDialog(),
-                new ReportTaxDialog()
+                //new ReportTaxDialog()
             };
         }
 

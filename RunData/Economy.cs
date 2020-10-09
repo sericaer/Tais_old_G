@@ -35,11 +35,11 @@ namespace RunData
         [JsonProperty, DataVisitorProperty("value")]
         public SubjectValue<double> curr;
 
-        //public ObservableValue<double> IncomeTotal;
+        public ObservableValue<double> IncomeTotal;
         public ObservableValue<double> OuputTotal;
 
-        //[DataVisitorProperty("month_surplus")]
-        //public ObservableValue<double> monthSurplus;
+        [DataVisitorProperty("month_surplus")]
+        public ObservableValue<double> monthSurplus;
 
         //[DataVisitorProperty("report_chaoting_tax_percent")]
         //public double reportTaxPercent
@@ -54,19 +54,19 @@ namespace RunData
         //    }
         //}
 
-        //[JsonProperty]
-        //internal List<InCome> inComes;
+        [JsonProperty]
+        internal List<InCome> inComes;
 
         [JsonProperty]
         internal List<Output> outputs;
 
-        //public IEnumerable<InCome> EnumerateInCome()
-        //{
-        //    foreach(var elem in inComes)
-        //    {
-        //        yield return elem;
-        //    }
-        //}
+        public IEnumerable<InCome> EnumerateInCome()
+        {
+            foreach (var elem in inComes)
+            {
+                yield return elem;
+            }
+        }
 
         public IEnumerable<Output> EnumerateOutput()
         {
@@ -79,7 +79,7 @@ namespace RunData
         public Memento CreateMemento()
         {
             var rslt = new Memento();
-            //rslt.incomes = this.inComes.ToDictionary(x => x.name, y => y.percent.Value);
+            rslt.incomes = this.inComes.ToDictionary(x => x.name, y => y.percent.Value);
             rslt.outputs = this.outputs.ToDictionary(x => x.name, y => y.percent.Value);
 
             return rslt;
@@ -96,10 +96,10 @@ namespace RunData
 
         public void LoadMemento(Memento memento)
         {
-            //foreach (var pair in memento.incomes)
-            //{
-            //    inComes.Find(x => x.name == pair.Key).percent.Value = pair.Value;
-            //}
+            foreach (var pair in memento.incomes)
+            {
+                inComes.Find(x => x.name == pair.Key).percent.Value = pair.Value;
+            }
 
             foreach (var pair in memento.outputs)
             {
@@ -111,7 +111,7 @@ namespace RunData
         {
             curr = new SubjectValue<double>(def.curr);
 
-            //inComes = InCome.Generate(def);
+            inComes = InCome.Generate(def);
             outputs = Output.Generate(def);
 
             InitObservableData(new StreamingContext());
@@ -126,64 +126,64 @@ namespace RunData
         [OnDeserialized]
         private void InitObservableData(StreamingContext context)
         {
-            //IncomeTotal = Observable.CombineLatest(inComes.Select(x => x.currValue.obs), (IList<double> all) => all.Sum()).ToOBSValue();
+            IncomeTotal = Observable.CombineLatest(inComes.Select(x => x.currValue.obs), (IList<double> all) => all.Sum()).ToOBSValue();
             OuputTotal = Observable.CombineLatest(outputs.Select(x => x.currValue.obs), (IList<double> all) => all.Sum()).ToOBSValue();
-            //monthSurplus = Observable.CombineLatest(IncomeTotal.obs, OuputTotal.obs, (i, o) => i - o).ToOBSValue();
+            monthSurplus = Observable.CombineLatest(IncomeTotal.obs, OuputTotal.obs, (i, o) => i - o).ToOBSValue();
         }
     }
 
-    //[JsonObject(MemberSerialization.OptIn)]
-    //public class InCome
-    //{
-    //    [JsonProperty]
-    //    public string name;
+    [JsonObject(MemberSerialization.OptIn)]
+    public class InCome
+    {
+        [JsonProperty]
+        public string name;
 
-    //    [JsonProperty]
-    //    public SubjectValue<double> percent;
+        [JsonProperty]
+        public SubjectValue<double> percent;
 
-    //    public ObservableValue<double> currValue;
+        public ObservableValue<double> currValue;
 
-    //    private static Dictionary<string, ObservableValue<double>> dictMax = new Dictionary<string, ObservableValue<double>>()
-    //    {
-    //        //{ "STATIC_POP_TAX", Observable.CombineLatest(Pop.all.Select(x=>x.expectTax.obs), (IList<double> taxs)=>taxs.Sum()).ToOBSValue()}
-    //    };
+        private static Dictionary<string, ObservableValue<double>> dictMax = new Dictionary<string, ObservableValue<double>>()
+        {
+            { "STATIC_POP_TAX", Observable.CombineLatest(Pop.all.Select(x=>x.tax.value.obs), (IList<double> taxs)=>taxs.Sum()).ToOBSValue()}
+        };
 
-    //    public ObservableValue<double> maxValue
-    //    {
-    //        get
-    //        {
-    //            return dictMax[name];
-    //        }
-    //    }
+        public ObservableValue<double> maxValue
+        {
+            get
+            {
+                return dictMax[name];
+            }
+        }
 
-    //    internal static List<InCome> Generate(Define.EconomyDef def)
-    //    {
-    //        return new List<InCome>()
-    //        {
-    //            //new InCome("STATIC_POP_TAX", def.pop_tax_percent)
-    //        };
-    //    }
+        internal static List<InCome> Generate(Define.EconomyDef def)
+        {
+            return new List<InCome>()
+            {
+                new InCome("STATIC_POP_TAX", def.pop_tax_percent)
+            };
+        }
 
-    //    internal InCome(string name, double percent)
-    //    {
-    //        this.name = name;
-    //        this.percent = new SubjectValue<double>(percent);
+        internal InCome(string name, double percent)
+        {
+            this.name = name;
+            this.percent = new SubjectValue<double>(percent);
 
-    //        InitObservableData(new StreamingContext());
-    //    }
+            InitObservableData(new StreamingContext());
+        }
 
-    //    [JsonConstructor]
-    //    private InCome()
-    //    {
+        [JsonConstructor]
+        private InCome()
+        {
 
-    //    }
+        }
 
-    //    [OnDeserialized]
-    //    private void InitObservableData(StreamingContext context)
-    //    {
-    //        this.currValue = Observable.CombineLatest(this.percent.obs, maxValue.obs, (p, m) => p * m / 100).ToOBSValue();
-    //    }
-    //}
+        [OnDeserialized]
+        private void InitObservableData(StreamingContext context)
+        {
+            this.currValue = Observable.CombineLatest(this.percent.obs, maxValue.obs, (p, m) => p * m / 100).ToOBSValue();
+        }
+    }
 
     [JsonObject(MemberSerialization.OptIn)]
     public class Output

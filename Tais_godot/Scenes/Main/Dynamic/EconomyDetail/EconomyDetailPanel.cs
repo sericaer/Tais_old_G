@@ -19,15 +19,15 @@ namespace TaisGodot.Scripts
 
 			memento = RunData.Economy.inst.CreateMemento();
 
-			//foreach (var income in RunData.Economy.inst.EnumerateInCome())
-			//{
-			//	var incomPanel = (IncomePanel)ResourceLoader.Load<PackedScene>("res://Scenes/Main/Dynamic/EconomyDetail/IncomePanel.tscn").Instance();
-			//	incomPanel.gmObj = income;
+            foreach (var income in RunData.Economy.inst.EnumerateInCome())
+            {
+                var incomPanel = (IncomePanel)ResourceLoader.Load<PackedScene>("res://Scenes/Main/Dynamic/EconomyDetail/IncomePanel.tscn").Instance();
+                incomPanel.gmObj = income;
 
-			//	GetNode<VBoxContainer>("CenterContainer/EconomyDetail/VBoxContainer/HBoxContainer/Income/VBoxContainer/VBoxContainer").AddChild(incomPanel);
-			//}
+                GetNode<VBoxContainer>("CenterContainer/EconomyDetail/VBoxContainer/HBoxContainer/Income/VBoxContainer/VBoxContainer").AddChild(incomPanel);
+            }
 
-			foreach (var output in RunData.Economy.inst.EnumerateOutput())
+            foreach (var output in RunData.Economy.inst.EnumerateOutput())
 			{
 				var outputPanel = (OutputPanel)ResourceLoader.Load<PackedScene>("res://Scenes/Main/Dynamic/EconomyDetail/OutputPanel.tscn").Instance();
 				outputPanel.gmObj = output;
@@ -35,14 +35,14 @@ namespace TaisGodot.Scripts
 				GetNode<VBoxContainer>("CenterContainer/EconomyDetail/VBoxContainer/HBoxContainer/Output/VBoxContainer/VBoxContainer").AddChild(outputPanel);
 			}
 
-			//GetNode<ReactiveLabel>("CenterContainer/EconomyDetail/VBoxContainer/Bottom/Surplus/Value").Assoc(RunData.Economy.inst.monthSurplus);
+			GetNode<ReactiveLabel>("CenterContainer/EconomyDetail/VBoxContainer/Bottom/Surplus/Value").Assoc(RunData.Economy.inst.monthSurplus);
 
 			////UpDateTempOutputStatus();
 		}
 
 		public override void _ExitTree()
 		{
-			//memento = null;
+			memento = null;
 			SpeedContrl.UnPause();
 		}
 

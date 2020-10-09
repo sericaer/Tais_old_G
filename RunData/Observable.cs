@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
+using System.Linq;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using DataVisit;
@@ -70,6 +73,40 @@ namespace RunData
         {
             writer.WriteValue(value.getValue());
         }
+    }
+
+    [JsonObject(MemberSerialization.OptIn)]
+    public class ObservableBufferedValue
+    {
+        public ObservableValue<double> baseValue;
+
+        [JsonProperty]
+        public ObservableCollection<(string name, double value)> buffers;
+
+        public ObservableValue<double> value;
+
+
+        internal ObservableBufferedValue(IObservable<double> baseValue)
+        {
+            this.baseValue = new ObservableValue<double>(baseValue);
+            this.buffers = new ObservableCollection<(string name, double value)>();
+
+            var bufferChanged = Observable.FromEventPattern(
+                                    (EventHandler<NotifyCollectionChangedEventArgs> ev)
+                                        => new NotifyCollectionChangedEventHandler(ev),
+                                           ev => buffers.CollectionChanged += ev,
+                                           ev => buffers.CollectionChanged -= ev);
+
+            value = Observable.CombineLatest(this.baseValue.obs, bufferChanged, (x, y) => x + buffers.Sum(z => z.value)).ToOBSValue();
+        }
+
+
+        [JsonConstructor]
+        private ObservableBufferedValue()
+        {
+            this.buffers = new ObservableCollection<(string name, double value)>();
+        }
+
     }
 
 }

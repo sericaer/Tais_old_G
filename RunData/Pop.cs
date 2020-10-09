@@ -6,6 +6,7 @@ using System.Reactive.Linq;
 using Newtonsoft.Json;
 using System.Runtime.Serialization;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 
 namespace RunData
 {
@@ -29,13 +30,14 @@ namespace RunData
         [JsonProperty]
         public SubjectValue<double> num;
 
-        public ObservableValue<double> expectTax;
-        public ObservableValue<double> adminExpend;
-
-        public SubjectValue<double> consume;
+        [JsonProperty]
+        public ObservableBufferedValue adminExpend;
 
         [JsonProperty]
-        public ObservableCollection<(string name, double value, int endDays)> consumeDetail;
+        public ObservableBufferedValue tax;
+
+        [JsonProperty]
+        public ObservableBufferedValue consume;
 
         [DataVisitorProperty("depart")]
         public Depart depart
@@ -73,11 +75,6 @@ namespace RunData
                 pops.Add(new Pop(depart.name, pop_init.name, pop_init.num));
             }
 
-
-            depart.popNum = Observable.CombineLatest(pops.Where(x => x.def.is_collect_tax).Select(x => x.num.obs),
-                                              (IList<double> nums) => nums.Sum(y => (int)y)).ToOBSValue();
-            depart.adminExpendBase = Observable.CombineLatest(pops.Select(x => x.adminExpend.obs),
-                       (IList<double> nums) => nums.Sum()).ToOBSValue();
             return pops;
         }
 
@@ -96,71 +93,25 @@ namespace RunData
 
             this.num = new SubjectValue<double>(num);
 
-            if(def.consume != null)
-            {
-                this.consume = new SubjectValue<double>(def.consume.Value);
-                this.consumeDetail = new ObservableCollection<(string name, double value, int endDays)>()
-                {
-                    ("BASE_VALUE", def.consume.Value, -1)
-                };
-            }
-
             InitObservableData(new StreamingContext());
-        }
-
-        internal double CalcTax(int level)
-        {
-            if (!def.is_collect_tax)
-            {
-                return 0;
-            }
-
-            return num.Value * Root.def.pop_tax.Single(x=>x.name == $"level{level}").per_tax;
-        }
-
-        internal double CollectTax(int level)
-        {
-            if (!def.is_collect_tax)
-            {
-                return 0;
-            }
-
-            if(def.consume != null)
-            {
-                consumeDetail.Add(("COLLECT_TAX", Root.def.pop_tax.Single(x => x.name == $"level{level}").consume_effect, Date.inst.total_days.Value + 360));
-            }
-
-            return CalcTax(level);
         }
 
         [JsonConstructor]
         private Pop()
         {
-            this.consumeDetail = new ObservableCollection<(string name, double value, int endDays)>();
         }
 
         [OnDeserialized]
         private void InitObservableData(StreamingContext context)
         {
-            this.expectTax = this.num.obs.Select(x => def.is_collect_tax ? x * 0.01 : 0).ToOBSValue();
-            this.adminExpend = this.num.obs.Select(x => def.is_collect_tax ? x * 0.0003 : 0).ToOBSValue();
+            this.tax = new ObservableBufferedValue(this.num.obs.Select(x => def.is_collect_tax ? x * 0.01 : 0));
+
+            this.adminExpend = new ObservableBufferedValue(this.num.obs.Select(x => def.is_collect_tax ? x * 0.0003 : 0));
 
             if (def.consume != null)
             {
-                this.consume = new SubjectValue<double>(def.consume.Value);
-
-                this.consumeDetail.CollectionChanged += (a, r) =>
-                {
-                    UpdateConsume();
-                };
-
-                UpdateConsume();
+                this.consume = new ObservableBufferedValue(new SubjectValue<double>(def.consume.Value).obs);
             }
-        }
-
-        private void UpdateConsume()
-        {
-            consume.Value = this.consumeDetail.Sum(x => x.value);
         }
     }
 }

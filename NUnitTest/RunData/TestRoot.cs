@@ -280,7 +280,7 @@ namespace UnitTest.RunData
 
             ModDataVisit.InitVisitData(Root.inst);
 
-            COLLECT_POP_TAX.Start();
+            //COLLECT_POP_TAX.Start();
 
             var json = Root.Serialize();
 

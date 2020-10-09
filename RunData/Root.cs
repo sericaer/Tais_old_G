@@ -9,6 +9,7 @@ using Newtonsoft.Json.Linq;
 using DataVisit;
 using Newtonsoft.Json;
 using System.Collections.ObjectModel;
+using System.Runtime.Serialization;
 
 namespace RunData
 {
@@ -118,6 +119,7 @@ namespace RunData
             departs = Depart.Init(def.departs.Keys);
 
             pops = Pop.Init(departs);
+            departs.ForEach(x => x.InitObservableData(new StreamingContext()));
 
             chaoting = Chaoting.Init(def.chaoting);
 
