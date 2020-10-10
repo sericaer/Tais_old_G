@@ -95,9 +95,11 @@ namespace RunData
                                     (EventHandler<NotifyCollectionChangedEventArgs> ev)
                                         => new NotifyCollectionChangedEventHandler(ev),
                                            ev => buffers.CollectionChanged += ev,
-                                           ev => buffers.CollectionChanged -= ev);
+                                           ev => buffers.CollectionChanged -= ev)
+                                .Select(x => buffers.Sum(y => y.value))
+                                .StartWith(buffers.Sum(y => y.value));
 
-            value = Observable.CombineLatest(this.baseValue.obs, bufferChanged, (x, y) => x + buffers.Sum(z => z.value)).ToOBSValue();
+            value = Observable.CombineLatest(this.baseValue.obs, bufferChanged, (x, y) => x + y).ToOBSValue();
         }
 
 

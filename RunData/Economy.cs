@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Linq;
@@ -13,11 +14,17 @@ namespace RunData
     [JsonObject(MemberSerialization.OptIn)]
     public class Economy
     {
-        public class Memento
-        {
-            internal Dictionary<string, double> incomes;
-            internal Dictionary<string, double> outputs;
-        }
+        [JsonProperty, DataVisitorProperty("value")]
+        public SubjectValue<double> curr;
+
+        [JsonProperty, DataVisitorProperty("income")]
+        public InComes incomes;
+
+        [JsonProperty, DataVisitorProperty("output")]
+        public Outputs outputs;
+
+        [DataVisitorProperty("month_surplus")]
+        public ObservableValue<double> monthSurplus;
 
         public static Economy inst
         {
@@ -32,78 +39,13 @@ namespace RunData
             return new Economy(def);
         }
 
-        [JsonProperty, DataVisitorProperty("value")]
-        public SubjectValue<double> curr;
-
-        public ObservableValue<double> IncomeTotal;
-        public ObservableValue<double> OuputTotal;
-
-        [DataVisitorProperty("month_surplus")]
-        public ObservableValue<double> monthSurplus;
-
-        //[DataVisitorProperty("report_chaoting_tax_percent")]
-        //public double reportTaxPercent
-        //{
-        //    get
-        //    {
-        //        return outputs.Single(x => x.name == "STATIC_REPORT_CHAOTING_TAX").percent.Value;
-        //    }
-        //    set
-        //    {
-        //        outputs.Single(x => x.name == "STATIC_REPORT_CHAOTING_TAX").percent.Value = value;
-        //    }
-        //}
-
-        [JsonProperty]
-        internal List<InCome> inComes;
-
-        [JsonProperty]
-        internal List<Output> outputs;
-
-        public IEnumerable<InCome> EnumerateInCome()
-        {
-            foreach (var elem in inComes)
-            {
-                yield return elem;
-            }
-        }
-
-        public IEnumerable<Output> EnumerateOutput()
-        {
-            foreach (var elem in outputs)
-            {
-                yield return elem;
-            }
-        }
-
-        public Memento CreateMemento()
-        {
-            var rslt = new Memento();
-            rslt.incomes = this.inComes.ToDictionary(x => x.name, y => y.percent.Value);
-            rslt.outputs = this.outputs.ToDictionary(x => x.name, y => y.percent.Value);
-
-            return rslt;
-        }
-
         internal static void DaysInc()
         {
             if (Date.inst == (null, null, 30))
             {
-                var newValue = inst.curr.Value - inst.OuputTotal.Value;
-                inst.curr.Value = newValue > 0 ? newValue : 0;
-            }
-        }
+                inst.curr.Value += inst.monthSurplus.Value;
 
-        public void LoadMemento(Memento memento)
-        {
-            foreach (var pair in memento.incomes)
-            {
-                inComes.Find(x => x.name == pair.Key).percent.Value = pair.Value;
-            }
-
-            foreach (var pair in memento.outputs)
-            {
-                outputs.Find(x => x.name == pair.Key).percent.Value = pair.Value;
+                inst.outputs.expend();
             }
         }
 
@@ -111,8 +53,8 @@ namespace RunData
         {
             curr = new SubjectValue<double>(def.curr);
 
-            inComes = InCome.Generate(def);
-            outputs = Output.Generate(def);
+            incomes = new InComes(def);
+            outputs = new Outputs(def);
 
             InitObservableData(new StreamingContext());
         }
@@ -126,15 +68,123 @@ namespace RunData
         [OnDeserialized]
         private void InitObservableData(StreamingContext context)
         {
-            IncomeTotal = Observable.CombineLatest(inComes.Select(x => x.currValue.obs), (IList<double> all) => all.Sum()).ToOBSValue();
-            OuputTotal = Observable.CombineLatest(outputs.Select(x => x.currValue.obs), (IList<double> all) => all.Sum()).ToOBSValue();
-            monthSurplus = Observable.CombineLatest(IncomeTotal.obs, OuputTotal.obs, (i, o) => i - o).ToOBSValue();
+            monthSurplus = Observable.CombineLatest(incomes.total.obs, outputs.total.obs, (i, o) => i - o).ToOBSValue();
+        }
+    }
+
+    [JsonObject(MemberSerialization.OptIn)]
+    public class InComes : IEnumerable<InCome>
+    {
+        public ObservableValue<double> total;
+
+        [JsonProperty]
+        InCome popTax;
+
+        public InComes(Define.EconomyDef def) : this()
+        {
+            InitObservableData(new StreamingContext());
+        }
+
+        [JsonConstructor]
+        private InComes()
+        {
+            InCome.all = new List<InCome>();
+
+            popTax = new InCome("STATIC_POP_TAX",
+                                 Root.def.economy.pop_tax_percent,
+                                 Observable.CombineLatest(Depart.all.Select(x => x.tax.obs), (IList<double> taxs) => taxs.Sum()).ToOBSValue());
+        }
+
+        public IEnumerator<InCome> GetEnumerator()
+        {
+            foreach(var elem in InCome.all)
+            {
+                yield return elem;
+            }
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            foreach (var elem in InCome.all)
+            {
+                yield return elem;
+            }
+        }
+
+        [OnDeserialized]
+        private void InitObservableData(StreamingContext context)
+        {
+            total = Observable.CombineLatest(InCome.all.Select(x => x.currValue.obs), (IList<double> all) => all.Sum()).ToOBSValue();
+        }
+    }
+
+    [JsonObject(MemberSerialization.OptIn)]
+    public class Outputs : IEnumerable<Output>
+    {
+        public ObservableValue<double> total;
+
+        [JsonProperty]
+        Output departAdmin;
+
+        [JsonProperty]
+        Output reportChaoting;
+
+        public Outputs(Define.EconomyDef def) : this()
+        {
+            InitObservableData(new StreamingContext());
+        }
+
+        [JsonConstructor]
+        private Outputs()
+        {
+            Output.all = new List<Output>();
+
+            departAdmin = new Output("STATIC_DEPART_ADMIN",
+                                 Root.def.economy.expend_depart_admin,
+                                 Observable.CombineLatest(Depart.all.Select(x => x.adminExpendBase.obs), (IList<double> expend) => expend.Sum()).ToOBSValue());
+
+            reportChaoting = new Output("STATIC_REPORT_CHAOTING",
+                                Root.def.economy.report_chaoting_percent,
+                                Chaoting.inst.expectMonthTaxValue);
+            reportChaoting.expend = () => Chaoting.inst.ReportMonthTax(reportChaoting.currValue.Value);
+        }
+
+        public IEnumerator<Output> GetEnumerator()
+        {
+            foreach (var elem in Output.all)
+            {
+                yield return elem;
+            }
+        }
+
+        internal void expend()
+        {
+            foreach (var elem in Output.all)
+            {
+                elem.expend?.Invoke();
+            }
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            foreach (var elem in Output.all)
+            {
+                yield return elem;
+            }
+        }
+
+        [OnDeserialized]
+        private void InitObservableData(StreamingContext context)
+        {
+            total = Observable.CombineLatest(Output.all.Select(x => x.currValue.obs), (IList<double> all) => all.Sum()).ToOBSValue();
         }
     }
 
     [JsonObject(MemberSerialization.OptIn)]
     public class InCome
     {
+        public static List<InCome> all;
+
         [JsonProperty]
         public string name;
 
@@ -143,31 +193,13 @@ namespace RunData
 
         public ObservableValue<double> currValue;
 
-        private static Dictionary<string, ObservableValue<double>> dictMax = new Dictionary<string, ObservableValue<double>>()
-        {
-            { "STATIC_POP_TAX", Observable.CombineLatest(Pop.all.Select(x=>x.tax.value.obs), (IList<double> taxs)=>taxs.Sum()).ToOBSValue()}
-        };
+        public ObservableValue<double> maxValue;
 
-        public ObservableValue<double> maxValue
-        {
-            get
-            {
-                return dictMax[name];
-            }
-        }
-
-        internal static List<InCome> Generate(Define.EconomyDef def)
-        {
-            return new List<InCome>()
-            {
-                new InCome("STATIC_POP_TAX", def.pop_tax_percent)
-            };
-        }
-
-        internal InCome(string name, double percent)
+        internal InCome(string name, double percent, ObservableValue<double> maxValue) : this()
         {
             this.name = name;
             this.percent = new SubjectValue<double>(percent);
+            this.maxValue = maxValue;
 
             InitObservableData(new StreamingContext());
         }
@@ -175,7 +207,7 @@ namespace RunData
         [JsonConstructor]
         private InCome()
         {
-
+            all.Add(this);
         }
 
         [OnDeserialized]
@@ -188,6 +220,8 @@ namespace RunData
     [JsonObject(MemberSerialization.OptIn)]
     public class Output
     {
+        public static List<Output> all;
+
         [JsonProperty]
         public string name;
 
@@ -196,31 +230,16 @@ namespace RunData
 
         public ObservableValue<double> currValue;
 
-        private static Dictionary<string, ObservableValue<double>> dictMax = new Dictionary<string, ObservableValue<double>>()
-        {
-            { "STATIC_DEPART_ADMIN_EXPEND", Observable.CombineLatest(Root.inst.departs.Select(x=>x.adminExpendBase.obs), (expends)=>expends.Sum()).ToOBSValue()}
-        };
+        public ObservableValue<double> maxValue;
 
-        public ObservableValue<double> maxValue
-        {
-            get
-            {
-                return dictMax[name];
-            }
-        }
+        public Action expend;
 
-        internal static List<Output> Generate(Define.EconomyDef def)
-        {
-            return new List<Output>()
-            {
-                new Output("STATIC_DEPART_ADMIN_EXPEND", def.expend_depart_admin)
-            };
-        }
-
-        internal Output(string name, double percent)
+        internal Output(string name, double percent, ObservableValue<double> maxValue, Action expend = null) : this()
         {
             this.name = name;
             this.percent = new SubjectValue<double>(percent);
+            this.maxValue = maxValue;
+            this.expend = expend;
 
             InitObservableData(new StreamingContext());
         }
@@ -228,7 +247,7 @@ namespace RunData
         [JsonConstructor]
         private Output()
         {
-
+            all.Add(this);
         }
 
         [OnDeserialized]

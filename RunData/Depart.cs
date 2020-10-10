@@ -22,7 +22,7 @@ namespace RunData
 
         public ObservableValue<int> popNum;
 
-        public ObservableValue<double> expectTax;
+        public ObservableValue<double> tax;
         public ObservableValue<double> adminExpendBase;
 
         public IEnumerable<Pop> pops
@@ -93,7 +93,7 @@ namespace RunData
             popNum = Observable.CombineLatest(pops.Where(x => x.def.is_collect_tax).Select(x => x.num.obs),
                                   (IList<double> nums) => nums.Sum(y => (int)y)).ToOBSValue();
 
-            expectTax = Observable.CombineLatest(pops.Select(x=>x.tax.value.obs),
+            tax = Observable.CombineLatest(pops.Select(x=>x.tax.value.obs),
                                     (IList<double> nums) => nums.Sum()).ToOBSValue();
 
             adminExpendBase = Observable.CombineLatest(pops.Select(x=>x.adminExpend.value.obs),

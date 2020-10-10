@@ -106,7 +106,7 @@ namespace RunData
         {
             this.tax = new ObservableBufferedValue(this.num.obs.Select(x => def.is_collect_tax ? x * 0.01 : 0));
 
-            this.adminExpend = new ObservableBufferedValue(this.num.obs.Select(x => def.is_collect_tax ? x * 0.0003 : 0));
+            this.adminExpend = new ObservableBufferedValue(this.num.obs.Select(x => def.is_collect_tax ? x * 0.0005 : 0));
 
             if (def.consume != null)
             {

@@ -38,12 +38,13 @@ namespace UnitTest.RunData
                 {
                     curr = 456,
                     pop_tax_percent = 30,
-                    expend_depart_admin = 100,
+                    report_chaoting_percent = 100,
+                    expend_depart_admin = 50,
                 },
 
                 chaoting = new Define.ChaotingDef()
                 {
-                    reportPopPercent = 130,
+                    reportPopPercent = 110,
                     taxPercent = 20,
                     powerParty = "huanguan"
                 },

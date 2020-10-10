@@ -14,6 +14,11 @@ namespace RunData
         [JsonProperty]
         public SubjectValue<int> reportPopNum;
 
+        [JsonProperty]
+        public SubjectValue<double> reportTaxPercent;
+
+        public ObservableValue<double> expectMonthTaxValue;
+
         [DataVisitorProperty("extra_tax")]
         public double extraTax
         {
@@ -74,8 +79,14 @@ namespace RunData
             }
 
             reportPopNum = new SubjectValue<int>((int)(Depart.all.Sum(x => x.popNum.Value) * def.reportPopPercent / 100));
+            reportTaxPercent = new SubjectValue<double>(def.taxPercent);
 
             InitObservableData(new StreamingContext());
+        }
+
+        internal void ReportMonthTax(double value)
+        {
+            _extraTax += value - expectMonthTaxValue.Value;
         }
 
         [JsonConstructor]
@@ -86,6 +97,9 @@ namespace RunData
         [OnDeserialized]
         private void InitObservableData(StreamingContext context)
         {
+            expectMonthTaxValue = Observable.CombineLatest(reportPopNum.obs, reportTaxPercent.obs,
+                                        (x, y)=> x*0.006*y/100)
+                                        .ToOBSValue();
         }
     }
 }
