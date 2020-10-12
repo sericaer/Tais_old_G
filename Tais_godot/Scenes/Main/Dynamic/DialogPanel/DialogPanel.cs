@@ -44,7 +44,7 @@ namespace TaisGodot.Scripts
 			GD.Print(nextEventKey);
 
 			if(nextEventKey != "")
-            {
+			{
 				this.Visible = false;
 
 				GEvent nextEvent = gEventObj.GetNext(nextEventKey);
@@ -67,7 +67,7 @@ namespace TaisGodot.Scripts
 		}
 
 		private void Exit()
-        {
+		{
 			QueueFree();
 
 			SpeedContrl.UnPause();

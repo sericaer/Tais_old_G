@@ -5,5 +5,5 @@ trigger =
 
 desc = 
 {
-    WARN_CHAOTING_OWE_TAX_DESC, chaoting.real_year_tax
+    WARN_CHAOTING_OWE_TAX_DESC, chaoting.owe_tax
 }

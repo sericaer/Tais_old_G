@@ -11,27 +11,37 @@ namespace TaisGodot.Scripts
 		// private string b = "text";
 
 		// Called when the node enters the scene tree for the first time.
+		ReactiveLabel surplus;
+		ReactiveLabel incomeTotal;
+		ReactiveLabel outputTotal;
+
 		public override void _Ready()
 		{
 			SpeedContrl.Pause();
 
-            foreach (var income in RunData.Economy.inst.incomes)
-            {
-                var incomPanel = (IncomePanel)ResourceLoader.Load<PackedScene>("res://Scenes/Main/Dynamic/EconomyDetail/IncomePanel.tscn").Instance();
-                incomPanel.gmObj = income;
+			surplus = GetNode<ReactiveLabel>("CenterContainer/EconomyDetail/VBoxContainer/Bottom/Surplus/Value");
+			incomeTotal = GetNode<ReactiveLabel>("CenterContainer/EconomyDetail/VBoxContainer/HBoxContainer/Income/VBoxContainer/Total/Value");
+			outputTotal = GetNode<ReactiveLabel>("CenterContainer/EconomyDetail/VBoxContainer/HBoxContainer/Output/VBoxContainer/Total/Value");
 
-                GetNode<VBoxContainer>("CenterContainer/EconomyDetail/VBoxContainer/HBoxContainer/Income/VBoxContainer/VBoxContainer").AddChild(incomPanel);
-            }
+			surplus.Assoc(RunData.Economy.inst.monthSurplus);
+			incomeTotal.Assoc(RunData.Economy.inst.incomes.total);
+			outputTotal.Assoc(RunData.Economy.inst.outputs.total);
 
-            foreach (var output in RunData.Economy.inst.outputs)
+			foreach (var income in RunData.Economy.inst.incomes)
+			{
+				var incomPanel = (IncomePanel)ResourceLoader.Load<PackedScene>("res://Scenes/Main/Dynamic/EconomyDetail/IncomePanel.tscn").Instance();
+				incomPanel.gmObj = income;
+
+				GetNode<VBoxContainer>("CenterContainer/EconomyDetail/VBoxContainer/HBoxContainer/Income/VBoxContainer/VBoxContainer").AddChild(incomPanel);
+			}
+
+			foreach (var output in RunData.Economy.inst.outputs)
 			{
 				var outputPanel = (OutputPanel)ResourceLoader.Load<PackedScene>("res://Scenes/Main/Dynamic/EconomyDetail/OutputPanel.tscn").Instance();
 				outputPanel.gmObj = output;
 
 				GetNode<VBoxContainer>("CenterContainer/EconomyDetail/VBoxContainer/HBoxContainer/Output/VBoxContainer/VBoxContainer").AddChild(outputPanel);
 			}
-
-			GetNode<ReactiveLabel>("CenterContainer/EconomyDetail/VBoxContainer/Bottom/Surplus/Value").Assoc(RunData.Economy.inst.monthSurplus);
 
 			////UpDateTempOutputStatus();
 		}
