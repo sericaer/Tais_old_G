@@ -21,15 +21,29 @@ namespace UnitTest.RunData
             Assert.AreEqual(0, Visitor.Get("chaoting.extra_tax"));
             Assert.AreEqual(0, Visitor.Get("chaoting.owe_tax"));
 
-            Chaoting.inst._extraTax = 100;
+            var extraTax = 100.0;
+            Chaoting.inst.ReportMonthTax(Chaoting.inst.expectMonthTaxValue.Value + extraTax);
 
-            Assert.AreEqual(100, Visitor.Get("chaoting.extra_tax"));
+            Assert.AreEqual(extraTax, Visitor.Get("chaoting.extra_tax"));
             Assert.AreEqual(0, Visitor.Get("chaoting.owe_tax"));
+        }
 
-            Chaoting.inst._extraTax = -100;
+        [Test()]
+        public void Test_ChaotingOweTax()
+        {
+            ModDataVisit.InitVisitMap(typeof(Root));
+
+            Root.Init(init);
+            ModDataVisit.InitVisitData(Root.inst);
 
             Assert.AreEqual(0, Visitor.Get("chaoting.extra_tax"));
-            Assert.AreEqual(100, Visitor.Get("chaoting.owe_tax"));
+            Assert.AreEqual(0, Visitor.Get("chaoting.owe_tax"));
+
+            var oweTax = 100.0;
+            Chaoting.inst.ReportMonthTax(Chaoting.inst.expectMonthTaxValue.Value - oweTax);
+
+            Assert.AreEqual(0, Visitor.Get("chaoting.extra_tax"));
+            Assert.AreEqual(oweTax, Visitor.Get("chaoting.owe_tax"));
         }
 
         [Test()]

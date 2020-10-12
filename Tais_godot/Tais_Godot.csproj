@@ -116,6 +116,10 @@
       <Project>{60624F37-78F3-44EB-AD31-76E1893F5EA9}</Project>
       <Name>DataVisit</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Define\Define.csproj">
+      <Project>{74494308-76ED-4EAC-8198-EFE225428247}</Project>
+      <Name>Define</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <ItemGroup />

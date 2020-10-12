@@ -10,6 +10,7 @@ using DataVisit;
 using Newtonsoft.Json;
 using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
+using Define;
 
 namespace RunData
 {
@@ -18,7 +19,7 @@ namespace RunData
     {
         public static Action<string> logger;
 
-        public static void SetDef(Define def)
+        public static void SetDef(Def def)
         {
             Root.def = def;
         }
@@ -61,6 +62,8 @@ namespace RunData
             Date.Inc();
 
             Process.DaysInc();
+
+            Risk.DaysInc();
         }
 
         public static IEnumerable<Warn> GenerateWarns()
@@ -68,7 +71,7 @@ namespace RunData
             return Warn.All.Where(x => x.IsValid());
         }
 
-        public static Define def;
+        public static Def  def;
         public static Root inst;
 
         [JsonProperty, DataVisitorProperty("taishou")]
@@ -94,6 +97,12 @@ namespace RunData
 
         [JsonProperty]
         public List<Party> partys;
+
+        [DataVisitorProperty("risk")]
+        public RiskMgr riskMgr;
+
+        [JsonProperty]
+        internal List<Risk> risks;
 
         //public List<Party> parties;
 
@@ -127,6 +136,8 @@ namespace RunData
 
             processes = Process.Init();
             //parties = Party.Init();
+
+            risks = Risk.Init();
         }
 
         [JsonConstructor]

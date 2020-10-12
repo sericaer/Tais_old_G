@@ -107,7 +107,7 @@ namespace UnitTest.RunData
             Date.inst.day.Value = 30;
             Economy.DaysInc();
 
-            Assert.AreEqual(report.currValue.Value - Chaoting.inst.expectMonthTaxValue.Value, Chaoting.inst._extraTax);
+            Assert.AreEqual(Chaoting.inst.expectMonthTaxValue.Value - report.currValue.Value, Chaoting.inst.oweTax);
         }
 
         [Test()]

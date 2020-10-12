@@ -45,39 +45,34 @@ namespace Modder
             };
         }
 
-        internal static (string key, List<string> datas)[] Process()
+        internal static (string key, List<Desc> desc)[] Process()
         {
-            var rslt = new List<(string, List<string>)>();
+            var rslt = new List<(string key, List<Desc> desc)>();
             foreach (var warn in common.SelectMany(x => x.events))
             {
                 var datas = new List<string>();
                 if (warn.isValid())
                 {
-                    if(warn.desc_str != "")
-                    {
-                        datas.Add(warn.desc_str);
-                    }
-
-                    rslt.Add((warn.key, datas));
+                    rslt.Add((warn.key, new List<Desc>() { warn.desc }));
                 }
             }
 
-            foreach (var warn in depart.SelectMany(x => x.events))
-            {
-                var datas = new List<string>();
-                while (ModDataVisit.EnumerateVisit("depart"))
-                {
-                    if (warn.isValid())
-                    {
-                        datas.Add((ModDataVisit.Get("depart.name") as string + "|" + warn.desc_str).TrimEnd('|'));
-                    }
-                }
+            //foreach (var warn in depart.SelectMany(x => x.events))
+            //{
+            //    var datas = new List<string>();
+            //    while (ModDataVisit.EnumerateVisit("depart"))
+            //    {
+            //        if (warn.isValid())
+            //        {
+            //            datas.Add((ModDataVisit.Get("depart.name") as string + "|" + warn.desc_str).TrimEnd('|'));
+            //        }
+            //    }
 
-                if (datas.Count != 0)
-                {
-                    rslt.Add((warn.key, datas));
-                }
-            }
+            //    if (datas.Count != 0)
+            //    {
+            //        rslt.Add((warn.key, datas));
+            //    }
+            //}
 
             return rslt.ToArray();
         }

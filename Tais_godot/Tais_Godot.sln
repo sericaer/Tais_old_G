@@ -20,6 +20,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataVisit", "..\DataVisit\D
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NUnitTest", "..\NUnitTest\NUnitTest.csproj", "{B27D30B1-B521-450C-8C2E-5AEE495CF5F0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Define", "..\Define\Define.csproj", "{74494308-76ED-4EAC-8198-EFE225428247}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -76,6 +78,14 @@ Global
 		{B27D30B1-B521-450C-8C2E-5AEE495CF5F0}.ExportRelease|Any CPU.Build.0 = Release|Any CPU
 		{B27D30B1-B521-450C-8C2E-5AEE495CF5F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B27D30B1-B521-450C-8C2E-5AEE495CF5F0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{74494308-76ED-4EAC-8198-EFE225428247}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{74494308-76ED-4EAC-8198-EFE225428247}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{74494308-76ED-4EAC-8198-EFE225428247}.ExportDebug|Any CPU.ActiveCfg = Debug|Any CPU
+		{74494308-76ED-4EAC-8198-EFE225428247}.ExportDebug|Any CPU.Build.0 = Debug|Any CPU
+		{74494308-76ED-4EAC-8198-EFE225428247}.ExportRelease|Any CPU.ActiveCfg = Release|Any CPU
+		{74494308-76ED-4EAC-8198-EFE225428247}.ExportRelease|Any CPU.Build.0 = Release|Any CPU
+		{74494308-76ED-4EAC-8198-EFE225428247}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{74494308-76ED-4EAC-8198-EFE225428247}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

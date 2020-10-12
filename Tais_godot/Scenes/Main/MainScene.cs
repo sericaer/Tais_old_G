@@ -9,10 +9,20 @@ namespace TaisGodot.Scripts
 
 		internal static MainScene inst;
 
+		internal WarnContainer warnContainer;
+		internal TaskContainer taskContainer;
+
 		public MainScene()
-        {
+		{
 			inst = this;
-        }
+		}
+
+		public override void _Ready()
+		{
+			warnContainer = GetNode<WarnContainer>("VBoxContainer/WinContainer/ImpContainer/WarnContainer");
+			taskContainer = GetNode<TaskContainer>("VBoxContainer/WinContainer/TaskContainer");
+
+		}
 
 		private async void _on_DaysInc()
 		{
@@ -32,8 +42,9 @@ namespace TaisGodot.Scripts
 				await ToSignal(dialog, "tree_exited");
 			}
 
-			GetNode<WarnContainer>("VBoxContainer/WinContainer/ImpContainer/WarnContainer").Refresh(RunData.Root.GenerateWarns());
-			GetNode<TaskContainer>("VBoxContainer/WinContainer/TaskContainer").Refresh(RunData.Root.GetTask());
+			warnContainer.Refresh(Modder.Mod.WarnProcess());
+
+			taskContainer.Refresh(RunData.Root.GetTask());
 
 			if (Root.inst.isEnd)
 			{

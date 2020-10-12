@@ -13,7 +13,7 @@ namespace UnitTest.RunData
 
         public TestRunData()
         {
-            Root.def = new Define()
+            Root.def = new Define.Def()
             {
                 departs = new Dictionary<string, Define.DepartDef>()
                 {

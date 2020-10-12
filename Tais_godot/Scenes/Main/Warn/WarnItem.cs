@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Godot;
+using Modder;
 using RunData;
 
 namespace TaisGodot.Scripts
@@ -13,20 +14,15 @@ namespace TaisGodot.Scripts
 	{
 		public override void _Ready()
 		{
-			GetNode<Label>("Label").Text = "WARN" + Name + "_TITLE";
+			GetNode<Label>("Label").Text = Name;
 		}
 
-		internal void Refresh(Warn warn)
+		internal void Refresh(List<Desc> descs)
 		{
-			var strItem = warn.datas.Select(x =>
-			{
-				var split = x.Split("|");
-				return string.Format(TranslateServerEx.Translate("WARN_" + Name + "_ITEM"), split);
-			});
 
-			var strInfo = TranslateServerEx.Translate("WARN_" + Name + "_DESC")
-						  + "\n\n-----------------\n\n"
-						  + string.Join("\n", strItem);
+			var strInfo = String.Format("{0}\n-----------------\n{1}",
+										Name+"_TITLE",
+										String.Join("\n", descs.Select(x=>TranslateServerEx.Translate(x.Format, x.Params))));
 
 			this.HintTooltip = strInfo;
 		}

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Godot;
+using Modder;
 using RunData;
 
 namespace TaisGodot.Scripts
@@ -16,11 +17,11 @@ namespace TaisGodot.Scripts
 
 		}
 
-        internal void Refresh(IEnumerable<RunData.Warn> warns)
+        internal void Refresh(IEnumerable<(string title, List<Desc> descs)> warns)
         {
 			var warnItems = this.GetChildren<WarnItem>().ToList();
 
-			var needRemoves = warnItems.FindAll(x => !warns.Any(y=>y.name == x.Name));
+			var needRemoves = warnItems.FindAll(x => !warns.Any(y=>y.title == x.Name));
 			needRemoves.ForEach(x =>
 			{
 				warnItems.Remove(x);
@@ -29,16 +30,16 @@ namespace TaisGodot.Scripts
 
 			foreach(var warn in warns)
             {
-				var warnItem = warnItems.SingleOrDefault(x => x.Name == warn.name);
+				var warnItem = warnItems.SingleOrDefault(x => x.Name == warn.title);
 				if (warnItem == null)
                 {
 					warnItem = (WarnItem)ResourceLoader.Load<PackedScene>("res://Scenes/Main/Warn/WarnItem.tscn").Instance();
-					warnItem.Name = warn.name;
+					warnItem.Name = warn.title;
 
 					AddChild(warnItem);
 				}
 
-				warnItem.Refresh(warn);
+				warnItem.Refresh(warn.descs);
 			}
 			
         }

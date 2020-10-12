@@ -20,26 +20,21 @@ namespace Modder
         internal Condition trigger;
 
         [SemanticProperty("desc")]
-        internal GroupValue desc;
+        internal GroupValue _desc;
+
+        internal Desc desc
+        {
+            get
+            {
+                return new Desc(_desc, key);
+            }
+        }
 
         internal string key
         {
             get
             {
                 return System.IO.Path.GetFileNameWithoutExtension(file);
-            }
-        }
-
-        internal string desc_str
-        {
-            get
-            {
-                if(desc == null)
-                {
-                    return "";
-                }
-
-                return string.Join("|", desc.Select(x => x.ToString()));
             }
         }
 

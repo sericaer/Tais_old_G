@@ -55,6 +55,7 @@
     <Compile Include="Tools\TestRandom.cs" />
     <Compile Include="Parser\Semantic\TestSeleted.cs" />
     <Compile Include="RunData\TestEconomy.cs" />
+    <Compile Include="Modder\Define\TestRisk.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -76,6 +77,10 @@
       <Project>{6889D115-E394-4412-A83C-26900889634E}</Project>
       <Name>Parser</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Define\Define.csproj">
+      <Project>{74494308-76ED-4EAC-8198-EFE225428247}</Project>
+      <Name>Define</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Modder\" />
@@ -88,6 +93,7 @@
     <Folder Include="Parser\" />
     <Folder Include="Parser\Semantic\" />
     <Folder Include="Tools\" />
+    <Folder Include="Modder\Define\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

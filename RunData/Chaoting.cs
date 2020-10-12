@@ -38,7 +38,7 @@ namespace RunData
         }
 
         [JsonProperty]
-        public double _extraTax;
+        private double _extraTax;
 
         [DataVisitorProperty("power_party")]
         public Party powerParty

@@ -3,40 +3,14 @@ trigger =
     greater = {chaoting.owe_tax, 0}
 }
 
-date = {month = 12, day=30}
+date = {month = 11, day=1}
 
 occur = 1
 
 option =
 {
-    next = 
+    selected = 
     {
-        EVENT_TAISHOU_IS_REVOKED = 
-        {
-            or = 
-            {
-                greater = { chaoting.owe_tax, 150}
-                and =
-                {
-                    not = 
-                    {
-                        equal = { chaoting.power_party.type, taishou.party.type }
-                    }
-                    
-                    greater = { chaoting.owe_tax, 50}
-                }
-            }
-        }
-        
-        EVENT_TAISHOU_PROTECTE_BY_POWER_PARTY = 
-        {
-            and = 
-            {
-                equal = { chaoting.power_party.type, taishou.party.type }
-                less = { chaoting.owe_tax, 50}
-            }
-        }
-        
-        default = EVENT_TAISHOU_BIRBE_TO_VOID_REVOKE
+        risk_start = RISK_CHAOTING_ROVKE_TAISHOU
     }
 }

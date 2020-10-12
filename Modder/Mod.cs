@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Define;
 using Parser.Semantic;
 
 namespace Modder
@@ -15,10 +16,20 @@ namespace Modder
         public string name;
         public string path;
 
+        public Def _def;
+
         public List<Language> languages;
         internal EventGroup eventGroup;
         internal WarnGroup warnGroup;
         internal List<InitSelect> initSelects;
+
+        public static Def def
+        {
+            get
+            {
+                return modDict.Values.First()._def;
+            }
+        }
 
         static Mod()
         {
@@ -58,23 +69,25 @@ namespace Modder
             }
         }
 
-        //public static (string key, List<string> datas)[] WarnProcess()
-        //{
-        //    return WarnGroup.Process();
-        //}
+        public static (string key, List<Desc> desc)[] WarnProcess()
+        {
+            return WarnGroup.Process();
+        }
 
         internal Mod(string modname, string path)
         {
             this.name = modname;
             this.path = path;
 
+            this._def = new Def(path);
+
             this.languages = Language.Load(path + "/languages");
             this.eventGroup = EventGroup.Load(modname, path + "/events");
-            //this.warnGroup = WarnGroup.Load(modname, path + "/warns");
+            this.warnGroup = WarnGroup.Load(modname, path + "/warns");
             this.initSelects = InitSelect.Load(modname, path + "/init_selects");
+            
         }
 
-        internal static Dictionary<string, Mod> modDict;
-
+        public static Dictionary<string, Mod> modDict;
     }
 }
