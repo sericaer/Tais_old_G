@@ -14,14 +14,14 @@ namespace TaisGodot.Scripts
 	{
 		public override void _Ready()
 		{
-			GetNode<Label>("Label").Text = Name;
+			GetNode<Label>("Label").Text = Name + "_TITLE";
 		}
 
 		internal void Refresh(List<Desc> descs)
 		{
 
 			var strInfo = String.Format("{0}\n-----------------\n{1}",
-										Name+"_TITLE",
+										TranslateServerEx.Translate(Name + "_TITLE"),
 										String.Join("\n", descs.Select(x=>TranslateServerEx.Translate(x.Format, x.Params))));
 
 			this.HintTooltip = strInfo;

@@ -139,11 +139,11 @@ namespace RunData
         {
             Output.all = new List<Output>();
 
-            departAdmin = new Output("STATIC_DEPART_ADMIN",
+            departAdmin = new Output("STATIC_ADMIN_EXPEND",
                                  Root.def.economy.expend_depart_admin,
                                  Observable.CombineLatest(Depart.all.Select(x => x.adminExpendBase.obs), (IList<double> expend) => expend.Sum()).ToOBSValue());
 
-            reportChaoting = new Output("STATIC_REPORT_CHAOTING",
+            reportChaoting = new Output("STATIC_REPORT_CHAOTING_TAX",
                                 Root.def.economy.report_chaoting_percent,
                                 Chaoting.inst.expectMonthTaxValue);
             reportChaoting.expend = () => Chaoting.inst.ReportMonthTax(reportChaoting.currValue.Value);
