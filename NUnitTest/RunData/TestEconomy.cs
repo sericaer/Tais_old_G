@@ -63,7 +63,7 @@ namespace UnitTest.RunData
             Root.Init(init);
             ModDataVisit.InitVisitData(Root.inst);
 
-            var adminExpend = Economy.inst.outputs.Single(x => x.name == "STATIC_DEPART_ADMIN");
+            var adminExpend = Economy.inst.outputs.Single(x => x.name == "STATIC_ADMIN_EXPEND");
 
             Assert.AreEqual(Root.def.economy.expend_depart_admin, adminExpend.percent.Value);
             Assert.AreEqual(Depart.all.Sum(x => x.adminExpendBase.Value), adminExpend.maxValue.Value);
@@ -88,7 +88,7 @@ namespace UnitTest.RunData
             Root.Init(init);
             ModDataVisit.InitVisitData(Root.inst);
 
-            var report = Economy.inst.outputs.Single(x => x.name == "STATIC_REPORT_CHAOTING");
+            var report = Economy.inst.outputs.Single(x => x.name == "STATIC_REPORT_CHAOTING_TAX");
 
             Assert.AreEqual(Root.def.economy.report_chaoting_percent, report.percent.Value);
             Assert.AreEqual(Chaoting.inst.expectMonthTaxValue.Value, report.maxValue.Value);
